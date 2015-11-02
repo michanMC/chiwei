@@ -15,10 +15,15 @@
 #import "letf3TableViewCell.h"
 #import "zuopinViewController.h"
 #import "letfTableViewCell.h"
-@interface DEMOMenuViewController (){
+#import "WMLabelAlertView.h"
+#import "fenxiangViewTableViewCell.h"
+@interface DEMOMenuViewController ()<WMAlertViewDelegate>{
     UIImageView *imageView;
     UILabel *label;
     UIImageView * _dengjiimgView;
+     WMLabelAlertView*   alert;
+    UITableView * _fenxiangView;
+    NSInteger index;
 }
 
 @end
@@ -28,6 +33,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    index = 3;
     NSLog(@"%f",self.tableView.frame.size.width);
     
     self.tableView.separatorColor = [UIColor colorWithRed:150/255.0f green:161/255.0f blue:177/255.0f alpha:1.0f];
@@ -81,6 +87,7 @@
         
         UIButton *fenxianBtn = [[UIButton alloc]initWithFrame:CGRectMake((Main_Screen_Width-50) - 10 - 30, (200 - 80)/2, 30, 30)];
         [fenxianBtn setImage:[UIImage imageNamed:@"nav_icon_share"] forState:0];
+        [fenxianBtn addTarget:self action:@selector(actionFenxian) forControlEvents:UIControlEventTouchUpInside];
         [view addSubview:fenxianBtn];
         
         
@@ -129,6 +136,27 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (tableView == _fenxiangView) {
+        if (indexPath.section == 0) {
+            if (index== 0) {
+                index  = 3;
+            }
+            else{
+            index = 0;
+            }
+        }
+        else
+        {
+            if (index== 1) {
+                index  = 3;
+            }
+            else{
+                index = 1;
+            }
+        }
+        [_fenxiangView reloadData];
+        return;
+    }
 //    if (indexPath.section == 0 && indexPath.row == 0) {
 //        DEMOHomeViewController *homeViewController = [[DEMOHomeViewController alloc] init];
 //        
@@ -183,6 +211,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (tableView == _fenxiangView) {
+        return 40;
+    }
     if (indexPath.row == 0) {
         return 60;
     }
@@ -192,18 +223,67 @@
     return 45;
 }
 
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//{
-//    return 5;
-//}
-
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    if (tableView == _fenxiangView) {
+        return 2;
+    }
+    return 1;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if (tableView == _fenxiangView) {
+        if (section == 0) {
+           return 0.5;
+        }
+        
+    }
+    return 0.01;
+    
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+     return 0.01;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex
 {
+    if (_fenxiangView == tableView) {
+        return 1;
+    }
     return 6;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (tableView == _fenxiangView) {
+        static NSString *cellIdentifier2 = @"fenxiangViewTableViewCell";
+        fenxiangViewTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier2];
+        if (!cell) {
+            cell = [[[NSBundle mainBundle]loadNibNamed:cellIdentifier2 owner:self options:nil]lastObject];
+        }
+        cell.titleLbl.textColor = AppTextCOLOR;
+        if (indexPath.section == 0) {
+            cell.titleLbl.text = @"国内";
+        }
+        else
+        {
+            cell.titleLbl.text = @"国外";
+
+        }
+        if (index == indexPath.section) {
+            cell.btn.hidden = NO;
+            cell.titleLbl.textColor = [UIColor orangeColor];
+        }
+        else
+        {
+            cell.titleLbl.textColor = AppTextCOLOR;
+
+           cell.btn.hidden = YES;
+        }
+        
+        return cell;//[[UITableViewCell alloc]init];
+        
+    }
     static NSString *cellIdentifier = @"letfTableViewCell";
     static NSString *cellIdentifier2 = @"mc";
     if (indexPath.row == 0) {
@@ -261,5 +341,35 @@
 
     return cell;
 }
+#pragma mark-分享
+-(void)actionFenxian{
+    _fenxiangView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width - 80, 2 * 40)style:UITableViewStyleGrouped];
+    // _yinhanView.bounces = NO;
+    //table.scrollEnabled = NO;
+    _fenxiangView.delegate = self;
+    _fenxiangView.dataSource = self;
+    _fenxiangView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _fenxiangView.scrollEnabled = NO;
+    alert = [[WMLabelAlertView alloc]initWithTitle:@"请选择分享范围" contentView:_fenxiangView];
+   // alert.leftButton.frame = CGRectMake(alert.leftButton.frame.origin.x, alert.leftButton.frame.origin.y, alert.leftButton.frame.size.width * 2+0.5, alert.leftButton.frame.size.height);
+    alert.delegate = self;
+    //[alert.rightButton removeFromSuperview];
+    [alert.leftButton setTitleColor:RGBCOLOR(249, 77, 33) forState:0];
+    alert.titleLabel.textColor = AppTextCOLOR;
+    
+    
+    [alert show];
 
+    
+}
+-(void)alertViewDidClickSureButton:(WMAlertView *)alertView
+{
+    NSLog(@"%ld",index);
+    NSLog(@"确定");
+}
+-(void)alertViewDidClickCancleButton:(WMAlertView *)alertView
+{
+    NSLog(@"%ld",index);
+    NSLog(@"取消");
+}
 @end

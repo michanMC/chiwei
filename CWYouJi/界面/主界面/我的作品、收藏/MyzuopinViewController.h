@@ -9,5 +9,14 @@
 #import "BaseViewController.h"
 
 @interface MyzuopinViewController : BaseViewController
+//BOOL _isquanxuan;
+//UIButton * _deleteBtn;
+//
+//NSMutableArray *_deleArray;//记录要删除的Btn
+@property(nonatomic,assign)BOOL isquanxuan;
+@property(nonatomic,strong)UIButton * deleteBtn;
+@property(nonatomic,strong)NSMutableArray * deleArray;
+
+-(void)actionBianji;
 
 @end

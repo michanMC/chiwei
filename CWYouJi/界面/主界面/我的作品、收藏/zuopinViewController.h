@@ -11,5 +11,4 @@
 @interface zuopinViewController : BaseViewController
 @property(nonatomic,strong)UIScrollView *mainScroll;
 @property (nonatomic, assign) NSInteger SegmentIndex;
-
 @end

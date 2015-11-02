@@ -13,10 +13,10 @@
         UITableView * _tableView;
     BOOL _isEit;
     UIView * foorview;
-    BOOL _isquanxuan;
-    UIButton * _deleteBtn;
-    
-    NSMutableArray *_deleArray;//记录要删除的Btn
+//    BOOL _isquanxuan;
+//    UIButton * _deleteBtn;
+//    
+//    NSMutableArray *_deleArray;//记录要删除的Btn
 }
 
 @end
@@ -71,13 +71,30 @@
     cell.isEit = _isEit;
     cell.deleteBtn.tag = indexPath.section + 200;
     [cell.deleteBtn addTarget:self action:@selector(actionCellBtn:) forControlEvents:UIControlEventTouchUpInside];
-    if ([_deleArray containsObject:@(cell.deleteBtn.tag)]) {
+//    if ([_deleArray containsObject:@(cell.deleteBtn.tag)]) {
+//        cell.deleteBtn.selected = YES;
+//    }
+//    else
+//    {
+//        cell.deleteBtn.selected = NO;
+//    }
+    if (_isquanxuan) {//全选
         cell.deleteBtn.selected = YES;
     }
     else
     {
-        cell.deleteBtn.selected = NO;
+        if ([_deleArray containsObject:@(cell.deleteBtn.tag)]) {
+            cell.deleteBtn.selected = YES;
+        }
+        else
+        {
+            cell.deleteBtn.selected = NO;
+        }
+        
+        
     }
+
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
 
@@ -121,6 +138,8 @@
     UIButton * delebtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 20, 20)];
     [delebtn setImage:[UIImage imageNamed:@"list_checkbox_normal"] forState:UIControlStateNormal];
     [delebtn setImage:[UIImage imageNamed:@"list_checkbox_checked"] forState:UIControlStateSelected];
+    [delebtn addTarget:self action:@selector(quanxuanBtn:) forControlEvents:UIControlEventTouchUpInside];
+
     [foorview addSubview:delebtn];
     UILabel * lbl = [[UILabel alloc]initWithFrame:CGRectMake(40, 0, 30, 40)];
     lbl.text = @"全选";
@@ -153,6 +172,20 @@
     
     
 }
+-(void)quanxuanBtn:(UIButton*)btn{
+    if (btn.selected) {
+        btn.selected = NO;
+        _isquanxuan = NO;
+    }
+    else
+    {
+        btn.selected = YES;
+        _isquanxuan = YES;
+        
+    }
+    [_tableView reloadData];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

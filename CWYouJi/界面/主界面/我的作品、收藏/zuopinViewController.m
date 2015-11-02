@@ -19,6 +19,8 @@
     MyzuopinViewController * _myzuopinCtl;
     
     NSInteger _isBianji;
+    NSInteger _isBianji2;
+
     
 }
 
@@ -43,6 +45,8 @@
     self.title = @"作品";
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     _isBianji = 3;
+    _isBianji2 = 3;
+
     [self prepareUI];
     // Do any additional setup after loading the view.
 }
@@ -71,13 +75,13 @@
     titleSegment = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 64, Main_Screen_Width, 44)];
     titleSegment.sectionTitles = @[@"已制作的作品", @"我收藏的作品"];
     titleSegment.selectedSegmentIndex = _SegmentIndex;
-    if (_SegmentIndex> 0) {
+  //  if (_SegmentIndex> 0) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:self action:@selector(bianjiBtn)];
-    }
-    else
-    {
-        self.navigationItem.rightBarButtonItem = nil;
-    }
+//    }
+//    else
+//    {
+//        self.navigationItem.rightBarButtonItem = nil;
+//    }
 
     titleSegment.backgroundColor = [UIColor whiteColor];
     titleSegment.textColor = [UIColor grayColor];
@@ -113,7 +117,22 @@
         }
         else
         {
-            weakSelf.navigationItem.rightBarButtonItem = nil;
+           // weakSelf.navigationItem.rightBarButtonItem = nil;
+            weakSelf.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:weakSelf action:@selector(bianjiBtn)];
+            if (_isBianji2 == 1) {
+                //weakisBianji = 0;
+                
+                weakSelf.navigationItem.rightBarButtonItem.title =  @"完成";}
+            
+            else if(_isBianji2 == 0 )
+            {
+                //weakisBianji = 1;
+                
+                weakSelf.navigationItem.rightBarButtonItem.title =  @"编辑";
+                
+            }
+            
+
         }
         
         
@@ -159,7 +178,20 @@
     }
     else
     {
-        self.navigationItem.rightBarButtonItem = nil;
+       // self.navigationItem.rightBarButtonItem = nil;
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:self action:@selector(bianjiBtn)];
+        if (_isBianji2 == 1) {
+            // _isBianji = 0;
+            self.navigationItem.rightBarButtonItem.title =  @"完成";}
+        else if(_isBianji2 == 0)
+        {
+            //_isBianji = 1;
+            self.navigationItem.rightBarButtonItem.title =  @"编辑";
+            
+        }
+
+        
+        
     }
 
 }
@@ -170,16 +202,47 @@
 }
 #pragma mark-编辑
 -(void)bianjiBtn{
+    CGFloat pageWidth = _mainScroll.frame.size.width;
+    NSInteger page = _mainScroll.contentOffset.x / pageWidth;
+    if (page == 1) {
+        
+    
     if (_isBianji== 1) {
         _isBianji = 0;
         self.navigationItem.rightBarButtonItem.title =  @"编辑";//[[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:self action:@selector(bianjiBtn)];
+        _myshouchangCtl.isquanxuan = NO;
+        _myshouchangCtl.deleteBtn.selected = NO;
+        _myshouchangCtl.deleArray = [NSMutableArray array];
         [_myshouchangCtl actionBianji];
+        
     }
     else
     {
         _isBianji = 1;
        self.navigationItem.rightBarButtonItem.title =  @"完成";
         [_myshouchangCtl actionBianji];
+
+    }
+    }
+    else
+    {
+        if (_isBianji2== 1) {
+            _isBianji2 = 0;
+            self.navigationItem.rightBarButtonItem.title =  @"编辑";//[[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:self action:@selector(bianjiBtn)];
+
+            [_myzuopinCtl actionBianji];
+        }
+        else
+        {
+            _isBianji2 = 1;
+            self.navigationItem.rightBarButtonItem.title =  @"完成";
+            _myzuopinCtl.isquanxuan = NO;
+            _myzuopinCtl.deleteBtn.selected = NO;
+            _myzuopinCtl.deleArray = [NSMutableArray array];
+            NSLog(@"%@",_myzuopinCtl.deleArray);
+            [_myzuopinCtl actionBianji];
+            
+        }
 
     }
 }
