@@ -10,6 +10,7 @@
 #import "HMSegmentedControl.h"
 #import "MyshouchangViewController.h"
 #import "MyzuopinViewController.h"
+#import "zuopinXQViewController.h"
 @interface zuopinViewController ()<UIScrollViewDelegate>
 {
     
@@ -42,6 +43,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectObjzuopin:) name:@"didSelectzuopinNotification" object:nil];
+    
+    
     self.title = @"作品";
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     _isBianji = 3;
@@ -50,6 +54,16 @@
     [self prepareUI];
     // Do any additional setup after loading the view.
 }
+#pragma mark-监听
+- (void)didSelectObjzuopin:(NSNotification *)notication
+{
+    NSLog(@">>>%@",notication);
+    zuopinXQViewController * ctl = [[zuopinXQViewController alloc]init];
+    [self pushNewViewController:ctl];
+
+    
+}
+
 -(void)prepareUI{
     [self addAllSelect];
     //    添加滚动

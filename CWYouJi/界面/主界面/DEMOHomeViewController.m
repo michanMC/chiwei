@@ -12,14 +12,17 @@
 #import "MCplaceholderText.h"
 #import "HomeTableViewCell.h"
 #import "zuopinViewController.h"
+#import "zuopinXQViewController.h"
+#import "DMLazyScrollView.h"
 
-@interface DEMOHomeViewController ()<ZZCarouselDelegate,UITableViewDelegate,UITableViewDataSource>
+#import "zhizuoZP1ViewController.h"
+@interface DEMOHomeViewController ()<ZZCarouselDelegate,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 {
     
     UITableView * _tableView;
     ZZCarousel *_headwheel;//广告图
     MCplaceholderText *_searchtext;
-    
+    UIButton * _faBuBtn;
 }
 
 @end
@@ -49,6 +52,10 @@
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
+    _faBuBtn = [[UIButton alloc]initWithFrame:CGRectMake((Main_Screen_Width - 50)/2, Main_Screen_Height - 5 - 50, 50, 50)];
+    [_faBuBtn setImage:[UIImage imageNamed:@"home_add_normal"] forState:UIControlStateNormal];
+    [self.view addSubview:_faBuBtn];
+    [_faBuBtn addTarget:self action:@selector(actionFabu) forControlEvents:UIControlEventTouchUpInside];
     
     [_headwheel reloadData];
     
@@ -86,7 +93,26 @@
 //    
     
 }
+#pragma mark-发布
+-(void)actionFabu{
+    zhizuoZP1ViewController * ctl = [[zhizuoZP1ViewController alloc]init];
+    [self pushNewViewController:ctl];
+}
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    _faBuBtn.hidden = YES;
+    
+    
+}
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    
 
+}
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    _faBuBtn.hidden = NO;
+}
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 4;
@@ -120,6 +146,11 @@
     ViewRadius(cell.headImg, 20);
     return cell;
 
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    zuopinXQViewController * ctl = [[zuopinXQViewController alloc]init];
+    [self pushNewViewController:ctl];
 }
 #pragma mark-添加广告头
 -(UIView*)addHeadView:(ZZCarousel*)zzcarView{

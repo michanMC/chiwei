@@ -17,25 +17,63 @@
 #import "letfTableViewCell.h"
 #import "WMLabelAlertView.h"
 #import "fenxiangViewTableViewCell.h"
-@interface DEMOMenuViewController ()<WMAlertViewDelegate>{
+
+@interface DEMOMenuViewController ()<WMAlertViewDelegate,UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>{
     UIImageView *imageView;
     UILabel *label;
     UIImageView * _dengjiimgView;
      WMLabelAlertView*   alert;
     UITableView * _fenxiangView;
     NSInteger index;
+////    MCIucencyView * _mciuc;
+//    UITextField * nameText;
+//    UITextField * nameText2;
+    
+    
+    RGFadeView * rgFadeView;
+    
+
 }
 
 @end
 
 @implementation DEMOMenuViewController
+-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didMoenuSelectObj:) name:@"didMoenuSelectObjNotification" object:nil];
+    }
+    
+    return self;
+    
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (rgFadeView) {
+        
+        [rgFadeView removeFromSuperview];
+        rgFadeView = nil;
+    }
+}
+
+#pragma mark-监听
+- (void)didMoenuSelectObj:(NSNotification *)notication
+{
+    NSLog(@">>>%@",notication);
+    
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     index = 3;
     NSLog(@"%f",self.tableView.frame.size.width);
-    
+//    nameText = [[UITextField alloc]initWithFrame:CGRectMake(-100, -100, 10, 10)];
+//    nameText.delegate = self;
+//    [self.view addSubview:nameText];
     self.tableView.separatorColor = [UIColor colorWithRed:150/255.0f green:161/255.0f blue:177/255.0f alpha:1.0f];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -59,6 +97,10 @@
         imageView.layer.rasterizationScale = [UIScreen mainScreen].scale;
         imageView.layer.shouldRasterize = YES;
         imageView.clipsToBounds = YES;
+        imageView.userInteractionEnabled = YES;
+        UITapGestureRecognizer * imgTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(actionImgTap)];
+        [imageView addGestureRecognizer:imgTap];
+        
         
         label = [[UILabel alloc] initWithFrame:CGRectMake(0, 150, self.tableView.frame.size.width - 50, 20)];
         label.text = @"Roman Efimov";
@@ -82,6 +124,7 @@
         UIButton * _bianjiBtn = [[UIButton alloc]initWithFrame:CGRectMake(x, y, width, height)];
         //_dengjiimgView.image = [UIImage imageNamed:@"mine_icon_revise"];
         [_bianjiBtn setImage:[UIImage imageNamed:@"mine_icon_revise"] forState:0];
+        [_bianjiBtn addTarget:self action:@selector(bianji) forControlEvents:UIControlEventTouchUpInside];
         [view addSubview:_bianjiBtn];
         
         
@@ -94,7 +137,96 @@
         
         view;
     });
+//    _mciuc = [[MCIucencyView alloc ]initWithFrame:CGRectMake(0, -64, Main_Screen_Width, Main_Screen_Height + 64)];
+//    [_mciuc setBgViewColor:[UIColor blackColor]];
+//    [_mciuc setBgViewAlpha:0.3];
+//    [self.view addSubview:_mciuc];
+//    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(mciucTap)];
+//    [_mciuc addGestureRecognizer:tap];
+//    _mciuc.hidden = YES;
+    
+    UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, 90)];
+    view.backgroundColor = [UIColor whiteColor];
+    
+    UIButton * Btn1 = [[UIButton alloc]initWithFrame:CGRectMake(10, 5, 30, 30)];
+    Btn1.tag = 400;
+    [Btn1 addTarget:self action:@selector(actionBtn1:) forControlEvents:UIControlEventTouchUpInside];
+    [Btn1 setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
+    [view addSubview:Btn1];
+    Btn1 = [[UIButton alloc]initWithFrame:CGRectMake(Main_Screen_Width - 10 - 30, 5, 30, 30)];
+    [Btn1 setImage:[UIImage imageNamed:@"send"] forState:UIControlStateNormal];
+    [view addSubview:Btn1];
+
+    UILabel * lbl = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, 40)];
+    lbl.text = @"编辑昵称";
+    lbl.textColor = AppTextCOLOR;
+    lbl.font = [UIFont systemFontOfSize:16];
+    lbl.textAlignment = NSTextAlignmentCenter;
+    [view addSubview:lbl];
+    
+    
+    
+//    nameText2 = [[UITextField alloc]initWithFrame:CGRectMake(5, 5+30 + 5, Main_Screen_Width - 10, 35)];
+//    nameText2.placeholder = @"输入昵称";
+//    nameText2.textColor = [UIColor grayColor];
+//    nameText2.font = [UIFont systemFontOfSize:14];
+//    nameText2.borderStyle = UITextBorderStyleRoundedRect;
+//    nameText2.enabled = NO;
+//    [view addSubview:nameText2];
+    
+    
+//    _countStr = [[UILabel alloc]initWithFrame:CGRectMake(Main_Screen_Width - 10-50, 35 + 5 + 5, 50, 20)];
+//    _countStr.textAlignment = NSTextAlignmentRight;
+//    _countStr.textColor = [UIColor lightGrayColor];
+//    _countStr.font = [UIFont systemFontOfSize:13];
+//    _countStr.text = @"0/15";
+//    [view addSubview:_countStr];
+    //nameText.inputAccessoryView = view;
+
+    
+    
+
 }
+
+#pragma 点击取消、保存
+-(void)actionBtn1:(UIButton*)btn{
+    if (btn.tag == 400) {
+        //[self mciucTap];
+    }
+}
+#pragma mark-编辑
+-(void)bianji{
+    if (!rgFadeView) {
+        rgFadeView = [[RGFadeView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Height)];
+        [self.view.window addSubview:rgFadeView];
+    }
+    [rgFadeView textH:150];
+    rgFadeView.titelLbl.text = @"编辑昵称";
+    rgFadeView.placeLabel.text = @"输入昵称";
+    [rgFadeView.msgTextView becomeFirstResponder];
+    
+    
+//    [nameText becomeFirstResponder];
+// 
+//    _mciuc.hidden = NO;
+}
+//-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+//{
+//    nameText2.text = nameText.text;
+//    
+//    
+//    return YES;
+//}
+//-(void)mciucTap{
+//    
+//    _mciuc.hidden = YES;
+//    nameText.text = @"";
+//    nameText2.text = @"";
+//    [nameText resignFirstResponder];
+//    
+//    
+//    
+//}
 
 #pragma mark -
 #pragma mark UITableView Delegate
@@ -372,4 +504,57 @@
     NSLog(@"%ld",index);
     NSLog(@"取消");
 }
+#pragma mark-点击头像
+-(void)actionImgTap{
+    UIActionSheet *myActionSheet = [[UIActionSheet alloc]
+                                    initWithTitle:nil
+                                    delegate:self
+                                    cancelButtonTitle:@"取消"
+                                    destructiveButtonTitle:nil
+                                    otherButtonTitles: @"从相册选择", @"拍照",nil];
+    
+    [myActionSheet showInView:self.view];
+}
+#pragma mark-选择从哪里拿照片
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    if(buttonIndex==2) return;
+    
+    
+    UIImagePickerControllerSourceType sourceType=UIImagePickerControllerSourceTypePhotoLibrary;
+    if(buttonIndex==1){//拍照
+        sourceType=UIImagePickerControllerSourceTypeCamera;
+        if (![UIImagePickerController isSourceTypeAvailable:sourceType]){
+            kAlertMessage(@"检测到无效的摄像头设备");
+            return ;
+        }
+    }
+    UIImagePickerController * picker = [[UIImagePickerController alloc]init];
+    picker.delegate = self;
+    picker.allowsEditing=YES;
+    picker.sourceType=sourceType;
+    picker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    
+    [self presentViewController:picker animated:YES completion:nil];
+    
+}
+//图像选取器的委托方法，选完图片后回调该方法
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    
+    UIImage *image=[info objectForKey:@"UIImagePickerControllerEditedImage"];
+    
+    //当图片不为空时显示图片并保存图片
+    if (image != nil) {
+        
+        
+        //头像
+        imageView.image = image;
+        
+    }
+}
+
 @end

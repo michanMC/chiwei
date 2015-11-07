@@ -21,6 +21,9 @@
 #import "MCUser.h"
 #import "BaseViewController.h"
 #import "BUIControl.h"
+#import "CWYouJi-Bridging-Header.h"
+#import "CWYouJi-Swift.h"
+
 #ifdef DEBUG
 #define MTLog(...) NSLog(__VA_ARGS__)
 #else

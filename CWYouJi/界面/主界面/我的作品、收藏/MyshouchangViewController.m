@@ -107,6 +107,16 @@
     return cell;
     
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    //发送通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectzuopinNotification" object:@"1"];
+    
+    
+    
+}
+
 
 #pragma mark-点击编辑
 -(void)actionBianji{
