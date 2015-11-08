@@ -39,6 +39,15 @@
 		4C936A181BE4D2C2003C1456 /* letf2TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C936A171BE4D2C2003C1456 /* letf2TableViewCell.m */; };
 		4C936A1B1BE4D994003C1456 /* letf3TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C936A1A1BE4D994003C1456 /* letf3TableViewCell.m */; };
 		4C936A1D1BE4D9A5003C1456 /* letf3TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C936A1C1BE4D9A5003C1456 /* letf3TableViewCell.xib */; };
+		4C9AF58F1BEEEF2B00104E7B /* zhizuoZp1TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9AF58E1BEEEF2B00104E7B /* zhizuoZp1TableViewCell.m */; };
+		4C9AF5911BEEEF3500104E7B /* zhizuoZp1TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C9AF5901BEEEF3500104E7B /* zhizuoZp1TableViewCell.xib */; };
+		4C9AF5941BEEEFB100104E7B /* zhizuoZp2TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9AF5931BEEEFB100104E7B /* zhizuoZp2TableViewCell.m */; };
+		4C9AF5991BEEF8F800104E7B /* zhizuoZp3TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9AF5981BEEF8F800104E7B /* zhizuoZp3TableViewCell.m */; };
+		4C9AF59B1BEEF90200104E7B /* zhizuoZp3TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C9AF59A1BEEF90200104E7B /* zhizuoZp3TableViewCell.xib */; };
+		4C9AF59E1BEF07F200104E7B /* zhizuoZp4TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9AF59D1BEF07F200104E7B /* zhizuoZp4TableViewCell.m */; };
+		4C9AF5A01BEF080600104E7B /* zhizuoZp4TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C9AF59F1BEF080600104E7B /* zhizuoZp4TableViewCell.xib */; };
+		4C9AF5A31BEF11B000104E7B /* zhizuoZp5TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9AF5A21BEF11B000104E7B /* zhizuoZp5TableViewCell.m */; };
+		4C9AF5A51BEF11BE00104E7B /* zhizuoZp5TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C9AF5A41BEF11BE00104E7B /* zhizuoZp5TableViewCell.xib */; };
 		4CB317881BE0FB4800D2E2A5 /* -travel-notes_addpicture02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB316DA1BE0FB4800D2E2A5 /* -travel-notes_addpicture02@2x.png */; };
 		4CB317891BE0FB4800D2E2A5 /* -travel-notes_addpicture02@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB316DB1BE0FB4800D2E2A5 /* -travel-notes_addpicture02@3x.png */; };
 		4CB3178A1BE0FB4800D2E2A5 /* -travel-notes_addpicture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB316DC1BE0FB4800D2E2A5 /* -travel-notes_addpicture@2x.png */; };
@@ -391,6 +400,20 @@
 		4C936A191BE4D994003C1456 /* letf3TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = letf3TableViewCell.h; sourceTree = "<group>"; };
 		4C936A1A1BE4D994003C1456 /* letf3TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = letf3TableViewCell.m; sourceTree = "<group>"; };
 		4C936A1C1BE4D9A5003C1456 /* letf3TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = letf3TableViewCell.xib; sourceTree = "<group>"; };
+		4C9AF58D1BEEEF2B00104E7B /* zhizuoZp1TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zhizuoZp1TableViewCell.h; sourceTree = "<group>"; };
+		4C9AF58E1BEEEF2B00104E7B /* zhizuoZp1TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zhizuoZp1TableViewCell.m; sourceTree = "<group>"; };
+		4C9AF5901BEEEF3500104E7B /* zhizuoZp1TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = zhizuoZp1TableViewCell.xib; sourceTree = "<group>"; };
+		4C9AF5921BEEEFB100104E7B /* zhizuoZp2TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zhizuoZp2TableViewCell.h; sourceTree = "<group>"; };
+		4C9AF5931BEEEFB100104E7B /* zhizuoZp2TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zhizuoZp2TableViewCell.m; sourceTree = "<group>"; };
+		4C9AF5971BEEF8F800104E7B /* zhizuoZp3TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zhizuoZp3TableViewCell.h; sourceTree = "<group>"; };
+		4C9AF5981BEEF8F800104E7B /* zhizuoZp3TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zhizuoZp3TableViewCell.m; sourceTree = "<group>"; };
+		4C9AF59A1BEEF90200104E7B /* zhizuoZp3TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = zhizuoZp3TableViewCell.xib; sourceTree = "<group>"; };
+		4C9AF59C1BEF07F200104E7B /* zhizuoZp4TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zhizuoZp4TableViewCell.h; sourceTree = "<group>"; };
+		4C9AF59D1BEF07F200104E7B /* zhizuoZp4TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zhizuoZp4TableViewCell.m; sourceTree = "<group>"; };
+		4C9AF59F1BEF080600104E7B /* zhizuoZp4TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = zhizuoZp4TableViewCell.xib; sourceTree = "<group>"; };
+		4C9AF5A11BEF11B000104E7B /* zhizuoZp5TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zhizuoZp5TableViewCell.h; sourceTree = "<group>"; };
+		4C9AF5A21BEF11B000104E7B /* zhizuoZp5TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zhizuoZp5TableViewCell.m; sourceTree = "<group>"; };
+		4C9AF5A41BEF11BE00104E7B /* zhizuoZp5TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = zhizuoZp5TableViewCell.xib; sourceTree = "<group>"; };
 		4CB316DA1BE0FB4800D2E2A5 /* -travel-notes_addpicture02@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "-travel-notes_addpicture02@2x.png"; sourceTree = "<group>"; };
 		4CB316DB1BE0FB4800D2E2A5 /* -travel-notes_addpicture02@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "-travel-notes_addpicture02@3x.png"; sourceTree = "<group>"; };
 		4CB316DC1BE0FB4800D2E2A5 /* -travel-notes_addpicture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "-travel-notes_addpicture@2x.png"; sourceTree = "<group>"; };
@@ -928,6 +951,20 @@
 		4C49958F1BEE68060032413A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4C9AF58D1BEEEF2B00104E7B /* zhizuoZp1TableViewCell.h */,
+				4C9AF58E1BEEEF2B00104E7B /* zhizuoZp1TableViewCell.m */,
+				4C9AF5901BEEEF3500104E7B /* zhizuoZp1TableViewCell.xib */,
+				4C9AF5921BEEEFB100104E7B /* zhizuoZp2TableViewCell.h */,
+				4C9AF5931BEEEFB100104E7B /* zhizuoZp2TableViewCell.m */,
+				4C9AF5971BEEF8F800104E7B /* zhizuoZp3TableViewCell.h */,
+				4C9AF5981BEEF8F800104E7B /* zhizuoZp3TableViewCell.m */,
+				4C9AF59A1BEEF90200104E7B /* zhizuoZp3TableViewCell.xib */,
+				4C9AF59C1BEF07F200104E7B /* zhizuoZp4TableViewCell.h */,
+				4C9AF59D1BEF07F200104E7B /* zhizuoZp4TableViewCell.m */,
+				4C9AF59F1BEF080600104E7B /* zhizuoZp4TableViewCell.xib */,
+				4C9AF5A11BEF11B000104E7B /* zhizuoZp5TableViewCell.h */,
+				4C9AF5A21BEF11B000104E7B /* zhizuoZp5TableViewCell.m */,
+				4C9AF5A41BEF11BE00104E7B /* zhizuoZp5TableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2023,6 +2060,7 @@
 				4CB317921BE0FB4800D2E2A5 /* nav_delete_pressed@2x.png in Resources */,
 				4CB318101BE0FB4800D2E2A5 /* nav_icon_back_pressed@2x.png in Resources */,
 				4CB3178B1BE0FB4800D2E2A5 /* -travel-notes_addpicture@3x.png in Resources */,
+				4C9AF59B1BEEF90200104E7B /* zhizuoZp3TableViewCell.xib in Resources */,
 				4CB317FF1BE0FB4800D2E2A5 /* douban@3x.png in Resources */,
 				4C49958B1BEE5B780032413A /* RGFadeView.xib in Resources */,
 				4CB317C91BE0FB4800D2E2A5 /* home_mine_avatar2@3x.png in Resources */,
@@ -2064,6 +2102,7 @@
 				4CB317B11BE0FB4800D2E2A5 /* mine_logo@3x.png in Resources */,
 				4CB318131BE0FB4800D2E2A5 /* qq@3x.png in Resources */,
 				4CB3181A1BE0FB4800D2E2A5 /* home_banner_default-chart@2x.png in Resources */,
+				4C9AF5911BEEEF3500104E7B /* zhizuoZp1TableViewCell.xib in Resources */,
 				4CB3179C1BE0FB4800D2E2A5 /* pop-up-box_close@2x.png in Resources */,
 				4CB3182A1BE0FB4800D2E2A5 /* travels-details_default-chart04@2x.png in Resources */,
 				4CB317A71BE0FB4800D2E2A5 /* list_checkbox_checked@3x.png in Resources */,
@@ -2095,6 +2134,7 @@
 				4CB3180E1BE0FB4800D2E2A5 /* nav_icon_back_normal@2x.png in Resources */,
 				4C936A1D1BE4D9A5003C1456 /* letf3TableViewCell.xib in Resources */,
 				4CB318071BE0FB4800D2E2A5 /* login_btn_pressed@3x.png in Resources */,
+				4C9AF5A51BEF11BE00104E7B /* zhizuoZp5TableViewCell.xib in Resources */,
 				4CF9B1DD1BDFC8CB006A268B /* MJRefresh.bundle in Resources */,
 				4CB317AB1BE0FB4800D2E2A5 /* mine_dot@3x.png in Resources */,
 				4C1C3CFE1BEDBDDB0059D9C2 /* send@2x.png in Resources */,
@@ -2161,6 +2201,7 @@
 				4CB317F91BE0FB4800D2E2A5 /* 购@3x.png in Resources */,
 				4CB317A11BE0FB4800D2E2A5 /* 不枉此行_pressed@3x.png in Resources */,
 				4CB317A91BE0FB4800D2E2A5 /* list_checkbox_normal@3x.png in Resources */,
+				4C9AF5A01BEF080600104E7B /* zhizuoZp4TableViewCell.xib in Resources */,
 				4CB317ED1BE0FB4800D2E2A5 /* travels_icon_more@3x.png in Resources */,
 				4CF9B21C1BDFCB0C006A268B /* Default-568h@2x.png in Resources */,
 				4CB318141BE0FB4800D2E2A5 /* signin_logo-@2x.png in Resources */,
@@ -2224,6 +2265,7 @@
 				4CF9B1DF1BDFC8CB006A268B /* MJRefreshConst.m in Sources */,
 				4CF9B1E81BDFC8CB006A268B /* Reachability.m in Sources */,
 				4CF9B22C1BDFCEC3006A268B /* REFrostedViewController.m in Sources */,
+				4C9AF5991BEEF8F800104E7B /* zhizuoZp3TableViewCell.m in Sources */,
 				4CF9B1DC1BDFC8CB006A268B /* NSObject+MJMember.m in Sources */,
 				4CF9B1F91BDFC8CB006A268B /* UIImage+MultiFormat.m in Sources */,
 				4CF9B2381BDFD0B4006A268B /* DEMOHomeViewController.m in Sources */,
@@ -2263,6 +2305,7 @@
 				4CF9B1FC1BDFC8CB006A268B /* UIView+WebCacheOperation.m in Sources */,
 				4C4995821BEE49210032413A /* zuopinQx3TableViewCell.m in Sources */,
 				4CF9B1E61BDFC8CB006A268B /* NSObject+AutoDescription.m in Sources */,
+				4C9AF58F1BEEEF2B00104E7B /* zhizuoZp1TableViewCell.m in Sources */,
 				4CF9B1C41BDFC8CB006A268B /* HMSegmentedControl.m in Sources */,
 				4CB3183B1BE1118F00D2E2A5 /* placeholderText.m in Sources */,
 				4CF9B1CE1BDFC8CB006A268B /* IQTitleBarButtonItem.m in Sources */,
@@ -2286,6 +2329,7 @@
 				4CF9B1CD1BDFC8CB006A268B /* IQBarButtonItem.m in Sources */,
 				4CF9B22E1BDFCEC3006A268B /* UIView+REFrostedViewController.m in Sources */,
 				4CF9B1BD1BDFC8CB006A268B /* Emoji.m in Sources */,
+				4C9AF59E1BEF07F200104E7B /* zhizuoZp4TableViewCell.m in Sources */,
 				4CF9B1DA1BDFC8CB006A268B /* NSObject+MJCoding.m in Sources */,
 				4C936A1B1BE4D994003C1456 /* letf3TableViewCell.m in Sources */,
 				4CF9B2341BDFD076006A268B /* DEMOMenuViewController.m in Sources */,
@@ -2299,6 +2343,7 @@
 				4CED41501BE5D1A70060CE47 /* zuopinViewController.m in Sources */,
 				4CB318411BE12D1300D2E2A5 /* ZZCarousel.m in Sources */,
 				4CF9B22D1BDFCEC3006A268B /* UIImage+REFrostedViewController.m in Sources */,
+				4C9AF5941BEEEFB100104E7B /* zhizuoZp2TableViewCell.m in Sources */,
 				4CF9B1F21BDFC8CB006A268B /* SDWebImageDecoder.m in Sources */,
 				4CB318441BE1340A00D2E2A5 /* MCplaceholderText.m in Sources */,
 				4CF9B1B41BDFC8CB006A268B /* AFHTTPSessionManager.m in Sources */,
@@ -2318,6 +2363,7 @@
 				4CF9B1D01BDFC8CB006A268B /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				4CF9B0821BDFC7ED006A268B /* AppDelegate.m in Sources */,
 				4CF9B1D31BDFC8CB006A268B /* MJConst.m in Sources */,
+				4C9AF5A31BEF11B000104E7B /* zhizuoZp5TableViewCell.m in Sources */,
 				4CF9B07F1BDFC7ED006A268B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
