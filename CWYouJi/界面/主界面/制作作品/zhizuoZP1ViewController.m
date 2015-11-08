@@ -12,7 +12,7 @@
 #import "zhizuoZp3TableViewCell.h"
 #import "zhizuoZp4TableViewCell.h"
 #import "zhizuoZp5TableViewCell.h"
-
+#import "zhizuoZP2ViewController.h"
 @interface zhizuoZP1ViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIAlertViewDelegate>
 {
     UITableView *_tableView;
@@ -116,6 +116,10 @@
 }
 #pragma mark-下一步
 -(void)xiayibuBtn{
+    
+    zhizuoZP2ViewController * ctl = [[zhizuoZP2ViewController alloc]init];
+    [self pushNewViewController:ctl];
+    return;
     NSString * str1= @"";
     NSString * str2= @"";
 
@@ -158,7 +162,8 @@
         return;
     }
 
-    
+//    zhizuoZP2ViewController * ctl = [[zhizuoZP2ViewController alloc]init];
+//    [self pushNewViewController:ctl];
     
 }
 -(UIView*)prepareheadView{

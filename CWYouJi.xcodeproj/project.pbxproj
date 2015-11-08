@@ -48,6 +48,10 @@
 		4C9AF5A01BEF080600104E7B /* zhizuoZp4TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C9AF59F1BEF080600104E7B /* zhizuoZp4TableViewCell.xib */; };
 		4C9AF5A31BEF11B000104E7B /* zhizuoZp5TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9AF5A21BEF11B000104E7B /* zhizuoZp5TableViewCell.m */; };
 		4C9AF5A51BEF11BE00104E7B /* zhizuoZp5TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C9AF5A41BEF11BE00104E7B /* zhizuoZp5TableViewCell.xib */; };
+		4CA31D531BEF8F560026F118 /* ZYQAssetPicker.Bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4CA31D501BEF8F560026F118 /* ZYQAssetPicker.Bundle */; };
+		4CA31D541BEF8F560026F118 /* ZYQAssetPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA31D521BEF8F560026F118 /* ZYQAssetPickerController.m */; };
+		4CA31D571BEF8FD10026F118 /* MCdeleteImgView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA31D561BEF8FD10026F118 /* MCdeleteImgView.m */; };
+		4CA31D5A1BEF955B0026F118 /* zhizuoZP2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA31D591BEF955B0026F118 /* zhizuoZP2ViewController.m */; };
 		4CB317881BE0FB4800D2E2A5 /* -travel-notes_addpicture02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB316DA1BE0FB4800D2E2A5 /* -travel-notes_addpicture02@2x.png */; };
 		4CB317891BE0FB4800D2E2A5 /* -travel-notes_addpicture02@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB316DB1BE0FB4800D2E2A5 /* -travel-notes_addpicture02@3x.png */; };
 		4CB3178A1BE0FB4800D2E2A5 /* -travel-notes_addpicture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB316DC1BE0FB4800D2E2A5 /* -travel-notes_addpicture@2x.png */; };
@@ -414,6 +418,13 @@
 		4C9AF5A11BEF11B000104E7B /* zhizuoZp5TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zhizuoZp5TableViewCell.h; sourceTree = "<group>"; };
 		4C9AF5A21BEF11B000104E7B /* zhizuoZp5TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zhizuoZp5TableViewCell.m; sourceTree = "<group>"; };
 		4C9AF5A41BEF11BE00104E7B /* zhizuoZp5TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = zhizuoZp5TableViewCell.xib; sourceTree = "<group>"; };
+		4CA31D501BEF8F560026F118 /* ZYQAssetPicker.Bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZYQAssetPicker.Bundle; sourceTree = "<group>"; };
+		4CA31D511BEF8F560026F118 /* ZYQAssetPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYQAssetPickerController.h; sourceTree = "<group>"; };
+		4CA31D521BEF8F560026F118 /* ZYQAssetPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYQAssetPickerController.m; sourceTree = "<group>"; };
+		4CA31D551BEF8FD10026F118 /* MCdeleteImgView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCdeleteImgView.h; sourceTree = "<group>"; };
+		4CA31D561BEF8FD10026F118 /* MCdeleteImgView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCdeleteImgView.m; sourceTree = "<group>"; };
+		4CA31D581BEF955B0026F118 /* zhizuoZP2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zhizuoZP2ViewController.h; sourceTree = "<group>"; };
+		4CA31D591BEF955B0026F118 /* zhizuoZP2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zhizuoZP2ViewController.m; sourceTree = "<group>"; };
 		4CB316DA1BE0FB4800D2E2A5 /* -travel-notes_addpicture02@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "-travel-notes_addpicture02@2x.png"; sourceTree = "<group>"; };
 		4CB316DB1BE0FB4800D2E2A5 /* -travel-notes_addpicture02@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "-travel-notes_addpicture02@3x.png"; sourceTree = "<group>"; };
 		4CB316DC1BE0FB4800D2E2A5 /* -travel-notes_addpicture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "-travel-notes_addpicture@2x.png"; sourceTree = "<group>"; };
@@ -937,6 +948,8 @@
 				4C49958F1BEE68060032413A /* View */,
 				4C4995901BEE68250032413A /* zhizuoZP1ViewController.h */,
 				4C4995911BEE68250032413A /* zhizuoZP1ViewController.m */,
+				4CA31D581BEF955B0026F118 /* zhizuoZP2ViewController.h */,
+				4CA31D591BEF955B0026F118 /* zhizuoZP2ViewController.m */,
 			);
 			path = "制作作品";
 			sourceTree = "<group>";
@@ -965,6 +978,8 @@
 				4C9AF5A11BEF11B000104E7B /* zhizuoZp5TableViewCell.h */,
 				4C9AF5A21BEF11B000104E7B /* zhizuoZp5TableViewCell.m */,
 				4C9AF5A41BEF11BE00104E7B /* zhizuoZp5TableViewCell.xib */,
+				4CA31D551BEF8FD10026F118 /* MCdeleteImgView.h */,
+				4CA31D561BEF8FD10026F118 /* MCdeleteImgView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1009,6 +1024,16 @@
 				4C0ACD6E1BE7C20000394B0C /* fenxiangViewTableViewCell.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		4CA31D4F1BEF8F560026F118 /* ZYQAssetPickerController */ = {
+			isa = PBXGroup;
+			children = (
+				4CA31D501BEF8F560026F118 /* ZYQAssetPicker.Bundle */,
+				4CA31D511BEF8F560026F118 /* ZYQAssetPickerController.h */,
+				4CA31D521BEF8F560026F118 /* ZYQAssetPickerController.m */,
+			);
+			path = ZYQAssetPickerController;
 			sourceTree = "<group>";
 		};
 		4CB316D81BE0FB4800D2E2A5 /* 刺猬游记切图文件20151028 */ = {
@@ -1787,6 +1812,7 @@
 		4CF9B16E1BDFC8CB006A268B /* 工具 */ = {
 			isa = PBXGroup;
 			children = (
+				4CA31D4F1BEF8F560026F118 /* ZYQAssetPickerController */,
 				4C4995861BEE5B780032413A /* MCtext */,
 				4C1C3D0D1BEDD9640059D9C2 /* DMLazyScrollViewExample */,
 				4C1C3D061BEDCCDA0059D9C2 /* picdim */,
@@ -2166,6 +2192,7 @@
 				4CB317B21BE0FB4800D2E2A5 /* toggle-off@2x.png in Resources */,
 				4C936A151BE4CFC2003C1456 /* letfTableViewCell.xib in Resources */,
 				4CB317C61BE0FB4800D2E2A5 /* home_list_bg@2x.png in Resources */,
+				4CA31D531BEF8F560026F118 /* ZYQAssetPicker.Bundle in Resources */,
 				4CB318151BE0FB4800D2E2A5 /* signin_logo-@3x.png in Resources */,
 				4CB317D71BE0FB4800D2E2A5 /* mine_grade-level@3x.png in Resources */,
 				4CB317E21BE0FB4800D2E2A5 /* nav_icon_back@2x.png in Resources */,
@@ -2240,6 +2267,7 @@
 				4CF9B1EA1BDFC8CB006A268B /* RESideMenu.m in Sources */,
 				4C1C3D0B1BEDCCDA0059D9C2 /* UIImage+ImageEffects.m in Sources */,
 				4C936A0C1BE4A8BF003C1456 /* HomeTableViewCell.m in Sources */,
+				4CA31D5A1BEF955B0026F118 /* zhizuoZP2ViewController.m in Sources */,
 				4C0ACD681BE7BC0400394B0C /* WMAlertView.m in Sources */,
 				4CF9B1E01BDFC8CB006A268B /* MJRefreshFooterView.m in Sources */,
 				4C0ACD691BE7BC0400394B0C /* WMLabelAlertView.m in Sources */,
@@ -2267,6 +2295,7 @@
 				4CF9B22C1BDFCEC3006A268B /* REFrostedViewController.m in Sources */,
 				4C9AF5991BEEF8F800104E7B /* zhizuoZp3TableViewCell.m in Sources */,
 				4CF9B1DC1BDFC8CB006A268B /* NSObject+MJMember.m in Sources */,
+				4CA31D571BEF8FD10026F118 /* MCdeleteImgView.m in Sources */,
 				4CF9B1F91BDFC8CB006A268B /* UIImage+MultiFormat.m in Sources */,
 				4CF9B2381BDFD0B4006A268B /* DEMOHomeViewController.m in Sources */,
 				4CF9B1C51BDFC8CB006A268B /* MBProgressHUD.m in Sources */,
@@ -2313,6 +2342,7 @@
 				4CF9B1F51BDFC8CB006A268B /* SDWebImageManager.m in Sources */,
 				4CF9B1CF1BDFC8CB006A268B /* IQToolbar.m in Sources */,
 				4CF9B1CC1BDFC8CB006A268B /* IQTextView.m in Sources */,
+				4CA31D541BEF8F560026F118 /* ZYQAssetPickerController.m in Sources */,
 				4CF9B1C11BDFC8CB006A268B /* MF_Base64Additions.m in Sources */,
 				4CF9B1B71BDFC8CB006A268B /* AFURLConnectionOperation.m in Sources */,
 				4CF9B1F81BDFC8CB006A268B /* UIImage+GIF.m in Sources */,
