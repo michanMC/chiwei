@@ -29,7 +29,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-        self.view.backgroundColor = [UIColor clearColor];
     }
     return self;
     
@@ -44,6 +43,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor clearColor];
+
     [self prepareUI];
     // Do any additional setup after loading the view.
 }

@@ -335,8 +335,8 @@
     if (_isbianji) {
         if (indexPath.row > 3) {
             UITextField * text = (UITextField*)[self.view viewWithTag:800];
-            text.text = _dataArray[indexPath.row - 3];
-            _jingdianStr = _dataArray[indexPath.row - 3];
+            text.text = _dataArray[indexPath.row - 4];
+            _jingdianStr = _dataArray[indexPath.row - 4];
         }
         _isbianji = NO;
         [_tableView reloadData];
