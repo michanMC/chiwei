@@ -167,12 +167,12 @@
 }
 -(void)setTitleStr:(NSString *)titleStr
 {
-    
+    _titleLbl.text = titleStr;
 }
 
 -(void)setSubTitleStr:(NSString *)subTitleStr
 {
-    
+    _subTitleLbl.text = subTitleStr;
 }
 -(void)setKeyImgStr:(NSString *)keyImgStr
 {

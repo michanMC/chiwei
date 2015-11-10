@@ -79,6 +79,11 @@
 }
 #pragma mark-点击事件
 -(void)actionnavigationButton:(UIButton*)btn{
+    UITextField * text = (UITextField *)[self.view viewWithTag:500];
+    [text resignFirstResponder];
+    UITextView * textview = (UITextView *)[self.view viewWithTag:600];
+    [textview resignFirstResponder];
+    
     
     if (btn.tag == 202) {
         NSLog(@"删除");
@@ -121,7 +126,8 @@
         }
           liulanViewController * ctl = [[liulanViewController alloc]init];
         ctl.imgViewArray= imgArray;
-
+        ctl.titleStr = _diaotiStr;
+        ctl.title2Str = _holderTextStr;
         [self pushNewViewController:ctl];
         
         
@@ -162,7 +168,8 @@
         cell.mctext.delegate= self;
         cell.mctext.text = _diaotiStr;
         cell.mctext.tag = 500;
-        return cell;
+        //设置清除按钮
+        cell.mctext.clearButtonMode = UITextFieldViewModeAlways;        return cell;
     }
     else if(indexPath.row == 1){
         
@@ -192,6 +199,20 @@
     
     _diaotiStr = textField.text;
     [_tableview reloadData];
+}
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    
+    if ([textField.text length] > 18) {
+        //[_tableview reloadData];
+        
+        return NO;
+    }
+    //[_tableview reloadData];
+    
+    return YES;
+ 
+    
 }
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {

@@ -205,7 +205,7 @@
    
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-        CGFloat h = [MCIucencyView heightforString:@"王企鹅王企鹅王企鹅王企鹅王企鹅请问请问去问问企鹅我去" andWidth:Main_Screen_Width - 80 - 30 fontSize:13];
+        CGFloat h = [MCIucencyView heightforString:_title2Str andWidth:Main_Screen_Width - 80 - 30 fontSize:13];
         
         return 85 + h + 55;
     
@@ -219,10 +219,25 @@
             cell = [[zuopinQxTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid1];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.dataStr = @"王企鹅王企鹅王企鹅王企鹅王企鹅请问请问去问问企鹅我去";
+    if (_titleStr.length > 9) {//第一行大概9个字
+        cell.titleStr = [_titleStr substringToIndex:9];
+        cell.subTitleStr = [_titleStr substringFromIndex:9];
+        
+    }
+    else
+    {
+        cell.titleStr = _titleStr;
+        cell.subTitleStr = @"";
+ 
+    }
+    
+    
+    
+    
+        cell.dataStr = _title2Str;
         
         
-        CGFloat h = [MCIucencyView heightforString:@"王企鹅王企鹅王企鹅王企鹅王企鹅请问请问去问问企鹅我去" andWidth:Main_Screen_Width - 80 - 30 fontSize:13];
+        CGFloat h = [MCIucencyView heightforString:_title2Str andWidth:Main_Screen_Width - 80 - 30 fontSize:13];
         
         UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, Main_Screen_Width - 80, 85 + h + 55) byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii:CGSizeMake(10, 10)];
         CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
