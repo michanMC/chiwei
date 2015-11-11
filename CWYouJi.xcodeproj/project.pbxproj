@@ -36,6 +36,17 @@
 		4C49958B1BEE5B780032413A /* RGFadeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C4995881BEE5B780032413A /* RGFadeView.xib */; };
 		4C49958C1BEE5B780032413A /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4995891BEE5B780032413A /* UIViewExt.swift */; };
 		4C4995921BEE68250032413A /* zhizuoZP1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4995911BEE68250032413A /* zhizuoZP1ViewController.m */; };
+		4C7796811BF383AF00DEA04C /* TYAlertController+BlurEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7796751BF383AF00DEA04C /* TYAlertController+BlurEffects.m */; };
+		4C7796821BF383AF00DEA04C /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7796771BF383AF00DEA04C /* UIImage+ImageEffects.m */; };
+		4C7796831BF383AF00DEA04C /* pop-up-box_photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7796781BF383AF00DEA04C /* pop-up-box_photo@2x.png */; };
+		4C7796841BF383AF00DEA04C /* pop-up-box_photo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7796791BF383AF00DEA04C /* pop-up-box_photo@3x.png */; };
+		4C7796851BF383AF00DEA04C /* ShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77967B1BF383AF00DEA04C /* ShareView.m */; };
+		4C7796861BF383AF00DEA04C /* ShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C77967C1BF383AF00DEA04C /* ShareView.xib */; };
+		4C7796871BF383AF00DEA04C /* TYAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77967E1BF383AF00DEA04C /* TYAlertController.m */; };
+		4C7796881BF383AF00DEA04C /* TYShowAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7796801BF383AF00DEA04C /* TYShowAlertView.m */; };
+		4C77968F1BF384BF00DEA04C /* TYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77968A1BF384BF00DEA04C /* TYAlertView.m */; };
+		4C7796901BF384BF00DEA04C /* UIView+TYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77968C1BF384BF00DEA04C /* UIView+TYAlertView.m */; };
+		4C7796911BF384BF00DEA04C /* UIView+TYAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77968E1BF384BF00DEA04C /* UIView+TYAutoLayout.m */; };
 		4C936A0C1BE4A8BF003C1456 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C936A0B1BE4A8BF003C1456 /* HomeTableViewCell.m */; };
 		4C936A0E1BE4A8CD003C1456 /* HomeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C936A0D1BE4A8CD003C1456 /* HomeTableViewCell.xib */; };
 		4C936A131BE4CFA3003C1456 /* letfTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C936A121BE4CFA3003C1456 /* letfTableViewCell.m */; };
@@ -404,6 +415,25 @@
 		4C4995891BEE5B780032413A /* UIViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
 		4C4995901BEE68250032413A /* zhizuoZP1ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zhizuoZP1ViewController.h; sourceTree = "<group>"; };
 		4C4995911BEE68250032413A /* zhizuoZP1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zhizuoZP1ViewController.m; sourceTree = "<group>"; };
+		4C7796741BF383AF00DEA04C /* TYAlertController+BlurEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TYAlertController+BlurEffects.h"; sourceTree = "<group>"; };
+		4C7796751BF383AF00DEA04C /* TYAlertController+BlurEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TYAlertController+BlurEffects.m"; sourceTree = "<group>"; };
+		4C7796761BF383AF00DEA04C /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		4C7796771BF383AF00DEA04C /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		4C7796781BF383AF00DEA04C /* pop-up-box_photo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pop-up-box_photo@2x.png"; sourceTree = "<group>"; };
+		4C7796791BF383AF00DEA04C /* pop-up-box_photo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pop-up-box_photo@3x.png"; sourceTree = "<group>"; };
+		4C77967A1BF383AF00DEA04C /* ShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareView.h; sourceTree = "<group>"; };
+		4C77967B1BF383AF00DEA04C /* ShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareView.m; sourceTree = "<group>"; };
+		4C77967C1BF383AF00DEA04C /* ShareView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareView.xib; sourceTree = "<group>"; };
+		4C77967D1BF383AF00DEA04C /* TYAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYAlertController.h; sourceTree = "<group>"; };
+		4C77967E1BF383AF00DEA04C /* TYAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYAlertController.m; sourceTree = "<group>"; };
+		4C77967F1BF383AF00DEA04C /* TYShowAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYShowAlertView.h; sourceTree = "<group>"; };
+		4C7796801BF383AF00DEA04C /* TYShowAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYShowAlertView.m; sourceTree = "<group>"; };
+		4C7796891BF384BF00DEA04C /* TYAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYAlertView.h; sourceTree = "<group>"; };
+		4C77968A1BF384BF00DEA04C /* TYAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYAlertView.m; sourceTree = "<group>"; };
+		4C77968B1BF384BF00DEA04C /* UIView+TYAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TYAlertView.h"; sourceTree = "<group>"; };
+		4C77968C1BF384BF00DEA04C /* UIView+TYAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TYAlertView.m"; sourceTree = "<group>"; };
+		4C77968D1BF384BF00DEA04C /* UIView+TYAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TYAutoLayout.h"; sourceTree = "<group>"; };
+		4C77968E1BF384BF00DEA04C /* UIView+TYAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TYAutoLayout.m"; sourceTree = "<group>"; };
 		4C936A0A1BE4A8BF003C1456 /* HomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTableViewCell.h; sourceTree = "<group>"; };
 		4C936A0B1BE4A8BF003C1456 /* HomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeTableViewCell.m; sourceTree = "<group>"; };
 		4C936A0D1BE4A8CD003C1456 /* HomeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeTableViewCell.xib; sourceTree = "<group>"; };
@@ -955,6 +985,7 @@
 		4C49958D1BEE68060032413A /* 制作作品 */ = {
 			isa = PBXGroup;
 			children = (
+				4C7796721BF383AF00DEA04C /* 分享框 */,
 				4C49958E1BEE68060032413A /* Model */,
 				4C49958F1BEE68060032413A /* View */,
 				4C4995901BEE68250032413A /* zhizuoZP1ViewController.h */,
@@ -1000,6 +1031,40 @@
 				4C237BB11BF0D84000A3C91D /* zhizuoText2TableViewCell.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		4C7796721BF383AF00DEA04C /* 分享框 */ = {
+			isa = PBXGroup;
+			children = (
+				4C7796891BF384BF00DEA04C /* TYAlertView.h */,
+				4C77968A1BF384BF00DEA04C /* TYAlertView.m */,
+				4C77968B1BF384BF00DEA04C /* UIView+TYAlertView.h */,
+				4C77968C1BF384BF00DEA04C /* UIView+TYAlertView.m */,
+				4C77968D1BF384BF00DEA04C /* UIView+TYAutoLayout.h */,
+				4C77968E1BF384BF00DEA04C /* UIView+TYAutoLayout.m */,
+				4C7796731BF383AF00DEA04C /* Blur Effects */,
+				4C7796781BF383AF00DEA04C /* pop-up-box_photo@2x.png */,
+				4C7796791BF383AF00DEA04C /* pop-up-box_photo@3x.png */,
+				4C77967A1BF383AF00DEA04C /* ShareView.h */,
+				4C77967B1BF383AF00DEA04C /* ShareView.m */,
+				4C77967C1BF383AF00DEA04C /* ShareView.xib */,
+				4C77967D1BF383AF00DEA04C /* TYAlertController.h */,
+				4C77967E1BF383AF00DEA04C /* TYAlertController.m */,
+				4C77967F1BF383AF00DEA04C /* TYShowAlertView.h */,
+				4C7796801BF383AF00DEA04C /* TYShowAlertView.m */,
+			);
+			path = "分享框";
+			sourceTree = "<group>";
+		};
+		4C7796731BF383AF00DEA04C /* Blur Effects */ = {
+			isa = PBXGroup;
+			children = (
+				4C7796741BF383AF00DEA04C /* TYAlertController+BlurEffects.h */,
+				4C7796751BF383AF00DEA04C /* TYAlertController+BlurEffects.m */,
+				4C7796761BF383AF00DEA04C /* UIImage+ImageEffects.h */,
+				4C7796771BF383AF00DEA04C /* UIImage+ImageEffects.m */,
+			);
+			path = "Blur Effects";
 			sourceTree = "<group>";
 		};
 		4C936A081BE4A8AE003C1456 /* Model */ = {
@@ -2137,6 +2202,7 @@
 				4CB317D11BE0FB4800D2E2A5 /* ic_icon_search2@3x.png in Resources */,
 				4CB318181BE0FB4800D2E2A5 /* weixin@2x.png in Resources */,
 				4CB317D61BE0FB4800D2E2A5 /* mine_grade-level@2x.png in Resources */,
+				4C7796841BF383AF00DEA04C /* pop-up-box_photo@3x.png in Resources */,
 				4CB317C01BE0FB4800D2E2A5 /* home_icon_checked@2x.png in Resources */,
 				4CB317BB1BE0FB4800D2E2A5 /* home_banner_step_dot1@3x.png in Resources */,
 				4CB317F51BE0FB4800D2E2A5 /* 景@3x.png in Resources */,
@@ -2199,6 +2265,7 @@
 				4CB3182C1BE0FB4800D2E2A5 /* travels-details_default-chart05@2x.png in Resources */,
 				4CB317901BE0FB4800D2E2A5 /* nav_delete_normal@2x.png in Resources */,
 				4CB318111BE0FB4800D2E2A5 /* nav_icon_back_pressed@3x.png in Resources */,
+				4C7796831BF383AF00DEA04C /* pop-up-box_photo@2x.png in Resources */,
 				4CB317E51BE0FB4800D2E2A5 /* nav_icon_share@3x.png in Resources */,
 				4CB317B91BE0FB4800D2E2A5 /* home_add_pressed@3x.png in Resources */,
 				4CB318201BE0FB4800D2E2A5 /* mine_default-avatar@2x.png in Resources */,
@@ -2219,6 +2286,7 @@
 				4C0ACD6F1BE7C20000394B0C /* fenxiangViewTableViewCell.xib in Resources */,
 				4CB317F61BE0FB4800D2E2A5 /* 荐@2x.png in Resources */,
 				4CB3180C1BE0FB4800D2E2A5 /* login_logo@2x.png in Resources */,
+				4C7796861BF383AF00DEA04C /* ShareView.xib in Resources */,
 				4CB318191BE0FB4800D2E2A5 /* weixin@3x.png in Resources */,
 				4CB317BA1BE0FB4800D2E2A5 /* home_banner_step_dot1@2x.png in Resources */,
 				4CB3181B1BE0FB4800D2E2A5 /* home_banner_default-chart@3x.png in Resources */,
@@ -2285,6 +2353,7 @@
 				4CF9B22F1BDFCEC3006A268B /* UIViewController+REFrostedViewController.m in Sources */,
 				4CF9B1EA1BDFC8CB006A268B /* RESideMenu.m in Sources */,
 				4C1C3D0B1BEDCCDA0059D9C2 /* UIImage+ImageEffects.m in Sources */,
+				4C7796911BF384BF00DEA04C /* UIView+TYAutoLayout.m in Sources */,
 				4C237BAD1BF0D77A00A3C91D /* zhizuoTextTableViewCell.m in Sources */,
 				4C936A0C1BE4A8BF003C1456 /* HomeTableViewCell.m in Sources */,
 				4CA31D5A1BEF955B0026F118 /* zhizuoZP2ViewController.m in Sources */,
@@ -2329,6 +2398,7 @@
 				4CF9B1B51BDFC8CB006A268B /* AFNetworkReachabilityManager.m in Sources */,
 				4CF9B1E51BDFC8CB006A268B /* NetworkManager.m in Sources */,
 				4CF9B1E11BDFC8CB006A268B /* MJRefreshHeaderView.m in Sources */,
+				4C7796871BF383AF00DEA04C /* TYAlertController.m in Sources */,
 				4CF9B2041BDFC8CB006A268B /* MCTabButton.m in Sources */,
 				4CF9B1EE1BDFC8CB006A268B /* README.md in Sources */,
 				4C237BB51BF0E68E00A3C91D /* liulanViewController.m in Sources */,
@@ -2336,6 +2406,7 @@
 				4C1C3D0C1BEDCCDA0059D9C2 /* UIImageView+LBBlurredImage.m in Sources */,
 				4CED415A1BE5E43F0060CE47 /* Home2TableViewCell.m in Sources */,
 				4C4995851BEE5B2F0032413A /* mcTableViewCell.swift in Sources */,
+				4C7796901BF384BF00DEA04C /* UIView+TYAlertView.m in Sources */,
 				4C49958C1BEE5B780032413A /* UIViewExt.swift in Sources */,
 				4CF9B1C91BDFC8CB006A268B /* IQKeyboardManager.m in Sources */,
 				4CF9B1E91BDFC8CB006A268B /* RECommonFunctions.m in Sources */,
@@ -2372,15 +2443,19 @@
 				4CF9B2051BDFC8CB006A268B /* UIViewController+HUD.m in Sources */,
 				4CED41561BE5D1E30060CE47 /* MyshouchangViewController.m in Sources */,
 				4CF9B1F11BDFC8CB006A268B /* SDWebImageCompat.m in Sources */,
+				4C7796821BF383AF00DEA04C /* UIImage+ImageEffects.m in Sources */,
 				4CF9B1C01BDFC8CB006A268B /* GTMBase64.m in Sources */,
 				4CF9B1C21BDFC8CB006A268B /* CommeHelper.m in Sources */,
 				4CF9B1FF1BDFC8CB006A268B /* MCUser.m in Sources */,
 				4CF9B1C81BDFC8CB006A268B /* IQUIWindow+Hierarchy.m in Sources */,
 				4CF9B1E41BDFC8CB006A268B /* UIView+MJExtension.m in Sources */,
+				4C7796881BF383AF00DEA04C /* TYShowAlertView.m in Sources */,
 				4CF9B1FA1BDFC8CB006A268B /* UIImageView+HighlightedWebCache.m in Sources */,
 				4CF9B1CD1BDFC8CB006A268B /* IQBarButtonItem.m in Sources */,
 				4CF9B22E1BDFCEC3006A268B /* UIView+REFrostedViewController.m in Sources */,
 				4CF9B1BD1BDFC8CB006A268B /* Emoji.m in Sources */,
+				4C7796851BF383AF00DEA04C /* ShareView.m in Sources */,
+				4C7796811BF383AF00DEA04C /* TYAlertController+BlurEffects.m in Sources */,
 				4C9AF59E1BEF07F200104E7B /* zhizuoZp4TableViewCell.m in Sources */,
 				4CF9B1DA1BDFC8CB006A268B /* NSObject+MJCoding.m in Sources */,
 				4C936A1B1BE4D994003C1456 /* letf3TableViewCell.m in Sources */,
@@ -2414,6 +2489,7 @@
 				4CF9B1BF1BDFC8CB006A268B /* AA3DESManager.m in Sources */,
 				4CF9B1D01BDFC8CB006A268B /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				4CF9B0821BDFC7ED006A268B /* AppDelegate.m in Sources */,
+				4C77968F1BF384BF00DEA04C /* TYAlertView.m in Sources */,
 				4CF9B1D31BDFC8CB006A268B /* MJConst.m in Sources */,
 				4C9AF5A31BEF11B000104E7B /* zhizuoZp5TableViewCell.m in Sources */,
 				4CF9B07F1BDFC7ED006A268B /* main.m in Sources */,

@@ -13,6 +13,10 @@
 #import "zhizuoText2TableViewCell.h"
 #import "UIPlaceHolderTextView.h"
 #import "liulanViewController.h"
+#import "TYAlertController+BlurEffects.h"
+#import "ShareView.h"
+#import "UIView+TYAlertView.h"
+
 @interface zhizuoZP2ViewController ()<ZYQAssetPickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,UITextFieldDelegate>
 {
     UITableView *_tableview;
@@ -100,6 +104,45 @@
 
     if (btn.tag == 200) {
         NSLog(@"发布");
+        
+        
+        ShareView *shareView = [ShareView createViewFromNib];
+        shareView.titleLbl.textColor = AppTextCOLOR;
+        ViewRadius(shareView.bgView, 5);
+        [shareView.detebtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+            [shareView hideView];
+        
+        }];
+        [shareView.weiboBtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+           [shareView hideView];
+            NSLog(@"微博");
+        }];
+        [shareView.QQBtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+           [shareView hideView];
+            NSLog(@"QQ");
+        }];
+        [shareView.weixin handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+           [shareView hideView];
+            NSLog(@"weixin");
+        }];
+        [shareView.toudouBtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+           [shareView hideView];
+            NSLog(@"土豆");
+        }];
+        [shareView showInWindow];
+//        TYAlertController *alertController = [TYAlertController alertControllerWithAlertView:shareView preferredStyle:TYAlertControllerStyleAlert];
+//        
+//        // blur effect
+//        [alertController setBlurEffectWithView:self.view];
+//        
+//        //alertController.alertViewOriginY = 60;
+//        [self presentViewController:alertController animated:YES completion:nil];
+        
+
+        
+        
+        
+        
     }
     if (btn.tag == 201) {
         NSLog(@"浏览");
