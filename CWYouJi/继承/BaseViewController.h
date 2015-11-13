@@ -25,8 +25,29 @@ typedef NS_ENUM(NSInteger, BarbuttonItemStyle) {
  */
 @property(nonatomic,copy)NSString*  userphone;//
 
+/**
+ 用户sessionId
+ */
+@property(nonatomic,copy)NSString*  userSessionId;//
+
+/**
+ 用户expire
+ */
+@property(nonatomic,copy)NSString*  userExpire;//
+/**
+ 用户nickname
+ */
+@property(nonatomic,copy)NSString*  userNickname;//
+/**
+ 用户sex
+ */
+@property(nonatomic,copy)NSString*  userSex;//
 
 
+/**
+ 用户thumbnail
+ */
+@property(nonatomic,copy)NSString*  userThumbnail;//
 
 
 

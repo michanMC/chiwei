@@ -18,7 +18,7 @@
 #import "WMLabelAlertView.h"
 #import "fenxiangViewTableViewCell.h"
 
-@interface DEMOMenuViewController ()<WMAlertViewDelegate,UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>{
+@interface DEMOMenuViewController ()<WMAlertViewDelegate,UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate>{
     UIImageView *imageView;
     UILabel *label;
     UIImageView * _dengjiimgView;
@@ -29,7 +29,7 @@
 //    UITextField * nameText;
 //    UITextField * nameText2;
     
-    
+    MCUser * _user;
     RGFadeView * rgFadeView;
     
 
@@ -44,6 +44,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didMoenuSelectObj:) name:@"didMoenuSelectObjNotification" object:nil];
+        _user=  [MCUser sharedInstance];
     }
     
     return self;
@@ -69,6 +70,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    requestManager = [NetworkManager instanceManager];
+    requestManager.needSeesion = YES;
+
     index = 3;
     NSLog(@"%f",self.tableView.frame.size.width);
 //    nameText = [[UITextField alloc]initWithFrame:CGRectMake(-100, -100, 10, 10)];
@@ -89,7 +93,8 @@
        // view.backgroundColor = [UIColor redColor];
        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, (200 - 80)/2, 80, 80)];
         imageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-        imageView.image = [UIImage imageNamed:@"mine_default-avatar"];
+        //imageView.image = [UIImage imageNamed:@"mine_default-avatar"];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:_user.userThumbnail] placeholderImage:[UIImage imageNamed:@"mine_default-avatar"]];
         imageView.layer.masksToBounds = YES;
         imageView.layer.cornerRadius = 40;
         imageView.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -103,7 +108,7 @@
         
         
         label = [[UILabel alloc] initWithFrame:CGRectMake(0, 150, self.tableView.frame.size.width - 50, 20)];
-        label.text = @"Roman Efimov";
+        label.text =_user.userNickname;
         label.font = [UIFont systemFontOfSize:18];//[UIFont fontWithName:@"HelveticaNeue" size:18];
         label.textColor = [UIColor whiteColor];
         label.textAlignment = NSTextAlignmentCenter;
@@ -114,7 +119,11 @@
         CGFloat y = 150;
         _dengjiimgView = [[UIImageView alloc]initWithFrame:CGRectMake(x, y, width, height)];
         _dengjiimgView.image = [UIImage imageNamed:@"mine_grade-level"];
+    
+        
         [view addSubview:_dengjiimgView];
+        
+
     
         [view addSubview:imageView];
         [view addSubview:label];
@@ -204,11 +213,48 @@
     rgFadeView.titelLbl.text = @"编辑昵称";
     rgFadeView.placeLabel.text = @"输入昵称";
     [rgFadeView.msgTextView becomeFirstResponder];
-    
-    
+    [rgFadeView.sendBtn addTarget:self action:@selector(ActionSendBtn) forControlEvents:UIControlEventTouchUpInside];
+    rgFadeView.msgTextView.tag = 2000;
+    rgFadeView.msgTextView.delegate = self;
 //    [nameText becomeFirstResponder];
 // 
 //    _mciuc.hidden = NO;
+}
+#pragma mark-修改资料
+-(void)ActionSendBtn{
+    [rgFadeView.msgTextView resignFirstResponder];
+    rgFadeView.placeLabel.hidden = NO;
+    NSLog(@"%@",rgFadeView.msgTextView.text);
+    if (rgFadeView.msgTextView.text.length) {
+        
+        [self showHudInView:self.view hint:nil];
+        NSDictionary * Parameterdic = @{
+                                        @"nickname":rgFadeView.msgTextView.text
+                                        };
+        
+        
+        
+        [requestManager requestWebWithParaWithURL:@"/api/user/profiles/updateNickname.json" Parameter:Parameterdic Finish:^(NSDictionary *resultDic) {
+            [self hideHud];
+            NSLog(@"成功");
+            NSLog(@"返回==%@",resultDic);
+            
+        } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+            [self hideHud];
+            [self showHint:description];
+            NSLog(@"失败");
+        }];
+        
+
+    }
+    
+}
+-(void)textViewDidEndEditing:(UITextView *)textView
+{
+    if (textView.tag == 2000) {
+        [self ActionSendBtn];
+    }
+    
 }
 //-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 //{
@@ -553,8 +599,34 @@
         
         //头像
         imageView.image = image;
-        
+        [self updateAvatar:image];
     }
 }
+#pragma mark-上传头像
+-(void)updateAvatar:(UIImage*)img{
+    [self showHudInView:self.view hint:@"上传中"];
+    NSData *imageData = UIImageJPEGRepresentation(img, 0.2);
+    NSString *base64Image=[imageData base64Encoding];
+    
+    
+    NSDictionary * Parameterdic = @{
+                                    @"image":base64Image
+                                    };
+    
+    
+    
+    [requestManager requestWebWithParaWithURL:@"/api/user/profiles/updateAvatar.json" Parameter:Parameterdic Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showHint:description];
+        NSLog(@"登录失败");
+    }];
+    
 
+    
+}
 @end

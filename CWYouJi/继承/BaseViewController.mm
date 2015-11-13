@@ -119,6 +119,16 @@
     
     _userphone = _user.userphone;
     
+    _userSessionId = _user.userSessionId;
+    _userExpire = _user.userExpire;
+    _userNickname = _user.userNickname;
+
+    _userSex = _user.userSex;
+    
+    _userThumbnail = _user.userThumbnail;
+    
+    
+    
     
     
     if (IOS7) {

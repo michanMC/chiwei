@@ -43,9 +43,6 @@
                                 <constraint firstAttribute="height" constant="40" id="aWj-98-65q"/>
                             </constraints>
                             <state key="normal" image="send.png"/>
-                            <connections>
-                                <action selector="sendBtnClick:" destination="-1" eventType="touchUpInside" id="5Aa-qe-thx"/>
-                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="编辑信息" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W1T-GG-Hzp">
                             <rect key="frame" x="121" y="9" width="78" height="21"/>

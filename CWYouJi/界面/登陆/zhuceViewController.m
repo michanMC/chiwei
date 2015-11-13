@@ -8,6 +8,12 @@
 
 #import "zhuceViewController.h"
 #import "placeholderText.h"
+#import "AppDelegate.h"
+#import "DEMONavigationController.h"
+#import "DEMOHomeViewController.h"
+#import "DEMOMenuViewController.h"
+#import "loginViewController.h"
+
 @interface zhuceViewController ()
 {
     
@@ -86,6 +92,9 @@
     _pwd1Text.font = [UIFont systemFontOfSize:14];
     _pwd1Text.placeholder = @"请输入密码";
     _pwd1Text.layer.borderWidth = 0.5;
+    //设置密码输入
+    _pwd1Text.secureTextEntry = YES;
+
     ViewRadius(_pwd1Text, 20);
     [self.view addSubview:_pwd1Text];
     y +=height + 5;
@@ -94,6 +103,9 @@
     _pwd2Text.layer.borderColor =  [UIColor lightGrayColor].CGColor;
     _pwd2Text.font = [UIFont systemFontOfSize:14];
     _pwd2Text.placeholder = @"请再次输入密码";
+    //设置密码输入
+    _pwd1Text.secureTextEntry = YES;
+
     _pwd2Text.layer.borderWidth = 0.5;
     ViewRadius(_pwd2Text, 20);
     [self.view addSubview:_pwd2Text];
@@ -106,6 +118,7 @@
     [btn setTitleColor:[UIColor whiteColor] forState:0];
     btn.titleLabel.font = [UIFont systemFontOfSize:15];
     [btn setBackgroundImage:[UIImage imageNamed:@"login_btn_normal"] forState:0];
+    [btn addTarget:self action:@selector(ActionQueding) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
     
     y = cvvbtnY + 0.5;
@@ -128,6 +141,73 @@
     UIView *lineview = [[UIView alloc]initWithFrame:CGRectMake(x, y, width, height)];
     lineview.backgroundColor = [UIColor lightGrayColor];
     [self.view addSubview:lineview];
+    
+    
+    
+    
+}
+-(void)ActionQueding{
+//    placeholderText * _phoneText;
+//    placeholderText * _cvvText;
+//    placeholderText * _pwd1Text;
+//    placeholderText * _pwd2Text;
+    if (!_phoneText.text.length) {
+        [self showAllTextDialog:@"请输入手机号码"];
+        return;
+    }
+    if (!_pwd1Text.text.length) {
+        [self showAllTextDialog:@"请输入密码"];
+        return;
+    }
+    if (!_pwd2Text.text.length) {
+        [self showAllTextDialog:@"请输入确定密码"];
+        return;
+    }
+//    if (!_cvvText.text.length) {
+//        [self showAllTextDialog:@"请输入验证码"];
+//        return;
+//    }
+    if (![_pwd2Text.text isEqualToString:_pwd1Text.text]) {
+        [self showAllTextDialog:@"两次输入密码不一致"];
+        return;
+    }
+    [self showLoading:YES AndText:nil];
+
+    NSDictionary * Parameterdic = @{
+                                    @"mobile":_phoneText.text,
+                                    @"password":_pwd1Text.text
+                                    };
+    
+    [requestManager requestWebWithParaWithURL:@"/api/user/register.json" Parameter:Parameterdic Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        [self showAllTextDialog:@"注册成功"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            //返回登录界面
+            
+            loginViewController *loginVC = [[loginViewController alloc]init];
+            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            DEMONavigationController *nav = [[DEMONavigationController alloc]initWithRootViewController:loginVC];
+            appDelegate.window.rootViewController = nav;
+
+            
+            
+        });
+
+        NSLog(@"成功");
+       // [self lloginChenggong];
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        NSLog(@"失败");
+    }];
+
+    
+    
+    
+    
+    
+    
     
     
     

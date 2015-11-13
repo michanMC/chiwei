@@ -101,11 +101,18 @@ msgTextView.frame = CGRectMake(msgTextView.frame.origin.x, msgTextView.frame.ori
         self.msgTextView.resignFirstResponder()
         self.msgTextView.text = ""
         self.placeLabel.hidden = false
+        
+        
     }
     
-    @IBAction func sendBtnClick(sender: UIButton) {
-        self .closeBtnClick(nil)
-    }
+//    @IBAction func sendBtnClick(sender: UIButton) {
+//       // self .closeBtnClick(nil)
+//        
+////        self.msgTextView.resignFirstResponder()
+////        self.placeLabel.hidden = false
+////        print(self.msgTextView.text)
+//        
+//    }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillChangeFrameNotification, object: nil)

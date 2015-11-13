@@ -83,7 +83,8 @@
     imgView1 = [[UIImageView alloc]initWithFrame:CGRectMake(x, y, width, height)];
     imgView1.image =[UIImage imageNamed:@"login_icon_lock"];
     [_bgImgView addSubview:imgView1];
-    
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+
     x += 40;
     y = Main_Screen_Height /2 - 30;
     width = Main_Screen_Width - 80 - 15 - 60;
@@ -93,11 +94,17 @@
     _nameText.textColor = [UIColor whiteColor];
     _nameText.font = [UIFont systemFontOfSize:14];
     //_nameText.backgroundColor = [UIColor yellowColor];
+    _nameText.text =  [defaults objectForKey:@"UserName"];
     [_bgImgView addSubview:_nameText];
     y +=height + 10 + 1 + 10;
     _pwdText = [[UITextField alloc]initWithFrame:CGRectMake(x, y, width, height)];
     _pwdText.textColor = [UIColor whiteColor];
     _pwdText.font = [UIFont systemFontOfSize:14];
+    //设置再次输入时,是否清原来内容
+    _pwdText.clearsOnBeginEditing = YES;
+    //设置密码输入
+    _pwdText.secureTextEntry = YES;
+    _pwdText.text =  [defaults objectForKey:@"Pwd"];
 
    // _pwdText.backgroundColor = [UIColor yellowColor];
     [_bgImgView addSubview:_pwdText];
@@ -203,6 +210,68 @@
 }
 #pragma mark-登陆
 -(void)login{
+    
+    [_nameText resignFirstResponder];
+    [_pwdText resignFirstResponder];
+//    _nameText;
+//    UITextField * _pwdText;
+    if (!_nameText.text.length) {
+        [self showAllTextDialog:@"请输入登录账户"];
+        return;
+    }
+    if (!_pwdText.text.length) {
+        [self showAllTextDialog:@"请输入密码"];
+        return;
+
+    }
+    if (![CommonUtil isMobile:_nameText.text]) {
+        [self showAllTextDialog:@"请正确输入手机号码"];
+        return;
+
+    }
+    [self showLoading:YES AndText:nil];
+
+    NSDictionary * Parameterdic = @{
+                           @"mobile":_nameText.text,
+                           @"password":_pwdText.text
+                           };
+    
+    
+    
+    [requestManager requestWebWithParaWithURL:@"/api/user/login.json" Parameter:Parameterdic Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"登录成功");
+        NSLog(@"返回==%@",resultDic);
+        /*保存数据－－－－－－－－－－－－－－－－－begin*/
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        [defaults setObject:_nameText.text forKey:@"UserName"];
+        [defaults setObject :_pwdText.text forKey:@"Pwd"];
+        //强制让数据立刻保存
+        [defaults synchronize];
+        /*保存数据－－－－－－－－－－－－－－－－－end*/
+        MCUser *_user = [MCUser sharedInstance];
+        _user.userExpire = resultDic[@"expire"];
+        _user.userSessionId = resultDic[@"sessionId"];
+        _user.userid = resultDic[@"id"];
+        _user.userid = resultDic[@"id"];
+        _user.userphone = resultDic[@"mobile"];
+        _user.userNickname = resultDic[@"nickname"];
+        _user.userSex = resultDic[@"sex"];
+
+        [self lloginChenggong];
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+
+          NSLog(@"登录失败");
+    }];
+    
+    
+ 
+}
+-(void)lloginChenggong{
+    
     DEMONavigationController *navigationController = [[DEMONavigationController alloc] initWithRootViewController:[[DEMOHomeViewController alloc] init]];
     
     DEMOMenuViewController *menuController = [[DEMOMenuViewController alloc] initWithStyle:UITableViewStylePlain];
@@ -219,7 +288,9 @@
     //
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.window.rootViewController = frostedViewController;
- 
+
+    
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

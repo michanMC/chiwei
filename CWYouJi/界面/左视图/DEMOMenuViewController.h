@@ -10,5 +10,7 @@
 #import "REFrostedViewController.h"
 
 @interface DEMOMenuViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
-
+{
+    NetworkManager *requestManager;
+}
 @end

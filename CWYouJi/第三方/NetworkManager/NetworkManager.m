@@ -141,7 +141,7 @@ static NSString *const EPHttpApiBaseURL = AppURL;
     
     webApi = [EPHttpApiBaseURL stringByAppendingString:webApi];
     
-       // [self.httpClient.requestSerializer setValue:[MCUser sharedInstance].sessionId forHTTPHeaderField:@"sessionId"];
+//        [self.httpClient.requestSerializer setValue:[MCUser sharedInstance].sessionId forHTTPHeaderField:@"sessionId"];
 //    NSLog(@"-------------------------------------%@",[MCUser sharedInstance].sessionId );
 //    
 //    
@@ -149,45 +149,51 @@ static NSString *const EPHttpApiBaseURL = AppURL;
 //
 //
     [self.httpClient POST:webApi parameters:para success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
+        NSLog(@"%@",responseObject[@"message"]);
 
         
         NSError *parserError = nil;
-        NSDictionary *resultDic = nil;
+        NSDictionary *resultDic = [NSDictionary dictionaryWithDictionary:responseObject];
         @try {
-            NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-            NSLog(@"%@",responseString);
+            NSMutableData* data = [[NSMutableData alloc]init];
+            NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
+            [archiver encodeObject:responseObject];
+            [archiver finishEncoding];
+            
+           // NSString *responseString =responseObject;// [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+          //  NSLog(@"%@",resultDic);
             
             
             
 //           NSRange rangeFrom = [s rangeOfString:@"result\":\""];
-             NSRange rangeFrom = [responseString rangeOfString:@"resultMsg\":\""];
+           //  NSRange rangeFrom = [responseString rangeOfString:@"resultMsg\":\""];
            // DLog(@"range===%lu    %lu",(unsigned long)rangeFrom.location, (unsigned long)rangeFrom.length);
 //            resultDic = (NSDictionary *)responseObject;
 //            NSRange rangeTo = [s rangeOfString:@"\",\"remark\""];
-            NSRange rangeTo = [responseString rangeOfString:@"\",\"deviceId\""];
+           // NSRange rangeTo = [responseString rangeOfString:@"\",\"deviceId\""];
          //   DLog(@"range===%lu    %lu",(unsigned long)rangeTo.location, (unsigned long)rangeTo.length);
            
-            NSRange stringRange = NSMakeRange(rangeFrom.location + rangeFrom.length, rangeTo.location - rangeFrom.location - rangeFrom.length);
-            NSString *tostring;
-            if (stringRange.length != 0) {
-                tostring = [responseString substringWithRange:stringRange];
-               // DLog(@"st====%@",tostring);
-//                NSString *decryptString = [AA3DESManager getDecryptWithString:tostring keyString:@"p2p_standard2_base64_key" ivString:@"p2p_s2iv"];
-               // NSLog(@"decrystring==%@",decryptString);
-            }
+          //  NSRange stringRange = NSMakeRange(rangeFrom.location + rangeFrom.length, rangeTo.location - rangeFrom.location - rangeFrom.length);
+//            NSString *tostring;
+//            if (stringRange.length != 0) {
+//                tostring = [responseString substringWithRange:stringRange];
+//               // DLog(@"st====%@",tostring);
+////                NSString *decryptString = [AA3DESManager getDecryptWithString:tostring keyString:@"p2p_standard2_base64_key" ivString:@"p2p_s2iv"];
+//               // NSLog(@"decrystring==%@",decryptString);
+//            }
            
-            NSData *jsonData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
-            NSError *err;
-            
-            
-            resultDic = [NSJSONSerialization JSONObjectWithData:jsonData
-                                                                options:NSJSONReadingMutableContainers
-                                                                  error:&err];
+//            NSData *jsonData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
+//            NSError *err;
+//            
+//            
+//            resultDic = [NSJSONSerialization JSONObjectWithData:jsonData
+//                                                                options:NSJSONReadingMutableContainers
+//                                                                  error:&err];
            // DLog(@"dic===%@",resultDic);
             
-            NSString *resultArray = [resultDic objectForKey:@"result"];
-            
+           // NSString *resultArray = [resultDic objectForKey:@"code"];
+            NSString *resultArray = [NSString stringWithFormat:@"%ld",[resultDic[@"code"] integerValue]];
+
             if ((NSNull *)resultArray != [NSNull null]) {
 //                NSString *resultArrayStr = [AA3DESManager getDecryptWithString:resultArray keyString:@"p2p_standard2_base64_key" ivString:@"p2p_s2iv"];
                // NSLog(@"resultArrayStr==%@",resultArrayStr);
@@ -201,17 +207,18 @@ static NSString *const EPHttpApiBaseURL = AppURL;
         }
         @finally {
             //业务产生的状态码
-            NSString *logicCode = resultDic[@"status"];
+            NSString *logicCode = [NSString stringWithFormat:@"%ld",[resultDic[@"code"] integerValue]];
             
             //成功获得数据
-            if ([logicCode isEqualToString:@"2000000"]) {
+            if ([logicCode isEqualToString:@"1"]) {
                 
-                completeBlock(resultDic);
+                completeBlock(resultDic[@"object"]);
                 
             }
             else{
                 //业务逻辑错误
                 NSString *message = [resultDic objectForKey:@"message"];
+                
                 NSError *error = [NSError errorWithDomain:@"服务器业务逻辑错误" code:logicCode.intValue userInfo:nil];
                 errorBlock(nil,error,message);
             }
