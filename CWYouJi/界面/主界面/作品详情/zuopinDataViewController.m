@@ -92,6 +92,7 @@
         imgfram = CGRectMake(0, 0, Main_Screen_Width - 80, Main_Screen_Width - 80);
      UIButton * imgView =[self addImgView:imgfram ImgStr:@"travels-details_default-chart01" ImgUrlStr:@""];
         imgView.tag = 400;
+        [imgView addTarget:self action:@selector(showTupian:) forControlEvents:UIControlEventTouchUpInside];
         [imgbgView addSubview:imgView];
     }
     else if(indexCount == 2){
@@ -101,6 +102,8 @@
             imgfram = CGRectMake(((Main_Screen_Width - 80 - 2)/2 + 2) *i, 0, (Main_Screen_Width - 80 - 2)/2, Main_Screen_Width - 80);
             UIButton * imgView =[self addImgView:imgfram ImgStr:@"travels-details_default-chart02" ImgUrlStr:@""];
             imgView.tag = 400 +i;
+            [imgView addTarget:self action:@selector(showTupian:) forControlEvents:UIControlEventTouchUpInside];
+
             [imgbgView addSubview:imgView];
             
         }
@@ -120,12 +123,16 @@
                 x +=width + 2;
                 height = (height-2)/2;
                 imgView.tag = 400 +i;
+                [imgView addTarget:self action:@selector(showTupian:) forControlEvents:UIControlEventTouchUpInside];
+
             }
             else
             {
                 UIButton * imgView =[self addImgView:imgfram ImgStr:@"home_banner_default-chart" ImgUrlStr:@""];
                 imgView.tag = 400 +i;
                 [imgbgView addSubview:imgView];
+                [imgView addTarget:self action:@selector(showTupian:) forControlEvents:UIControlEventTouchUpInside];
+
                 if (i == 1) {
                     y += height + 2;
                 }
@@ -145,6 +152,8 @@
             UIButton * imgView =[self addImgView:imgfram ImgStr:@"home_banner_default-chart" ImgUrlStr:@""];
             imgView.tag = 400 +i;
             [imgbgView addSubview:imgView];
+            [imgView addTarget:self action:@selector(showTupian:) forControlEvents:UIControlEventTouchUpInside];
+
             x += width + 2;
             if (i == 1) {
                 y += height + 2;
@@ -163,7 +172,15 @@
     
     return imgView;
 }
-
+#pragma mark-浏览图片
+-(void)showTupian:(UIButton*)btn{
+    
+    //发送通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"didshowObjNotification" object:@(btn.tag)];
+ 
+    
+    
+}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
@@ -240,7 +257,7 @@
 
             
             [cell.pinglunBtn addTarget:self action:@selector(ActionPinjia:) forControlEvents:UIControlEventTouchUpInside];
-            
+            [cell.jubaoBtn addTarget:self action:@selector(ActionjubaoBtn) forControlEvents:UIControlEventTouchUpInside];
             
             
             
@@ -306,6 +323,16 @@
     rgFadeView.placeLabel.text = @"请输入评论信息";
     [rgFadeView.msgTextView becomeFirstResponder];
 
+    
+}
+-(void)ActionjubaoBtn{
+    
+    //发送通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"didjubaoObjNotification" object:@""];
+    
+
+   // [self pushNewViewController:ctl];
+    
     
 }
 - (void)didReceiveMemoryWarning {

@@ -2,7 +2,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MJRefresh.h"
-
+#import "NetworkManager.h"
 typedef void(^BarButtonItemActionBlock)(void);
 
 typedef NS_ENUM(NSInteger, BarbuttonItemStyle) {
@@ -12,10 +12,10 @@ typedef NS_ENUM(NSInteger, BarbuttonItemStyle) {
 };
 
 @interface BaseViewController : UIViewController
-{
-    NetworkManager *requestManager;
-}
-
+//{
+//   
+//}
+@property (nonatomic,strong) NetworkManager *requestManager;
 /**
  用户id
  */

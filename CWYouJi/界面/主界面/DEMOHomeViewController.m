@@ -14,7 +14,7 @@
 #import "zuopinViewController.h"
 #import "zuopinXQViewController.h"
 #import "DMLazyScrollView.h"
-
+#import "shaixuanView.h"
 #import "zhizuoZP1ViewController.h"
 @interface DEMOHomeViewController ()<ZZCarouselDelegate,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 {
@@ -23,6 +23,11 @@
     ZZCarousel *_headwheel;//广告图
     MCplaceholderText *_searchtext;
     UIButton * _faBuBtn;
+    UIView * _daohanTiaoview;
+    UIView * _daohanTiaoLineview;
+    
+    ShareView *_shaixuanView;
+
 }
 
 @end
@@ -36,6 +41,18 @@
 	self.title = @"Home Controller";
     
     [self prepareUI];
+    
+    
+    _shaixuanView = (ShareView*)[[[NSBundle mainBundle] loadNibNamed:@"shaixuanView" owner:self options:nil] lastObject];
+    _shaixuanView.frame = CGRectMake(0, 64, Main_Screen_Width, Main_Screen_Height - 64);
+
+   // [_shaixuanView.quanbu1]
+    
+
+    
+    [self.view addSubview:_shaixuanView];
+    
+    
     return;
     
 //    self.view.backgroundColor = [UIColor yellowColor];
@@ -58,6 +75,58 @@
     [_faBuBtn addTarget:self action:@selector(actionFabu) forControlEvents:UIControlEventTouchUpInside];
     
     [_headwheel reloadData];
+    [self preparedaohangtiao];
+    
+}
+-(void)preparedaohangtiao{
+    
+  _daohanTiaoview  = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, 64)];
+    
+    CGFloat x = 10;
+    CGFloat y = 25;
+    CGFloat width = 30;
+    CGFloat height = 30;
+    UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(x, y, width, height)];
+    [btn setBackgroundImage:[UIImage imageNamed:@"home_mine_avatar"] forState:0];
+    [btn addTarget:(DEMONavigationController *)self.navigationController action:@selector(showMenu) forControlEvents:UIControlEventTouchUpInside];
+    [_daohanTiaoview addSubview:btn];
+    x += width + 15;
+    width  =Main_Screen_Width - 2*x;
+    UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(x, y, width, height)];
+    bgView.backgroundColor =[UIColor blackColor];
+    bgView.alpha = .4;
+    ViewRadius(bgView, 15);
+    [_daohanTiaoview addSubview:bgView];
+    x += 10;
+    y += 6.5;
+    width  = 20;
+    height = 20;
+    UIImageView * img = [[UIImageView alloc]initWithFrame:CGRectMake(x, y, width, height)];
+    img.image = [UIImage imageNamed:@"ic_icon_search"];
+    [_daohanTiaoview addSubview:img];
+    x +=width + 5;
+    y -=6.5;
+    width = Main_Screen_Width - 2*x - 35;
+    height = 30;
+    _searchtext = [[MCplaceholderText alloc]initWithFrame:CGRectMake(x, y, width, height)];
+    _searchtext.placeholder = @"输入景点搜索";
+    _searchtext.textColor  =[UIColor whiteColor];
+    _searchtext.font = AppFont;
+    
+    [_daohanTiaoview addSubview:_searchtext];
+    x = Main_Screen_Width - 10 - 30;
+    width = 30;
+    height = 30;
+    
+    UIButton * _shaixuanBtn = [[UIButton alloc]initWithFrame:CGRectMake(x, y, width, height)];
+    [_shaixuanBtn setImage:[UIImage imageNamed:@"home_mine_screened2"] forState:0];
+    [_daohanTiaoview addSubview:_shaixuanBtn];
+    _daohanTiaoLineview = [[UIView alloc]initWithFrame:CGRectMake(0, 64, Main_Screen_Width, 0.5)];
+    _daohanTiaoLineview.backgroundColor = [UIColor clearColor];
+    [_daohanTiaoview addSubview:_daohanTiaoLineview];
+    [self.view addSubview:_daohanTiaoview];
+    
+    
     
 }
 #pragma mark-监听
@@ -112,6 +181,30 @@
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     _faBuBtn.hidden = NO;
+    NSLog(@"%f",_tableView.contentOffset.y );
+
+    if (scrollView == _tableView) {
+        if (_tableView.contentOffset.y > 100) {
+            [UIView animateWithDuration:1 animations:^{
+                 _daohanTiaoview.backgroundColor = [UIColor whiteColor];
+                _daohanTiaoLineview.backgroundColor = [UIColor lightGrayColor];
+            }];
+           
+            
+        }
+        else
+        {
+            [UIView animateWithDuration:1 animations:^{
+                _daohanTiaoview.backgroundColor = [UIColor clearColor];
+                _daohanTiaoLineview.backgroundColor = [UIColor clearColor];
+
+            }];
+            
+        }
+    }
+
+    
+    
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -149,6 +242,9 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
+
     zuopinXQViewController * ctl = [[zuopinXQViewController alloc]init];
     [self pushNewViewController:ctl];
 }
@@ -159,50 +255,6 @@
     view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     UIView * lineView =[[UIView alloc]initWithFrame:CGRectMake(0, 120, Main_Screen_Width, 0.5)];
     lineView.backgroundColor =[UIColor lightGrayColor];
-    
-    CGFloat x = 10;
-    CGFloat y = 25;
-    CGFloat width = 30;
-    CGFloat height = 30;
-    UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(x, y, width, height)];
-    [btn setBackgroundImage:[UIImage imageNamed:@"home_mine_avatar"] forState:0];
-    [btn addTarget:(DEMONavigationController *)self.navigationController action:@selector(showMenu) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:btn];
-    x += width + 15;
-    width  =Main_Screen_Width - 2*x;
-    UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(x, y, width, height)];
-    bgView.backgroundColor =[UIColor blackColor];
-    bgView.alpha = .4;
-    ViewRadius(bgView, 15);
-    [view addSubview:bgView];
-    x += 10;
-    y += 6.5;
-    width  = 20;
-    height = 20;
-    UIImageView * img = [[UIImageView alloc]initWithFrame:CGRectMake(x, y, width, height)];
-    img.image = [UIImage imageNamed:@"ic_icon_search"];
-    [view addSubview:img];
-    x +=width + 5;
-    y -=6.5;
-    width = Main_Screen_Width - 2*x - 35;
-    height = 30;
-    _searchtext = [[MCplaceholderText alloc]initWithFrame:CGRectMake(x, y, width, height)];
-    _searchtext.placeholder = @"输入景点搜索";
-    _searchtext.textColor  =[UIColor whiteColor];
-    _searchtext.font = AppFont;
-
-    [view addSubview:_searchtext];
-    x = Main_Screen_Width - 10 - 30;
-    width = 30;
-    height = 30;
-    
-    UIButton * _shaixuanBtn = [[UIButton alloc]initWithFrame:CGRectMake(x, y, width, height)];
-    [_shaixuanBtn setImage:[UIImage imageNamed:@"home_mine_screened2"] forState:0];
-    [view addSubview:_shaixuanBtn];
-    
-    
-    
-    
         return view;
 }
 

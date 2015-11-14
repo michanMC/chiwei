@@ -109,6 +109,8 @@
         ShareView *shareView = [ShareView createViewFromNib];
         shareView.titleLbl.textColor = AppTextCOLOR;
         ViewRadius(shareView.bgView, 5);
+        
+        
         [shareView.detebtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
             [shareView hideView];
         

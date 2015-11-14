@@ -11,7 +11,8 @@
 #import "UIButton+WebCache.h"
 #import "zuopinQxTableViewCell.h"
 #import "zuopinQx2TableViewCell.h"
-@interface liulanViewController ()<UITableViewDataSource,UITableViewDelegate>{
+#import "HZPhotoBrowser.h"
+@interface liulanViewController ()<UITableViewDataSource,UITableViewDelegate,HZPhotoBrowserDelegate>{
     UIButton * _backBtn;
     UILabel *_titleLbl;
     UITableView *_tableView;
@@ -113,6 +114,8 @@
         imgfram = CGRectMake(0, 0, Main_Screen_Width - 80, Main_Screen_Width - 80);
         UIButton * imgView =[self addImgView:imgfram ImgStr:@"travels-details_default-chart01" ImgUrlStr:_imgViewArray[0]];
         imgView.tag = 400;
+        [imgView addTarget:self action:@selector(showTupian:) forControlEvents:UIControlEventTouchUpInside];
+
         [imgbgView addSubview:imgView];
     }
     else if(indexCount == 2){
@@ -122,6 +125,8 @@
             imgfram = CGRectMake(((Main_Screen_Width - 80 - 2)/2 + 2) *i, 0, (Main_Screen_Width - 80 - 2)/2, Main_Screen_Width - 80);
             UIButton * imgView =[self addImgView:imgfram ImgStr:@"travels-details_default-chart02" ImgUrlStr:_imgViewArray[i]];
             imgView.tag = 400 +i;
+            [imgView addTarget:self action:@selector(showTupian:) forControlEvents:UIControlEventTouchUpInside];
+
             [imgbgView addSubview:imgView];
             
         }
@@ -141,11 +146,15 @@
                 x +=width + 2;
                 height = (height-2)/2;
                 imgView.tag = 400 +i;
+                [imgView addTarget:self action:@selector(showTupian:) forControlEvents:UIControlEventTouchUpInside];
+
             }
             else
             {
                 UIButton * imgView =[self addImgView:imgfram ImgStr:@"home_banner_default-chart" ImgUrlStr:_imgViewArray[i]];
                 imgView.tag = 400 +i;
+                [imgView addTarget:self action:@selector(showTupian:) forControlEvents:UIControlEventTouchUpInside];
+
                 [imgbgView addSubview:imgView];
                 if (i == 1) {
                     y += height + 2;
@@ -166,6 +175,8 @@
             
             UIButton * imgView =[self addImgView:imgfram ImgStr:@"home_banner_default-chart" ImgUrlStr:_imgViewArray[i]];
             imgView.tag = 400 +i;
+            [imgView addTarget:self action:@selector(showTupian:) forControlEvents:UIControlEventTouchUpInside];
+
             [imgbgView addSubview:imgView];
             x += width + 2;
             if (i == 1) {
@@ -179,6 +190,7 @@
     return bgview;
     
 }
+
 -(UIButton*)addImgView:(CGRect)imgFrame ImgStr:(NSString*)imgStr ImgUrlStr:(UIImage*)imgUrlStr{
     UIButton * imgView = [[UIButton alloc]initWithFrame:imgFrame];
     
@@ -188,6 +200,35 @@
     
     return imgView;
 }
+#pragma mark-浏览图片
+-(void)showTupian:(UIButton*)btn{
+    
+    NSInteger index = btn.tag - 400;
+    
+    //启动图片浏览器
+    HZPhotoBrowser *browserVc = [[HZPhotoBrowser alloc] init];
+    browserVc.sourceImagesContainerView = self.view; // 原图的父控件
+    browserVc.imageCount = _imgViewArray.count; // 图片总数
+    browserVc.currentImageIndex =(int)index;
+    browserVc.delegate = self;
+    [browserVc show];
+    
+    
+}
+#pragma mark - photobrowser代理方法
+- (UIImage *)photoBrowser:(HZPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index
+{
+    return _imgViewArray[index];//[UIImage imageNamed:@"login_bg_720"];
+}
+
+//- (NSURL *)photoBrowser:(HZPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index
+//{
+//    // NSString * imgurl = [NSString stringWithFormat:@"%@%@",AppURL,imgArray[index]];
+//    
+//    return [NSURL URLWithString:@""];
+//}
+//
+
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 10;

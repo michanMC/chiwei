@@ -113,8 +113,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    requestManager = [NetworkManager instanceManager];
-    requestManager.needSeesion = YES;
+    _requestManager = [NetworkManager instanceManager];
+    _requestManager.needSeesion = YES;
     _userid = _user.userid;
     
     _userphone = _user.userphone;

@@ -229,6 +229,8 @@
         return;
 
     }
+     [self lloginChenggong];
+    return;
     [self showLoading:YES AndText:nil];
 
     NSDictionary * Parameterdic = @{
@@ -238,7 +240,7 @@
     
     
     
-    [requestManager requestWebWithParaWithURL:@"/api/user/login.json" Parameter:Parameterdic Finish:^(NSDictionary *resultDic) {
+    [self.requestManager requestWebWithParaWithURL:@"/api/user/login.json" Parameter:Parameterdic Finish:^(NSDictionary *resultDic) {
         [self hideHud];
         NSLog(@"登录成功");
         NSLog(@"返回==%@",resultDic);

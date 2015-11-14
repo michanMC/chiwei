@@ -10,9 +10,10 @@
 #import "UIImageView+LBBlurredImage.h"
 #import "DMLazyScrollView.h"
 #import "zuopinDataViewController.h"
+#import "HZPhotoBrowser.h"
 #define ARC4RANDOM_MAX	0x100000000
 
-@interface zuopinXQViewController ()<UITableViewDataSource,UITableViewDelegate,DMLazyScrollViewDelegate>
+@interface zuopinXQViewController ()<UITableViewDataSource,UITableViewDelegate,DMLazyScrollViewDelegate,HZPhotoBrowserDelegate>
 {
     DMLazyScrollView* _lazyScrollView;
 
@@ -33,9 +34,49 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectjubaoObj:) name:@"didjubaoObjNotification" object:nil];
+    
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didshowTupianjubaoObj:) name:@"didshowObjNotification" object:nil];
     [self prepareUI];
     // Do any additional setup after loading the view.
 }
+//举报
+-(void)didSelectjubaoObj:(NSNotification*)Notification{
+    jubaoViewController * ctl = [[jubaoViewController alloc]init];
+    [self pushNewViewController:ctl];
+    //[self.navigationController presentViewController:ctl animated:YES completion:nil];
+   
+    
+}
+#pragma mark-浏览图片监听
+-(void)didshowTupianjubaoObj:(NSNotification*)Notification{
+    
+    NSLog(@"%@",Notification.object);
+    NSInteger index = [Notification.object integerValue] - 400;
+    
+    //启动图片浏览器
+    HZPhotoBrowser *browserVc = [[HZPhotoBrowser alloc] init];
+    browserVc.sourceImagesContainerView = self.view; // 原图的父控件
+    browserVc.imageCount = 4; // 图片总数
+    browserVc.currentImageIndex =(int)index;
+    browserVc.delegate = self;
+    [browserVc show];
+
+}
+#pragma mark - photobrowser代理方法
+- (UIImage *)photoBrowser:(HZPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index
+{
+    return [UIImage imageNamed:@"login_bg_720"];
+}
+
+- (NSURL *)photoBrowser:(HZPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index
+{
+   // NSString * imgurl = [NSString stringWithFormat:@"%@%@",AppURL,imgArray[index]];
+    
+    return [NSURL URLWithString:@""];
+}
+
+
 -(void)prepareUI{
      _imgview = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Height)];
     [self.view addSubview:_imgview];
