@@ -16,7 +16,8 @@
 #import "DMLazyScrollView.h"
 #import "shaixuanView.h"
 #import "zhizuoZP1ViewController.h"
-@interface DEMOHomeViewController ()<ZZCarouselDelegate,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
+#import "jingdianView.h"
+@interface DEMOHomeViewController ()<ZZCarouselDelegate,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,UITextFieldDelegate,jingdianViewDelegate>
 {
     
     UITableView * _tableView;
@@ -26,7 +27,12 @@
     UIView * _daohanTiaoview;
     UIView * _daohanTiaoLineview;
     
-    ShareView *_shaixuanView;
+    shaixuanView *_shaixuanView;
+    jingdianView *_jiangdianView;
+    //喜欢
+    NSInteger _btnTagindexXH;
+    //分类
+     NSInteger _btnTagindexFL;
 
 }
 
@@ -43,24 +49,144 @@
     [self prepareUI];
     
     
-    _shaixuanView = (ShareView*)[[[NSBundle mainBundle] loadNibNamed:@"shaixuanView" owner:self options:nil] lastObject];
-    _shaixuanView.frame = CGRectMake(0, 64, Main_Screen_Width, Main_Screen_Height - 64);
+    _shaixuanView = [[[NSBundle mainBundle] loadNibNamed:@"shaixuanView" owner:self options:nil] lastObject];
+    _shaixuanView.frame = CGRectMake(0, 64.5, Main_Screen_Width, Main_Screen_Height - 64);
+    _shaixuanView.hidden = YES;
 
-   // [_shaixuanView.quanbu1]
-    
+    [self btnview:_shaixuanView.quanbu1];
+    [self btnview:_shaixuanView.tuijian];
+    [self btnview:_shaixuanView.butuijian];
+    [self btnview:_shaixuanView.quanbu2];
+    [self btnview:_shaixuanView.shiBtn];
+    [self btnview:_shaixuanView.zhuBtn];
+    [self btnview:_shaixuanView.jingBtn];
+    [self btnview:_shaixuanView.gouBtn];
+    [_shaixuanView.quanbu1 addTarget:self action:@selector(actionShaixuan:) forControlEvents:UIControlEventTouchUpInside];
+    [_shaixuanView.tuijian addTarget:self action:@selector(actionShaixuan:) forControlEvents:UIControlEventTouchUpInside];
 
-    
+    [_shaixuanView.butuijian addTarget:self action:@selector(actionShaixuan:) forControlEvents:UIControlEventTouchUpInside];
+
+    [_shaixuanView.quanbu2 addTarget:self action:@selector(actionShaixuan:) forControlEvents:UIControlEventTouchUpInside];
+
+    [_shaixuanView.shiBtn addTarget:self action:@selector(actionShaixuan:) forControlEvents:UIControlEventTouchUpInside];
+
+    [_shaixuanView.zhuBtn addTarget:self action:@selector(actionShaixuan:) forControlEvents:UIControlEventTouchUpInside];
+    [_shaixuanView.jingBtn addTarget:self action:@selector(actionShaixuan:) forControlEvents:UIControlEventTouchUpInside];
+
+    [_shaixuanView.gouBtn addTarget:self action:@selector(actionShaixuan:) forControlEvents:UIControlEventTouchUpInside];
+
+    [_shaixuanView.okBtn addTarget:self action:@selector(actionShaixuan:) forControlEvents:UIControlEventTouchUpInside];
+
+
     [self.view addSubview:_shaixuanView];
     
     
-    return;
     
-//    self.view.backgroundColor = [UIColor yellowColor];
-//    UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(10, 30, 30, 30)];
-//    btn.backgroundColor =[UIColor redColor];
-//    [btn addTarget:(DEMONavigationController *)self.navigationController action:@selector(showMenu) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:btn];
+    _jiangdianView = [[jingdianView alloc]initWithFrame:CGRectMake(0, 64.5, Main_Screen_Width, Main_Screen_Height - 64.5)];
+    _jiangdianView.delegate = self;
+    _jiangdianView.hidden = YES;
+    [self.view addSubview:_jiangdianView];
+    
 }
+
+-(void)actionShaixuan:(UIButton*)btn{
+    
+    NSLog(@"%ld",btn.tag);
+    //喜欢
+    if (btn.tag >= 700 && btn.tag <= 702) {
+        for (int i = 700; i < 703; i ++) {
+            UIButton * subBtn = (UIButton*)[self.view viewWithTag:i];
+            subBtn.selected = NO;
+            [self StateNormalBtn:subBtn];
+        }
+        btn.selected = YES;
+        [self StateSelectedBtn:btn];
+        _btnTagindexXH  = btn.tag;
+        
+        
+    }
+    else if (btn.tag >= 800 && btn.tag <= 804)//分类
+    {
+        for (int i = 800; i < 805; i ++) {
+            UIButton * subBtn = (UIButton*)[self.view viewWithTag:i];
+            subBtn.selected = NO;
+            [self StateNormalBtn:subBtn];
+        }
+        btn.selected = YES;
+        [self StateSelectedBtn:btn];
+        _btnTagindexFL  = btn.tag;
+
+        
+    }
+    else if(btn.tag == 900){
+        UIButton * btn2 = (UIButton*)[self.view viewWithTag:901];
+        [self actionShaixuan:btn2];
+        
+        NSLog(@"喜欢%ld",_btnTagindexXH);
+        NSLog(@"分类%ld",_btnTagindexFL);
+
+        
+    }
+    else if(btn.tag == 901){
+        _jiangdianView.hidden = YES;
+        if (!_shaixuanView.hidden) {//隐藏
+            if (_tableView.contentOffset.y > 100) {
+                _daohanTiaoview.backgroundColor = [UIColor whiteColor];
+                _daohanTiaoLineview.backgroundColor =[ UIColor lightGrayColor];
+            }
+            else
+            {
+                _daohanTiaoview.backgroundColor = [UIColor clearColor];
+                _daohanTiaoLineview.backgroundColor =[ UIColor clearColor];
+            }
+            _shaixuanView.hidden = YES;
+            btn.selected = NO;
+            
+        }
+        else
+        {
+//            [UIView animateWithDuration:1 animations:^{
+//                _shaixuanView.frame = CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Height);
+//                
+//            }];
+            _daohanTiaoview.backgroundColor = [UIColor whiteColor];
+            _daohanTiaoLineview.backgroundColor =[ UIColor lightGrayColor];
+            _shaixuanView.hidden = NO;
+
+        }
+        
+    }
+    
+    
+    
+    
+    
+}
+-(void)btnview:(UIButton*)btn{
+    ViewRadius(btn, 15);
+    btn.layer.borderColor = [UIColor grayColor].CGColor;
+    btn.layer.borderWidth = 0.5;
+    [btn setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
+    [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    
+}
+-(void)StateSelectedBtn:(UIButton*)btn{
+    
+    btn.layer.borderColor = [UIColor orangeColor].CGColor;
+    UIImageView * img = (UIImageView*)[_shaixuanView viewWithTag:btn.tag + 10];
+    img.hidden = NO;
+
+}
+-(void)StateNormalBtn:(UIButton*)btn{
+    
+    btn.layer.borderColor = [UIColor grayColor].CGColor;
+    UIImageView * img = (UIImageView*)[_shaixuanView viewWithTag:btn.tag + 10];
+    img.hidden = YES;
+
+
+}
+
+
 -(void)prepareUI{
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Height) style:UITableViewStyleGrouped];
     _headwheel = [self headViewwheel:500];
@@ -112,7 +238,8 @@
     _searchtext.placeholder = @"输入景点搜索";
     _searchtext.textColor  =[UIColor whiteColor];
     _searchtext.font = AppFont;
-    
+    _searchtext.delegate =self;
+    [_searchtext addTarget:self action:@selector(actionText:) forControlEvents:UIControlEventEditingChanged];
     [_daohanTiaoview addSubview:_searchtext];
     x = Main_Screen_Width - 10 - 30;
     width = 30;
@@ -120,12 +247,85 @@
     
     UIButton * _shaixuanBtn = [[UIButton alloc]initWithFrame:CGRectMake(x, y, width, height)];
     [_shaixuanBtn setImage:[UIImage imageNamed:@"home_mine_screened2"] forState:0];
+    [_shaixuanBtn addTarget:self action:@selector(actionShaixuan:) forControlEvents:UIControlEventTouchUpInside];
+    _shaixuanBtn.tag =  901;
     [_daohanTiaoview addSubview:_shaixuanBtn];
     _daohanTiaoLineview = [[UIView alloc]initWithFrame:CGRectMake(0, 64, Main_Screen_Width, 0.5)];
     _daohanTiaoLineview.backgroundColor = [UIColor clearColor];
     [_daohanTiaoview addSubview:_daohanTiaoLineview];
     [self.view addSubview:_daohanTiaoview];
     
+    
+    
+}
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    if (!textField.text.length) {
+        if (_tableView.contentOffset.y > 100) {
+            _daohanTiaoview.backgroundColor = [UIColor whiteColor];
+            _daohanTiaoLineview.backgroundColor =[ UIColor lightGrayColor];
+        }
+        else
+        {
+            _daohanTiaoview.backgroundColor = [UIColor clearColor];
+            _daohanTiaoLineview.backgroundColor =[ UIColor clearColor];
+        }
+
+        _jiangdianView.hidden = YES;
+        
+    }
+
+    
+}
+-(void)actionText:(UITextField*)textField{
+    _daohanTiaoview.backgroundColor = [UIColor whiteColor];
+    _daohanTiaoLineview.backgroundColor =[ UIColor lightGrayColor];
+    _shaixuanView.hidden = YES;
+    _jiangdianView.hidden = NO;
+    NSLog(@"string%@",textField.text);
+    
+}
+//-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+//{
+//    _daohanTiaoview.backgroundColor = [UIColor whiteColor];
+//    _daohanTiaoLineview.backgroundColor =[ UIColor lightGrayColor];
+//    _shaixuanView.hidden = YES;
+//    _jiangdianView.hidden = NO;
+//    NSLog(@"string%@",textField.text);
+//    
+//    return YES;
+//    
+//}
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (textField.text.length) {
+        _shaixuanView.hidden = YES;
+        _daohanTiaoview.backgroundColor = [UIColor whiteColor];
+        _daohanTiaoLineview.backgroundColor =[ UIColor lightGrayColor];
+        _shaixuanView.hidden = YES;
+        _jiangdianView.hidden = NO;
+        NSLog(@"string%@",textField.text);
+        
+
+    }
+    
+    
+}
+-(void)jingdianStr:(NSString *)str{
+    _searchtext.text = str;
+    [_searchtext resignFirstResponder];
+    if (_tableView.contentOffset.y > 100) {
+        _daohanTiaoview.backgroundColor = [UIColor whiteColor];
+        _daohanTiaoLineview.backgroundColor =[ UIColor lightGrayColor];
+    }
+    else
+    {
+        _daohanTiaoview.backgroundColor = [UIColor clearColor];
+        _daohanTiaoLineview.backgroundColor =[ UIColor clearColor];
+    }
+    
+    _jiangdianView.hidden = YES;
     
     
 }

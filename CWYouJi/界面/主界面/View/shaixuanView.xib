@@ -26,27 +26,30 @@
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FWt-RG-LTq">
+                        <button opaque="NO" tag="700" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FWt-RG-LTq">
                             <rect key="frame" x="10" y="39" width="68" height="30"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <state key="normal" title="全部">
                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6fV-yV-f2v">
+                        <button opaque="NO" tag="701" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6fV-yV-f2v">
                             <rect key="frame" x="89" y="39" width="67" height="30"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <state key="normal" title="推荐">
                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c6X-7C-pac">
+                        <button opaque="NO" tag="702" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c6X-7C-pac">
                             <rect key="frame" x="166" y="39" width="68" height="30"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <state key="normal" title="不推荐">
                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -58,42 +61,47 @@
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QNQ-7x-WbI">
+                        <button opaque="NO" tag="800" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QNQ-7x-WbI">
                             <rect key="frame" x="10" y="115" width="68" height="30"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <state key="normal" title="全部">
                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bcq-r5-IGR">
-                            <rect key="frame" x="237" y="115" width="68" height="30"/>
+                        <button opaque="NO" tag="803" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bcq-r5-IGR">
+                            <rect key="frame" x="241" y="115" width="68" height="30"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <state key="normal" title="景">
                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X9V-fv-WB1">
-                            <rect key="frame" x="166" y="115" width="68" height="30"/>
+                        <button opaque="NO" tag="802" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X9V-fv-WB1">
+                            <rect key="frame" x="164" y="115" width="68" height="30"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <state key="normal" title="住">
                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fKQ-kA-ufn">
-                            <rect key="frame" x="89" y="115" width="68" height="30"/>
+                        <button opaque="NO" tag="801" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fKQ-kA-ufn">
+                            <rect key="frame" x="87" y="115" width="68" height="30"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <state key="normal" title="食">
                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bb9-pS-1UQ">
+                        <button opaque="NO" tag="804" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bb9-pS-1UQ">
                             <rect key="frame" x="10" y="159" width="68" height="30"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <state key="normal" title="购">
                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -103,7 +111,7 @@
                             <animations/>
                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="egt-I5-ZjK">
+                        <button opaque="NO" tag="900" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="egt-I5-ZjK">
                             <rect key="frame" x="0.0" y="214" width="320" height="30"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -111,6 +119,38 @@
                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
+                        <imageView hidden="YES" userInteractionEnabled="NO" tag="710" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_checkbox_checked.png" translatesAutoresizingMaskIntoConstraints="NO" id="Whw-Xf-0Z5">
+                            <rect key="frame" x="66" y="33" width="20" height="20"/>
+                            <animations/>
+                        </imageView>
+                        <imageView hidden="YES" userInteractionEnabled="NO" tag="711" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_checkbox_checked.png" translatesAutoresizingMaskIntoConstraints="NO" id="u30-PH-BZE">
+                            <rect key="frame" x="143" y="33" width="20" height="20"/>
+                            <animations/>
+                        </imageView>
+                        <imageView hidden="YES" userInteractionEnabled="NO" tag="712" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_checkbox_checked.png" translatesAutoresizingMaskIntoConstraints="NO" id="4Ck-TU-ftD">
+                            <rect key="frame" x="219" y="33" width="20" height="20"/>
+                            <animations/>
+                        </imageView>
+                        <imageView hidden="YES" userInteractionEnabled="NO" tag="810" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_checkbox_checked.png" translatesAutoresizingMaskIntoConstraints="NO" id="sAa-x7-5eT">
+                            <rect key="frame" x="66" y="109" width="20" height="20"/>
+                            <animations/>
+                        </imageView>
+                        <imageView hidden="YES" userInteractionEnabled="NO" tag="811" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_checkbox_checked.png" translatesAutoresizingMaskIntoConstraints="NO" id="1ky-Ws-AbS">
+                            <rect key="frame" x="143" y="109" width="20" height="20"/>
+                            <animations/>
+                        </imageView>
+                        <imageView hidden="YES" userInteractionEnabled="NO" tag="812" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_checkbox_checked.png" translatesAutoresizingMaskIntoConstraints="NO" id="u1H-cG-pRs">
+                            <rect key="frame" x="219" y="109" width="20" height="20"/>
+                            <animations/>
+                        </imageView>
+                        <imageView hidden="YES" userInteractionEnabled="NO" tag="814" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_checkbox_checked.png" translatesAutoresizingMaskIntoConstraints="NO" id="Lo2-2X-Elk">
+                            <rect key="frame" x="66" y="153" width="20" height="20"/>
+                            <animations/>
+                        </imageView>
+                        <imageView hidden="YES" userInteractionEnabled="NO" tag="813" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_checkbox_checked.png" translatesAutoresizingMaskIntoConstraints="NO" id="cID-lK-YiL">
+                            <rect key="frame" x="292" y="109" width="20" height="20"/>
+                            <animations/>
+                        </imageView>
                     </subviews>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -133,4 +173,7 @@
             </connections>
         </view>
     </objects>
+    <resources>
+        <image name="list_checkbox_checked.png" width="24" height="24"/>
+    </resources>
 </document>

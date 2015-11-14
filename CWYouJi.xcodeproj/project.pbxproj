@@ -46,6 +46,7 @@
 		4C77968F1BF384BF00DEA04C /* TYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77968A1BF384BF00DEA04C /* TYAlertView.m */; };
 		4C7796901BF384BF00DEA04C /* UIView+TYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77968C1BF384BF00DEA04C /* UIView+TYAlertView.m */; };
 		4C7796911BF384BF00DEA04C /* UIView+TYAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77968E1BF384BF00DEA04C /* UIView+TYAutoLayout.m */; };
+		4C8E4EEB1BF7979E00A679D9 /* jingdianView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8E4EEA1BF7979E00A679D9 /* jingdianView.m */; };
 		4C936A0C1BE4A8BF003C1456 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C936A0B1BE4A8BF003C1456 /* HomeTableViewCell.m */; };
 		4C936A0E1BE4A8CD003C1456 /* HomeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C936A0D1BE4A8CD003C1456 /* HomeTableViewCell.xib */; };
 		4C936A131BE4CFA3003C1456 /* letfTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C936A121BE4CFA3003C1456 /* letfTableViewCell.m */; };
@@ -444,6 +445,8 @@
 		4C77968C1BF384BF00DEA04C /* UIView+TYAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TYAlertView.m"; sourceTree = "<group>"; };
 		4C77968D1BF384BF00DEA04C /* UIView+TYAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TYAutoLayout.h"; sourceTree = "<group>"; };
 		4C77968E1BF384BF00DEA04C /* UIView+TYAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TYAutoLayout.m"; sourceTree = "<group>"; };
+		4C8E4EE91BF7979E00A679D9 /* jingdianView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jingdianView.h; sourceTree = "<group>"; };
+		4C8E4EEA1BF7979E00A679D9 /* jingdianView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = jingdianView.m; sourceTree = "<group>"; };
 		4C936A0A1BE4A8BF003C1456 /* HomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTableViewCell.h; sourceTree = "<group>"; };
 		4C936A0B1BE4A8BF003C1456 /* HomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeTableViewCell.m; sourceTree = "<group>"; };
 		4C936A0D1BE4A8CD003C1456 /* HomeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeTableViewCell.xib; sourceTree = "<group>"; };
@@ -1114,6 +1117,8 @@
 				4CAC617A1BF74A280025158D /* shaixuanView.h */,
 				4CAC617B1BF74A280025158D /* shaixuanView.m */,
 				4CAC617D1BF74A310025158D /* shaixuanView.xib */,
+				4C8E4EE91BF7979E00A679D9 /* jingdianView.h */,
+				4C8E4EEA1BF7979E00A679D9 /* jingdianView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2436,6 +2441,7 @@
 				4CF9B1C61BDFC8CB006A268B /* IQNSArray+Sort.m in Sources */,
 				4CF9B22B1BDFCEC2006A268B /* REFrostedContainerViewController.m in Sources */,
 				4C49957D1BEE41420032413A /* zuopinQx2TableViewCell.m in Sources */,
+				4C8E4EEB1BF7979E00A679D9 /* jingdianView.m in Sources */,
 				4CF9B1CA1BDFC8CB006A268B /* IQKeyboardReturnKeyHandler.m in Sources */,
 				4CF9B1BE1BDFC8CB006A268B /* EmojiEmoticons.m in Sources */,
 				4CAC617C1BF74A280025158D /* shaixuanView.m in Sources */,
