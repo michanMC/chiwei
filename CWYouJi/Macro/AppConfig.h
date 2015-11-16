@@ -24,6 +24,8 @@
 #define AppFont     [UIFont systemFontOfSize:14]
 #define AppBgCOLOR      RGBACOLOR(240, 240, 240, 1);
 
-#define AppURL @"http://203.195.168.151:9000/hedgehogTravels"
+#define AppURL @"http://203.195.168.151:9000/hedgehogTravels/"
+#define AppImgURL @"http://203.195.168.151:9000/hedgehogTravels"
+
 //http://112.74.207.224:9001/api
 #endif

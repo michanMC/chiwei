@@ -255,6 +255,7 @@
 		4CB3183E1BE11E5F00D2E2A5 /* wangjiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB3183D1BE11E5F00D2E2A5 /* wangjiViewController.m */; };
 		4CB318411BE12D1300D2E2A5 /* ZZCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB318401BE12D1300D2E2A5 /* ZZCarousel.m */; };
 		4CB318441BE1340A00D2E2A5 /* MCplaceholderText.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB318431BE1340A00D2E2A5 /* MCplaceholderText.m */; };
+		4CECC99D1BF861E300ACD410 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CECC99C1BF861E300ACD410 /* NetworkManager.m */; };
 		4CED41501BE5D1A70060CE47 /* zuopinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CED414F1BE5D1A70060CE47 /* zuopinViewController.m */; };
 		4CED41531BE5D1D80060CE47 /* MyzuopinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CED41521BE5D1D80060CE47 /* MyzuopinViewController.m */; };
 		4CED41561BE5D1E30060CE47 /* MyshouchangViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CED41551BE5D1E30060CE47 /* MyshouchangViewController.m */; };
@@ -317,7 +318,6 @@
 		4CF9B1E21BDFC8CB006A268B /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9B12D1BDFC8CB006A268B /* UIScrollView+MJExtension.m */; };
 		4CF9B1E31BDFC8CB006A268B /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9B12F1BDFC8CB006A268B /* UIScrollView+MJRefresh.m */; };
 		4CF9B1E41BDFC8CB006A268B /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9B1311BDFC8CB006A268B /* UIView+MJExtension.m */; };
-		4CF9B1E51BDFC8CB006A268B /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9B13A1BDFC8CB006A268B /* NetworkManager.m */; };
 		4CF9B1E61BDFC8CB006A268B /* NSObject+AutoDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9B13D1BDFC8CB006A268B /* NSObject+AutoDescription.m */; };
 		4CF9B1E71BDFC8CB006A268B /* PPRevealSideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9B1401BDFC8CB006A268B /* PPRevealSideViewController.m */; };
 		4CF9B1E81BDFC8CB006A268B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9B1431BDFC8CB006A268B /* Reachability.m */; };
@@ -679,6 +679,8 @@
 		4CB318401BE12D1300D2E2A5 /* ZZCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZZCarousel.m; sourceTree = "<group>"; };
 		4CB318421BE1340A00D2E2A5 /* MCplaceholderText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCplaceholderText.h; sourceTree = "<group>"; };
 		4CB318431BE1340A00D2E2A5 /* MCplaceholderText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCplaceholderText.m; sourceTree = "<group>"; };
+		4CECC99B1BF861E300ACD410 /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
+		4CECC99C1BF861E300ACD410 /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
 		4CED414E1BE5D1A70060CE47 /* zuopinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zuopinViewController.h; sourceTree = "<group>"; };
 		4CED414F1BE5D1A70060CE47 /* zuopinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zuopinViewController.m; sourceTree = "<group>"; };
 		4CED41511BE5D1D80060CE47 /* MyzuopinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyzuopinViewController.h; sourceTree = "<group>"; };
@@ -809,8 +811,6 @@
 		4CF9B12F1BDFC8CB006A268B /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
 		4CF9B1301BDFC8CB006A268B /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
 		4CF9B1311BDFC8CB006A268B /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
-		4CF9B1391BDFC8CB006A268B /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
-		4CF9B13A1BDFC8CB006A268B /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
 		4CF9B13C1BDFC8CB006A268B /* NSObject+AutoDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AutoDescription.h"; sourceTree = "<group>"; };
 		4CF9B13D1BDFC8CB006A268B /* NSObject+AutoDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AutoDescription.m"; sourceTree = "<group>"; };
 		4CF9B13F1BDFC8CB006A268B /* PPRevealSideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPRevealSideViewController.h; sourceTree = "<group>"; };
@@ -1421,6 +1421,15 @@
 			path = "登陆";
 			sourceTree = "<group>";
 		};
+		4CECC99A1BF861E300ACD410 /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				4CECC99B1BF861E300ACD410 /* NetworkManager.h */,
+				4CECC99C1BF861E300ACD410 /* NetworkManager.m */,
+			);
+			path = NetworkManager;
+			sourceTree = "<group>";
+		};
 		4CED414B1BE5D1800060CE47 /* 我的作品、收藏 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1526,6 +1535,7 @@
 		4CF9B0B01BDFC8CA006A268B /* 第三方 */ = {
 			isa = PBXGroup;
 			children = (
+				4CECC99A1BF861E300ACD410 /* NetworkManager */,
 				4CAC616D1BF71EE60025158D /* HZPhotoBrowser */,
 				4CF9B0B11BDFC8CA006A268B /* AFNetworking */,
 				4CF9B0C51BDFC8CB006A268B /* Base */,
@@ -1538,7 +1548,6 @@
 				4CF9B1091BDFC8CB006A268B /* MJExtension */,
 				4CF9B1211BDFC8CB006A268B /* MJRefresh */,
 				4CF9B1321BDFC8CB006A268B /* MWPhotoBrowser */,
-				4CF9B1381BDFC8CB006A268B /* NetworkManager */,
 				4CF9B13B1BDFC8CB006A268B /* NSObject+AutoDescription */,
 				4CF9B13E1BDFC8CB006A268B /* PPRevealSideviewController */,
 				4CF9B1411BDFC8CB006A268B /* Reachbility */,
@@ -1868,15 +1877,6 @@
 			children = (
 			);
 			path = PSTCollectionView;
-			sourceTree = "<group>";
-		};
-		4CF9B1381BDFC8CB006A268B /* NetworkManager */ = {
-			isa = PBXGroup;
-			children = (
-				4CF9B1391BDFC8CB006A268B /* NetworkManager.h */,
-				4CF9B13A1BDFC8CB006A268B /* NetworkManager.m */,
-			);
-			path = NetworkManager;
 			sourceTree = "<group>";
 		};
 		4CF9B13B1BDFC8CB006A268B /* NSObject+AutoDescription */ = {
@@ -2478,7 +2478,6 @@
 				4CF9B1B31BDFC8CB006A268B /* AFHTTPRequestOperationManager.m in Sources */,
 				4C1C3D351BEDDBEB0059D9C2 /* zuopinDataViewController.m in Sources */,
 				4CF9B1B51BDFC8CB006A268B /* AFNetworkReachabilityManager.m in Sources */,
-				4CF9B1E51BDFC8CB006A268B /* NetworkManager.m in Sources */,
 				4CF9B1E11BDFC8CB006A268B /* MJRefreshHeaderView.m in Sources */,
 				4C7796871BF383AF00DEA04C /* TYAlertController.m in Sources */,
 				4CF9B2041BDFC8CB006A268B /* MCTabButton.m in Sources */,
@@ -2486,6 +2485,7 @@
 				4C237BB51BF0E68E00A3C91D /* liulanViewController.m in Sources */,
 				4CF9B1B91BDFC8CB006A268B /* AFURLResponseSerialization.m in Sources */,
 				4C1C3D0C1BEDCCDA0059D9C2 /* UIImageView+LBBlurredImage.m in Sources */,
+				4CECC99D1BF861E300ACD410 /* NetworkManager.m in Sources */,
 				4CED415A1BE5E43F0060CE47 /* Home2TableViewCell.m in Sources */,
 				4C7796901BF384BF00DEA04C /* UIView+TYAlertView.m in Sources */,
 				4C49958C1BEE5B780032413A /* UIViewExt.swift in Sources */,

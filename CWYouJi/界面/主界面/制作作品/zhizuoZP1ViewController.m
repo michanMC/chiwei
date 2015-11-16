@@ -117,9 +117,9 @@
 #pragma mark-下一步
 -(void)xiayibuBtn{
     
-    zhizuoZP2ViewController * ctl = [[zhizuoZP2ViewController alloc]init];
-    [self pushNewViewController:ctl];
-    return;
+//    zhizuoZP2ViewController * ctl = [[zhizuoZP2ViewController alloc]init];
+//    [self pushNewViewController:ctl];
+//    return;
     NSString * str1= @"";
     NSString * str2= @"";
 
@@ -140,11 +140,6 @@
         }
     }
     
-    NSLog(@"str1 == %@",str1);
-    NSLog(@"str2 == %@",str2);
-    NSLog(@"_jingdianStr == %@",_jingdianStr);
-
-    NSLog(@"_timeStr == %@",_timeStr);
     if (!str1.length) {
         kAlertMessage(@"请选择你对此景点的看法");
         return;
@@ -161,9 +156,24 @@
         kAlertMessage(@"请选择你出游的时间");
         return;
     }
+    NSLog(@"str1 == %@",str1);
+    NSLog(@"str2 == %@",str2);
+    NSLog(@"_jingdianStr == %@",_jingdianStr);
+    
+    NSLog(@"_timeStr == %@",_timeStr);
+    
+    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+    [dic setObject:str1 forKey:@"isRecommend"];
+    [dic setObject:str2 forKey:@"classify"];
+    [dic setObject:_jingdianStr forKey:@"spotId"];
+    [dic setObject:_timeStr forKey:@"startTime"];
 
-//    zhizuoZP2ViewController * ctl = [[zhizuoZP2ViewController alloc]init];
-//    [self pushNewViewController:ctl];
+    
+
+    zhizuoZP2ViewController * ctl = [[zhizuoZP2ViewController alloc]init];
+    
+    ctl.dataDic = dic;
+    [self pushNewViewController:ctl];
     
 }
 -(UIView*)prepareheadView{

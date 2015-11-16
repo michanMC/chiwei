@@ -202,6 +202,7 @@
     
     [_headwheel reloadData];
     [self preparedaohangtiao];
+    [self loadData:YES];
     
 }
 -(void)preparedaohangtiao{
@@ -255,6 +256,32 @@
     [_daohanTiaoview addSubview:_daohanTiaoLineview];
     [self.view addSubview:_daohanTiaoview];
     
+    
+    
+}
+#pragma mark-加载数据
+-(void)loadData:(BOOL)isjuhua{
+    
+    NSDictionary * Parameterdic = @{
+                                    @"page":@"0",
+                                    @"user_session":self.userSessionId
+                                    
+                                    };
+    
+    
+    [self showLoading:isjuhua AndText:nil];
+    [self.requestManager requestWebWithParaWithURL:@"api/travel/query.json" Parameter:Parameterdic Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        
+        NSLog(@"失败");
+    }];
+
     
     
 }

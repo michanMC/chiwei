@@ -31,7 +31,7 @@
     
     MCUser * _user;
     RGFadeView * rgFadeView;
-    
+    UIButton * _bianjiBtn;
 
 }
 
@@ -95,6 +95,8 @@
         imageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         //imageView.image = [UIImage imageNamed:@"mine_default-avatar"];
         [imageView sd_setImageWithURL:[NSURL URLWithString:_user.userThumbnail] placeholderImage:[UIImage imageNamed:@"mine_default-avatar"]];
+       
+        
         imageView.layer.masksToBounds = YES;
         imageView.layer.cornerRadius = 40;
         imageView.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -130,7 +132,7 @@
         
         x = (Main_Screen_Width-50)/2 + lblW / 2 + 10;
         
-        UIButton * _bianjiBtn = [[UIButton alloc]initWithFrame:CGRectMake(x, y, width, height)];
+         _bianjiBtn = [[UIButton alloc]initWithFrame:CGRectMake(x, y, width, height)];
         //_dengjiimgView.image = [UIImage imageNamed:@"mine_icon_revise"];
         [_bianjiBtn setImage:[UIImage imageNamed:@"mine_icon_revise"] forState:0];
         [_bianjiBtn addTarget:self action:@selector(bianji) forControlEvents:UIControlEventTouchUpInside];
@@ -227,15 +229,40 @@
     NSLog(@"%@",rgFadeView.msgTextView.text);
     if (rgFadeView.msgTextView.text.length) {
         
-        [self showHudInView:self.view hint:nil];
+       // [self showHudInView:self.view hint:@"修改中"];
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+
         NSDictionary * Parameterdic = @{
-                                        @"nickname":rgFadeView.msgTextView.text
+                                        @"nickname":rgFadeView.msgTextView.text,
+                                        @"user_session":[defaults objectForKey:@"sessionId"]
                                         };
         
         
         
-        [requestManager requestWebWithParaWithURL:@"/api/user/profiles/updateNickname.json" Parameter:Parameterdic Finish:^(NSDictionary *resultDic) {
+        [requestManager requestWebWithParaWithURL:@"api/user/profiles/updateNickname.json" Parameter:Parameterdic Finish:^(NSDictionary *resultDic) {
+           
             [self hideHud];
+
+            [self showHint:@"修改成功"];
+            label.text = rgFadeView.msgTextView.text;
+            
+            CGFloat lblW = [MCIucencyView heightforString:label.text andHeight:20 fontSize:18];
+            
+            CGFloat width = 20;
+            CGFloat height = width;
+            CGFloat x =(self.tableView.frame.size.width - 50- lblW)/2 - 10;
+            
+            
+            CGFloat y = 150;
+            
+            _dengjiimgView .frame= CGRectMake(x, y, width, height);
+            
+            _user.userNickname = label.text;
+            
+            x = (Main_Screen_Width-50)/2 + lblW / 2 + 10;
+            
+            _bianjiBtn.frame = CGRectMake(x,_bianjiBtn.frame.origin.y , _bianjiBtn.frame.size.width, _bianjiBtn.frame.size.height);
+            
             NSLog(@"成功");
             NSLog(@"返回==%@",resultDic);
             
@@ -608,17 +635,20 @@
     NSData *imageData = UIImageJPEGRepresentation(img, 0.2);
     NSString *base64Image=[imageData base64Encoding];
     
-    
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+
     NSDictionary * Parameterdic = @{
-                                    @"image":base64Image
+                                    @"image":base64Image,
+                                    @"user_session":[defaults objectForKey:@"sessionId"]
                                     };
     
     
     
-    [requestManager requestWebWithParaWithURL:@"/api/user/profiles/updateAvatar.json" Parameter:Parameterdic Finish:^(NSDictionary *resultDic) {
+    [requestManager requestWebWithParaWithURL:@"api/user/profiles/updateAvatar.json" Parameter:Parameterdic Finish:^(NSDictionary *resultDic) {
         [self hideHud];
         NSLog(@"成功");
         NSLog(@"返回==%@",resultDic);
+        _user.userThumbnail = resultDic[@"object"];
         
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
         [self hideHud];

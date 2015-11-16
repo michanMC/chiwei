@@ -229,8 +229,8 @@
         return;
 
     }
-     [self lloginChenggong];
-    return;
+//     [self lloginChenggong];
+//    return;
     [self showLoading:YES AndText:nil];
 
     NSDictionary * Parameterdic = @{
@@ -240,26 +240,43 @@
     
     
     
-    [self.requestManager requestWebWithParaWithURL:@"/api/user/login.json" Parameter:Parameterdic Finish:^(NSDictionary *resultDic) {
+    [self.requestManager requestWebWithParaWithURL:@"api/user/login.json" Parameter:Parameterdic Finish:^(NSDictionary *resultDic) {
         [self hideHud];
         NSLog(@"登录成功");
         NSLog(@"返回==%@",resultDic);
+        resultDic = resultDic[@"object"];
         /*保存数据－－－－－－－－－－－－－－－－－begin*/
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
         [defaults setObject:_nameText.text forKey:@"UserName"];
         [defaults setObject :_pwdText.text forKey:@"Pwd"];
+        
+        [defaults setObject :resultDic[@"sessionId"] forKey:@"sessionId"];
+          [defaults setObject :resultDic[@"nickname"] forKey:@"nickname"];
+        [defaults setObject :resultDic[@"mobile"] forKey:@"mobile"];
+        [defaults setObject :resultDic[@"id"] forKey:@"id"];
+        [defaults setObject :resultDic[@"sign"] forKey:@"password"];
+
+        
+        
+        
+        
+        
+        
         //强制让数据立刻保存
         [defaults synchronize];
         /*保存数据－－－－－－－－－－－－－－－－－end*/
         MCUser *_user = [MCUser sharedInstance];
-        _user.userExpire = resultDic[@"expire"];
+        _user.userExpire = resultDic[@"user"][@"expire"];
         _user.userSessionId = resultDic[@"sessionId"];
-        _user.userid = resultDic[@"id"];
-        _user.userid = resultDic[@"id"];
-        _user.userphone = resultDic[@"mobile"];
-        _user.userNickname = resultDic[@"nickname"];
-        _user.userSex = resultDic[@"sex"];
-
+        
+        
+        
+        _user.userid = resultDic[@"user"][@"id"];
+        _user.userid = resultDic[@"user"][@"id"];
+        _user.userphone = resultDic[@"user"][@"mobile"];
+        _user.userNickname = resultDic[@"user"][@"nickname"];
+        _user.userSex = resultDic[@"user"][@"sex"];
+        _user.userThumbnail = [NSString stringWithFormat:@"%@%@",AppImgURL,resultDic[@"user"][@"thumbnail"]];
         [self lloginChenggong];
         
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {

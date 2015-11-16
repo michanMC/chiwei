@@ -9,5 +9,8 @@
 #import "BaseViewController.h"
 
 @interface zhizuoZP2ViewController : BaseViewController
+@property(nonatomic,strong)NSMutableDictionary * dataDic;
+
+
 
 @end

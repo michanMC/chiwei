@@ -10,10 +10,9 @@
 #import "MyTools.h"
 #import "AA3DESManager.h"
 #import "CommeHelper.h"
-//#import "MainTableViewController.h"
-
-//192.168.1.112
-static NSString *const EPHttpApiBaseURL = AppURL;
+//http://121.201.16.96:80/app/test
+static NSString *const EPHttpApiBaseURL = AppURL;//@"http://121.201.16.96";
+//static NSString *const EPHttpApiBaseURL = @"http://120.25.218.167";
 
 @implementation NetworkManager
 
@@ -25,7 +24,13 @@ static NSString *const EPHttpApiBaseURL = AppURL;
     dispatch_once(&onceToken, ^{
         _instanceManager = [[NetworkManager alloc] init];
         _instanceManager.httpClient = [ExproHttpClient sharedClient];
+        
         _instanceManager.reachability = [Reachability reachabilityWithHostName:EPHttpApiBaseURL];
+        
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        [_instanceManager.httpClient.requestSerializer setValue:[defaults objectForKey:@"sessionId"] forHTTPHeaderField:@"user_session"];
+        
+        
     });
     
     return _instanceManager;
@@ -44,8 +49,8 @@ static NSString *const EPHttpApiBaseURL = AppURL;
 - (BOOL)isExistenceNetwork
 {
     BOOL isExistenceNetwork;
-    Reachability *reachAblitity = [Reachability reachabilityForInternetConnection];
-  //  Reachability *reachAblitity = [Reachability reachabilityWithHostName:@"http://www.baidu.com"];
+//    Reachability *reachAblitity = [Reachability reachabilityForInternetConnection];
+    Reachability *reachAblitity = [Reachability reachabilityWithHostName:@"http://www.baidu.com"];
     switch ([reachAblitity currentReachabilityStatus]) {
         case NotReachable:
             isExistenceNetwork=FALSE;
@@ -68,65 +73,6 @@ static NSString *const EPHttpApiBaseURL = AppURL;
 - (BOOL) IsEnable3G {
     return ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != NotReachable);
 }
-/**
- *  请求网络接口,返回请求的响应接口,并作初期数据处理
- *
- *  @param webApi        网络请求的接口
- *  @param para          请求所带的参数
- *  @param completeBlock 成功请求后得到的响应,此响应包括服务器业务逻辑异常结果,只接收服务器业务逻辑状态码为200的结果
- *  @param errorBlock    服务器响应不正常,网络连接失败返回的响应结果
- */
-- (void)requestGETWebWithParaWithURL:(NSString*)webApi Parameter:(NSDictionary *)para Finish:(HttpResponseSucBlock)completeBlock Error:(HttpResponseErrBlock)errorBlock{
-    webApi = [EPHttpApiBaseURL stringByAppendingString:webApi];
-
-    [self.httpClient GET:webApi parameters:para success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSDictionary *resultDic = responseObject;
-        NSString *resultArray = [resultDic objectForKey:@"result"];
-            
-            if ((NSNull *)resultArray != [NSNull null]) {
-                //                NSString *resultArrayStr = [AA3DESManager getDecryptWithString:resultArray keyString:@"p2p_standard2_base64_key" ivString:@"p2p_s2iv"];
-                // NSLog(@"resultArrayStr==%@",resultArrayStr);
-            }
-                   NSInteger logicCode = [resultDic[@"status"] integerValue];
-            
-            //成功获得数据
-            if (logicCode ==2000000) {
-                
-                completeBlock(resultDic);
-                
-            }
-            else{
-                //业务逻辑错误
-                NSString *message = [resultDic objectForKey:@"message"];
-                NSError *error = [NSError errorWithDomain:@"服务器业务逻辑错误" code:logicCode userInfo:nil];
-                errorBlock(nil,error,message);
-            }
-        //}
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        //请求失败
-        if (![self isExistenceNetwork]) {
-            
-            errorBlock(operation,error,@"网络有问题，请稍后再试");
-        }
-        else{
-            errorBlock(operation,error,@"数据请求失败");
-        }
-        
-
-    }];
-
-    
-    
-    
-    
-    
-    
-    
-    
-}
-
 
 /**
  *  请求网络接口,返回请求的响应接口,并作初期数据处理
@@ -139,65 +85,64 @@ static NSString *const EPHttpApiBaseURL = AppURL;
 - (void)requestWebWithParaWithURL:(NSString*)webApi Parameter:(NSDictionary *)para Finish:(HttpResponseSucBlock)completeBlock Error:(HttpResponseErrBlock)errorBlock
 {
     
-    webApi = [EPHttpApiBaseURL stringByAppendingString:webApi];
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+  [self.httpClient.requestSerializer setValue:[defaults objectForKey:@"sessionId"] forHTTPHeaderField:@"user_session"];
+//    NSLog(@"》》》》%@",self.httpClient);
     
-//        [self.httpClient.requestSerializer setValue:[MCUser sharedInstance].sessionId forHTTPHeaderField:@"sessionId"];
-//    NSLog(@"-------------------------------------%@",[MCUser sharedInstance].sessionId );
+    
+    
+//    [self.httpClient.requestSerializer setValue:APP_KEY forHTTPHeaderField:@"sign_appkey"];
 //    
-//    
-//    [self.httpClient.requestSerializer setValue:[MCUser sharedInstance].sessionId forHTTPHeaderField:@"sessionId"];
-//
-//
-    [self.httpClient POST:webApi parameters:para success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@",responseObject[@"message"]);
+//    [self.httpClient.requestSerializer setValue:[defaults objectForKey:@"sign"] forHTTPHeaderField:@"sign_sign"];
+//    [self.httpClient.requestSerializer setValue:IMEI forHTTPHeaderField:@"imei"];
 
+    
+    
+   // webApi = [EPHttpApiBaseURL stringByAppendingString:webApi];
+
+//    [self.httpClient.requestSerializer setValue:[MyTools getTheSeesionId] forHTTPHeaderField:@"user_session"];
+    [self.httpClient POST:webApi parameters:para success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+       // DLog(@"URL:%@, 请求参数:%@, 返回值:%@",operation.request.URL,para,responseObject);
         
         NSError *parserError = nil;
-        NSDictionary *resultDic = [NSDictionary dictionaryWithDictionary:responseObject];
+        NSDictionary *resultDic = nil;
         @try {
-            NSMutableData* data = [[NSMutableData alloc]init];
-            NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
-            [archiver encodeObject:responseObject];
-            [archiver finishEncoding];
-            
-           // NSString *responseString =responseObject;// [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-          //  NSLog(@"%@",resultDic);
-            
-            
+            NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+
             
 //           NSRange rangeFrom = [s rangeOfString:@"result\":\""];
-           //  NSRange rangeFrom = [responseString rangeOfString:@"resultMsg\":\""];
+             NSRange rangeFrom = [responseString rangeOfString:@"resultMsg\":\""];
            // DLog(@"range===%lu    %lu",(unsigned long)rangeFrom.location, (unsigned long)rangeFrom.length);
 //            resultDic = (NSDictionary *)responseObject;
 //            NSRange rangeTo = [s rangeOfString:@"\",\"remark\""];
-           // NSRange rangeTo = [responseString rangeOfString:@"\",\"deviceId\""];
+            NSRange rangeTo = [responseString rangeOfString:@"\",\"deviceId\""];
          //   DLog(@"range===%lu    %lu",(unsigned long)rangeTo.location, (unsigned long)rangeTo.length);
            
-          //  NSRange stringRange = NSMakeRange(rangeFrom.location + rangeFrom.length, rangeTo.location - rangeFrom.location - rangeFrom.length);
-//            NSString *tostring;
-//            if (stringRange.length != 0) {
-//                tostring = [responseString substringWithRange:stringRange];
-//               // DLog(@"st====%@",tostring);
-////                NSString *decryptString = [AA3DESManager getDecryptWithString:tostring keyString:@"p2p_standard2_base64_key" ivString:@"p2p_s2iv"];
-//               // NSLog(@"decrystring==%@",decryptString);
-//            }
+            NSRange stringRange = NSMakeRange(rangeFrom.location + rangeFrom.length, rangeTo.location - rangeFrom.location - rangeFrom.length);
+            NSString *tostring;
+            if (stringRange.length != 0) {
+                tostring = [responseString substringWithRange:stringRange];
+               // DLog(@"st====%@",tostring);
+                NSString *decryptString = [AA3DESManager getDecryptWithString:tostring keyString:@"p2p_standard2_base64_key" ivString:@"p2p_s2iv"];
+                NSLog(@"decrystring==%@",decryptString);
+            }
            
-//            NSData *jsonData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
-//            NSError *err;
-//            
-//            
-//            resultDic = [NSJSONSerialization JSONObjectWithData:jsonData
-//                                                                options:NSJSONReadingMutableContainers
-//                                                                  error:&err];
+            NSData *jsonData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
+            NSError *err;
+            
+            
+            resultDic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                                options:NSJSONReadingMutableContainers
+                                                                  error:&err];
            // DLog(@"dic===%@",resultDic);
             
            // NSString *resultArray = [resultDic objectForKey:@"code"];
-            NSString *resultArray = [NSString stringWithFormat:@"%ld",[resultDic[@"code"] integerValue]];
-
-            if ((NSNull *)resultArray != [NSNull null]) {
+            
+//            if ((NSNull *)resultArray != [NSNull null]) {
 //                NSString *resultArrayStr = [AA3DESManager getDecryptWithString:resultArray keyString:@"p2p_standard2_base64_key" ivString:@"p2p_s2iv"];
-               // NSLog(@"resultArrayStr==%@",resultArrayStr);
-            }
+//                NSLog(@"resultArrayStr==%@",resultArrayStr);
+//            }
           
             
         }
@@ -212,14 +157,43 @@ static NSString *const EPHttpApiBaseURL = AppURL;
             //成功获得数据
             if ([logicCode isEqualToString:@"1"]) {
                 
-                completeBlock(resultDic[@"object"]);
+                completeBlock(resultDic);
                 
             }
             else{
                 //业务逻辑错误
                 NSString *message = [resultDic objectForKey:@"message"];
-                
                 NSError *error = [NSError errorWithDomain:@"服务器业务逻辑错误" code:logicCode.intValue userInfo:nil];
+                if ([message isEqualToString:@"会话信息失效"]) {
+                    
+                    //                    /*保存数据－－－－－－－－－－－－－－－－－begin*/
+                    //                    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+                    //                    [defaults setObject:@"0" forKey:@"isLogOut"];
+                    //                    // [defaults setObject :nil forKey:@"sessionId"];
+                    //                    [MCUser sharedInstance].sessionId = nil;
+                    //                    [defaults setObject:nil forKey:@"sessionId"];
+                    //                    // [defaults setObject:nil forKey:@"Pwd"];
+                    //                    [defaults setObject:nil forKey:@"customerName"];
+                    //                    [defaults setObject:nil forKey:@"examine"];
+                    //
+                    //
+                    //                    //消除提示打开通讯录
+                    //                    [defaults setBool:NO forKey:@"isNoNotice"];
+                    //
+                    //                    //强制让数据立刻保存
+                    //                    [defaults synchronize];
+                    //                    // [[NetworkManager instanceManager] setSessionID:nil];
+                    //                    ViewController * root = [[ViewController alloc]init];
+                    //                    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                    //                    // [self addChildViewController:nav];
+                    //                    
+                    //                    
+                    //                    appDelegate.window.rootViewController = root;
+                    //                    
+                    //                    
+                    //                    
+                    //                    return ;
+                }
                 errorBlock(nil,error,message);
             }
         }
@@ -317,11 +291,6 @@ static NSString *const EPHttpApiBaseURL = AppURL;
     }];
 }
 
-- (void)setSessionID:(NSString *)sessionID
-{
-    //[self.httpClient.requestSerializer setValue:[MCUser sharedInstance].sessionId forHTTPHeaderField:@"sessionId"];
-}
-
 
 
 @end
@@ -333,26 +302,27 @@ static NSString *const EPHttpApiBaseURL = AppURL;
     static ExproHttpClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedClient = [ExproHttpClient manager];
+        _sharedClient = [[ExproHttpClient alloc] initWithBaseURL:[NSURL URLWithString:EPHttpApiBaseURL]];
+        
+        [_sharedClient setSecurityPolicy:[AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone]];
+        //[_sharedClient.requestSerializer setValue:@"ios" forHTTPHeaderField:@"client"];
+        //[_sharedClient.requestSerializer setValue:APP_KEY forHTTPHeaderField:@"sign_appkey"];
+        _sharedClient.responseSerializer = [AFHTTPResponseSerializer serializer];
+       // _sharedClient.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"text/plain",@"text/javascript", nil];
+        
+        
+        
+       
 
         
-//        //2.设置response类型
-//        _sharedClient.responseSerializer = [AFPropertyListResponseSerializer serializer]; //是Response, 别写成request了. 修改为plist类型.
-//        _sharedClient.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"text/plain",@"text/javascript", nil];
-//        
         
         
-//        
-//        _sharedClient = [[ExproHttpClient alloc] initWithBaseURL:[NSURL URLWithString:EPHttpApiBaseURL]];
-//        [_sharedClient setSecurityPolicy:[AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone]];
-//        //[_sharedClient.requestSerializer setValue:@"ios" forHTTPHeaderField:@"client"];
-//        //[_sharedClient.requestSerializer setValue:APP_KEY forHTTPHeaderField:@"sign_appkey"];
-//        _sharedClient.responseSerializer = [AFHTTPResponseSerializer serializer];
-//       // [_sharedClient.requestSerializer setValue:[MCUser sharedInstance].sessionId forHTTPHeaderField:@"sessionId"];
+        
     });
     
     return _sharedClient;
 }
+
 
 
 @end

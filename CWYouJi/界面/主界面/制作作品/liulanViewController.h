@@ -15,5 +15,5 @@
 @property(nonatomic,copy)NSString * timeStr;//时间
 @property(nonatomic,copy)NSString * KeyStr;//类型
 @property(nonatomic,copy)NSString * jingdianStr;//景点
-
+@property(nonatomic,strong)NSMutableDictionary * dataDic;
 @end

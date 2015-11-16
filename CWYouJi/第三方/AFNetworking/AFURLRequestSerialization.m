@@ -312,6 +312,7 @@ forHTTPHeaderField:(NSString *)field
 {
     NSParameterAssert(method);
     NSParameterAssert(URLString);
+    //http://203.195.168.151:9000/api/user/login.json
 
     NSURL *url = [NSURL URLWithString:URLString];
 
@@ -323,6 +324,8 @@ forHTTPHeaderField:(NSString *)field
     for (NSString *keyPath in AFHTTPRequestSerializerObservedKeyPaths()) {
         if ([self.mutableObservedChangedKeyPaths containsObject:keyPath]) {
             [mutableRequest setValue:[self valueForKeyPath:keyPath] forKey:keyPath];
+            
+            
         }
     }
 

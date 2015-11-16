@@ -92,6 +92,26 @@
     if (btn.tag == 202) {
         NSLog(@"删除");
     }
+    NSMutableArray *imgArray = [NSMutableArray array];
+    for (int i = 0; i < _imgViewArray.count; i ++) {
+        
+        UIImage *tempImg;
+        if([_imgViewArray[i]isKindOfClass:[UIImage class]]){
+            tempImg = _imgViewArray[i];
+        }
+        else{
+            ALAsset *asset=_imgViewArray[i];
+            tempImg =[UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
+        }
+        
+        [imgArray addObject:tempImg];
+        
+    }
+    if (!imgArray.count) {
+        kAlertMessage(@"亲，有图有真相哦");
+        return;
+    }
+
     if (!_diaotiStr.length) {
         kAlertMessage(@"请输入标题");
         return;
@@ -104,8 +124,99 @@
 
     if (btn.tag == 200) {
         NSLog(@"发布");
+        NSLog(@">>>>%@",_dataDic);
+        NSString * isRecommend;
+        NSString *classify;
+        NSString *startTime;
+        NSString *spotId;
+        if ([[_dataDic objectForKey:@"isRecommend"] isEqualToString:@"赞美"]) {
+            isRecommend = @"1";
+//            _titlearray = @[@"东西好吃得不要不要的",@"三星级的价格，五星级的享受",@"景美，我和我的小伙伴都惊呆了",@"买买买"];
+
+            
+            
+        }
+        else
+        {
+          // [@"我有100钟方法让你吃不下去",@"住宿环境差，感觉不会再爱了",@"看到这景色，我的内心几乎是崩溃",@"青岛大虾，38元一只"];
+            isRecommend = @"0";
+            
+        }
+        if ([[_dataDic objectForKey:@"classify"] isEqualToString:@"东西好吃得不要不要的"]||[[_dataDic objectForKey:@"classify"] isEqualToString:@"我有100钟方法让你吃不下去"])
+            classify = @"0";
+        if ([[_dataDic objectForKey:@"classify"] isEqualToString:@"三星级的价格，五星级的享受"]||[[_dataDic objectForKey:@"classify"] isEqualToString:@"住宿环境差，感觉不会再爱了"])
+            classify = @"1";
+        if ([[_dataDic objectForKey:@"classify"] isEqualToString:@"景美，我和我的小伙伴都惊呆了"]||[[_dataDic objectForKey:@"classify"] isEqualToString:@"看到这景色，我的内心几乎是崩溃"])
+            classify = @"2";
+        if ([[_dataDic objectForKey:@"classify"] isEqualToString:@"买买买"]|[[_dataDic objectForKey:@"classify"] isEqualToString:@"青岛大虾，38元一只"])
+            classify = @"3";
+
+     startTime =   [[_dataDic objectForKey:@"startTime"] substringToIndex:10];
         
         
+       // NSLog(@">>>>>%@",imgArray);
+        NSMutableDictionary * imgDic = [NSMutableDictionary dictionary];
+        for (int i = 0; i < imgArray.count; i++) {
+            
+            UIImage *img = imgArray[i];
+            NSData *imageData = UIImageJPEGRepresentation(img, 0.2);
+            NSString *base64Image=[imageData base64Encoding];
+             [imgDic setObject:base64Image forKey:[NSString stringWithFormat:@"%d",i+1]];
+
+            
+        }
+        NSLog(@"<<<<<%@",imgDic);
+        
+        
+        NSError *parseError = nil;
+        
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:imgDic options:NSJSONWritingPrettyPrinted error:&parseError];
+        
+        NSString * photoes = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        
+        
+        
+        
+        
+        NSLog(@",,,,,,%@",self.userSessionId);
+        NSDictionary * Parameterdic = @{
+                                        @"title":_diaotiStr,
+                                        @"content":_holderTextStr,
+                                        @"spotId":@(1),
+                                        @"classify":@(0),//classify,
+                                        @"startTime":startTime,
+                                        @"isRecommend":@(0),//isRecommend,
+                                        @"photoes":photoes,
+                                        @"user_session":self.userSessionId
+                                        
+                                        };
+        
+        
+        [self showLoading:YES AndText:nil];
+        [self.requestManager requestWebWithParaWithURL:@"api/travel/add.json" Parameter:Parameterdic Finish:^(NSDictionary *resultDic) {
+            [self hideHud];
+            NSLog(@"成功");
+            NSLog(@"返回==%@",resultDic);
+            
+        } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+            [self hideHud];
+            [self showAllTextDialog:description];
+            
+            NSLog(@"失败");
+        }];
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        return;
         ShareView *shareView = [ShareView createViewFromNib];
         shareView.titleLbl.textColor = AppTextCOLOR;
         ViewRadius(shareView.bgView, 5);
@@ -113,6 +224,9 @@
         
         [shareView.detebtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
             [shareView hideView];
+            
+            
+            
         
         }];
         [shareView.weiboBtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
@@ -150,29 +264,30 @@
         NSLog(@"浏览");
         
       
-        NSMutableArray *imgArray = [NSMutableArray array];
-        for (int i = 0; i < _imgViewArray.count; i ++) {
-        
-        UIImage *tempImg;
-        if([_imgViewArray[i]isKindOfClass:[UIImage class]]){
-            tempImg = _imgViewArray[i];
-        }
-        else{
-            ALAsset *asset=_imgViewArray[i];
-            tempImg =[UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
-        }
-            
-            [imgArray addObject:tempImg];
-            
-        }
-        if (!imgArray.count) {
-            kAlertMessage(@"亲，有图有真相哦");
-            return;
-        }
+//        NSMutableArray *imgArray = [NSMutableArray array];
+//        for (int i = 0; i < _imgViewArray.count; i ++) {
+//        
+//        UIImage *tempImg;
+//        if([_imgViewArray[i]isKindOfClass:[UIImage class]]){
+//            tempImg = _imgViewArray[i];
+//        }
+//        else{
+//            ALAsset *asset=_imgViewArray[i];
+//            tempImg =[UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
+//        }
+//            
+//            [imgArray addObject:tempImg];
+//            
+//        }
+//        if (!imgArray.count) {
+//            kAlertMessage(@"亲，有图有真相哦");
+//            return;
+//        }
           liulanViewController * ctl = [[liulanViewController alloc]init];
         ctl.imgViewArray= imgArray;
         ctl.titleStr = _diaotiStr;
         ctl.title2Str = _holderTextStr;
+        ctl.dataDic = _dataDic;
         [self pushNewViewController:ctl];
         
         
