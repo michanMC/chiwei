@@ -62,7 +62,7 @@
     
     
     
-    [self.imgview setImageToBlur:bgimg
+    [self.imgview setImageToBlur:bgimg Url:@""
                       blurRadius:kLBBlurredImageDefaultBlurRadius
                  completionBlock:^(){
                      NSLog(@"The blurred image has been set");

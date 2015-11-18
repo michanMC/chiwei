@@ -14,7 +14,6 @@
 #import "DEMONavigationController.h"
 #import "DEMOHomeViewController.h"
 #import "DEMOMenuViewController.h"
-
 @interface loginViewController ()
 {
     UIImageView * _bgImgView;
@@ -240,11 +239,12 @@
     
     
     
-    [self.requestManager requestWebWithParaWithURL:@"api/user/login.json" Parameter:Parameterdic Finish:^(NSDictionary *resultDic) {
+    [self.requestManager requestWebWithParaWithURL:@"api/user/login.json" Parameter:Parameterdic IsLogin:NO Finish:^(NSDictionary *resultDic) {
         [self hideHud];
         NSLog(@"登录成功");
         NSLog(@"返回==%@",resultDic);
         resultDic = resultDic[@"object"];
+        
         /*保存数据－－－－－－－－－－－－－－－－－begin*/
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
         [defaults setObject:_nameText.text forKey:@"UserName"];
@@ -258,10 +258,6 @@
 
         
         
-        
-        
-        
-        
         //强制让数据立刻保存
         [defaults synchronize];
         /*保存数据－－－－－－－－－－－－－－－－－end*/
@@ -272,11 +268,12 @@
         
         
         _user.userid = resultDic[@"user"][@"id"];
-        _user.userid = resultDic[@"user"][@"id"];
         _user.userphone = resultDic[@"user"][@"mobile"];
         _user.userNickname = resultDic[@"user"][@"nickname"];
         _user.userSex = resultDic[@"user"][@"sex"];
         _user.userThumbnail = [NSString stringWithFormat:@"%@%@",AppImgURL,resultDic[@"user"][@"thumbnail"]];
+        NSLog(@">>>>%@",[NSString stringWithFormat:@"%@%@",AppImgURL,resultDic[@"user"][@"thumbnail"]]);
+        
         [self lloginChenggong];
         
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {

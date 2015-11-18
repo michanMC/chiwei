@@ -17,6 +17,7 @@
 #import "shaixuanView.h"
 #import "zhizuoZP1ViewController.h"
 #import "jingdianView.h"
+#import "homeYJModel.h"
 @interface DEMOHomeViewController ()<ZZCarouselDelegate,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,UITextFieldDelegate,jingdianViewDelegate>
 {
     
@@ -33,6 +34,9 @@
     NSInteger _btnTagindexXH;
     //分类
      NSInteger _btnTagindexFL;
+    
+    NSMutableArray *_dataAarray;//数据源
+    NSInteger _pageStr;
 
 }
 
@@ -43,9 +47,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _pageStr = 1;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectObj:) name:@"didSelectObjNotification" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dishuaxinObj:) name:@"dishuaxinObjNotification" object:nil];
 	self.title = @"Home Controller";
-    
+    _dataAarray  =[NSMutableArray array];
     [self prepareUI];
     
     
@@ -195,6 +201,8 @@
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
+    [_tableView addFooterWithTarget:self action:@selector(actionfooter)];
+    [_tableView addHeaderWithTarget:self action:@selector(actionHeader)];
     _faBuBtn = [[UIButton alloc]initWithFrame:CGRectMake((Main_Screen_Width - 50)/2, Main_Screen_Height - 5 - 50, 50, 50)];
     [_faBuBtn setImage:[UIImage imageNamed:@"home_add_normal"] forState:UIControlStateNormal];
     [self.view addSubview:_faBuBtn];
@@ -203,6 +211,16 @@
     [_headwheel reloadData];
     [self preparedaohangtiao];
     [self loadData:YES];
+    
+}
+#pragma mrak-上下拉
+-(void)actionHeader{
+    _pageStr = 1;
+    [self loadData:NO];
+}
+-(void)actionfooter{
+    _pageStr ++;
+    [self loadData:NO];
     
 }
 -(void)preparedaohangtiao{
@@ -263,22 +281,40 @@
 -(void)loadData:(BOOL)isjuhua{
     
     NSDictionary * Parameterdic = @{
-                                    @"page":@"0",
+                                    @"page":@(_pageStr),
                                     @"user_session":self.userSessionId
                                     
                                     };
     
     
     [self showLoading:isjuhua AndText:nil];
-    [self.requestManager requestWebWithParaWithURL:@"api/travel/query.json" Parameter:Parameterdic Finish:^(NSDictionary *resultDic) {
+    [self.requestManager requestWebWithParaWithURL:@"api/travel/query.json" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
         [self hideHud];
         NSLog(@"成功");
-        NSLog(@"返回==%@",resultDic);
+       NSLog(@"返回游记==%@",resultDic);
+        if (_pageStr == 1) {
+            [_dataAarray removeAllObjects];
+        }
+        
+        NSArray * objectArray = resultDic[@"object"];
+        for (NSDictionary* dic in objectArray) {
+            homeYJModel * model = [homeYJModel mj_objectWithKeyValues:dic];
+           model.userModel = [YJUserModel mj_objectWithKeyValues:dic[@"user"]];
+            NSLog(@"%@",model.userModel.isNew);
+            
+            [_dataAarray addObject:model];
+        }
+        
+        [_tableView headerEndRefreshing];
+        [_tableView footerEndRefreshing];
+        [_tableView reloadData];
+        
         
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
         [self hideHud];
         [self showAllTextDialog:description];
-        
+        [_tableView headerEndRefreshing];
+        [_tableView footerEndRefreshing];
         NSLog(@"失败");
     }];
 
@@ -389,6 +425,10 @@
 //    
     
 }
+-(void)dishuaxinObj:(NSNotification*)notication{
+    _pageStr = 0;
+    [self loadData:NO];
+}
 #pragma mark-发布
 -(void)actionFabu{
     zhizuoZP1ViewController * ctl = [[zhizuoZP1ViewController alloc]init];
@@ -435,7 +475,8 @@
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
+    
+    return _dataAarray.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 150;
@@ -464,6 +505,66 @@
     cell.dingweiimg.textColor = [UIColor grayColor];
     cell.nameLbl.textColor = [UIColor grayColor];
     ViewRadius(cell.headImg, 20);
+    cell.headImg.layer.borderColor = [UIColor whiteColor].CGColor;
+    cell.headImg.layer.borderWidth = 1.5;
+    if (_dataAarray.count > indexPath.section) {
+        homeYJModel * model = _dataAarray[indexPath.section];
+      //  NSMutableDictionary * model = _dataAarray[indexPath.section];
+        //NSLog(@">>>>>>%@", model.title);
+     
+    //title
+    if (model.title.length > 9) {//第一行大概9个字
+        cell.titleLbl1.text = [model.title substringToIndex:9];
+        cell.title2Lb.text = [model.title substringFromIndex:9];
+        
+    }
+    else
+    {
+        cell.titleLbl1.text = model.title;
+        cell.title2Lb.text = @"";
+        
+    }
+        
+        //photos
+
+        if ([model.photos count]) {
+            NSString * str = model.photos[0][@"thumbnail"];
+            
+            [cell.imgView sd_setImageWithURL:[NSURL URLWithString:str] placeholderImage:[UIImage imageNamed:@"travels-details_default-chart04"]];
+        }
+        
+        //头像
+        if(model.userModel.thumbnail)
+        {
+            [cell.headImg sd_setImageWithURL:[NSURL URLWithString:model.userModel.thumbnail] placeholderImage:[UIImage imageNamed:@"home_default-avatar"]];
+            
+        }
+        //姓名
+        if (model.userModel.nickname) {
+            cell.nameLbl.text = model.userModel.nickname;
+        }
+        else
+        {
+           cell.nameLbl.text = @"游客";
+        }
+         
+        
+        //游记类型
+        //NSLog(@">>>>%@",[self.classifyDic objectForKey:model[@"classify"]]);
+        cell.typeLimgView.image  = [UIImage imageNamed:[self.classifyDic objectForKey:[NSString stringWithFormat:@"%ld",model.classify]]];
+        
+        NSLog(@"<<<<<%@",[NSString stringWithFormat:@"%ld",model.classify]);
+        
+        
+        //游记推荐
+        BOOL isRecommend = [model.isRecommend boolValue];
+        cell.tuijianimg.hidden = !isRecommend;
+        
+
+    
+    }
+    
+    
     return cell;
 
 }
@@ -471,8 +572,12 @@
 {
     
     
+    homeYJModel * model = _dataAarray[indexPath.section];
 
     zuopinXQViewController * ctl = [[zuopinXQViewController alloc]init];
+    ctl.home_model = model;
+    ctl.dataArray = _dataAarray;
+    ctl.index = indexPath.section;
     [self pushNewViewController:ctl];
 }
 #pragma mark-添加广告头

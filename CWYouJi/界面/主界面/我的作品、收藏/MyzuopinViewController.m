@@ -9,13 +9,15 @@
 #import "MyzuopinViewController.h"
 #import "HomeTableViewCell.h"
 #import "Home2TableViewCell.h"
-
+#import "homeYJModel.h"
 @interface MyzuopinViewController ()<UITableViewDataSource,UITableViewDelegate>{
     UITableView * _tableView;
     BOOL _isEit;
 
     UIView * foorview;
 
+    NSMutableArray *_dataArray;
+    
 }
 
 @end
@@ -27,13 +29,15 @@
     if (self) {
         _isEit = NO;
         _deleArray = [NSMutableArray array];
-        self.view.frame = CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Height - 44 - 64);
+       
+        _dataArray = [NSMutableArray array];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+     self.view.frame = CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Height - 44 - 64);
     self.view.backgroundColor = [UIColor yellowColor];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Height- 64 - 44) style:UITableViewStyleGrouped];
     _tableView.delegate = self;
@@ -41,11 +45,43 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     [self.view addSubview:_tableView];
+    [self loadData];
     // Do any additional setup after loading the view.
 }
+
+-(void)loadData{
+    NSDictionary * Parameterdic = @{
+                                    @"page":@(1)
+                                    };
+    
+    
+    [self showLoading:YES AndText:nil];
+    [self.requestManager requestWebWithParaWithURL:@"api/travel/myTravels.json" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        for (NSDictionary * dic in resultDic[@"object"]) {
+            homeYJModel * model = [homeYJModel mj_objectWithKeyValues:dic];
+            model.userModel = [YJUserModel mj_objectWithKeyValues:dic[@"user"]];
+            [_dataArray addObject:model];
+        }
+        
+        [_tableView reloadData];
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        
+        NSLog(@"失败");
+    }];
+    
+    
+}
+
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 10;
+    return _dataArray.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 150;
@@ -68,6 +104,61 @@
         //cell = [[[NSBundle mainBundle]loadNibNamed:@"Home2TableViewCell" owner:self options:nil]lastObject];
         cell = [[Home2TableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid1];
     }
+    
+    if (_dataArray.count > indexPath.section) {
+        homeYJModel * model = _dataArray[indexPath.section];
+        //title
+        if (model.title.length > 9) {//第一行大概9个字
+            cell.titleStr = [model.title substringToIndex:9];
+            cell.title2Str = [model.title substringFromIndex:9];
+            
+        }
+        else
+        {
+            cell.titleStr = model.title;
+            cell.title2Str = @"";
+            
+        }
+        //photos
+        
+        if ([model.photos count]) {
+            NSString * str = model.photos[0][@"thumbnail"];
+            cell.imgViewStr = str;
+        }
+        //头像
+        if(model.userModel.thumbnail)
+        {
+            
+            cell.headimgStr = model.userModel.thumbnail;
+            
+            
+        }
+        //姓名
+        if (model.userModel.nickname) {
+            cell.nameStr = model.userModel.nickname;
+        }
+        else
+        {
+            cell.nameStr = @"游客";
+        }
+
+        //游记类型
+        //NSLog(@">>>>%@",[self.classifyDic objectForKey:model[@"classify"]]);
+        cell.leixingStr  = [self.classifyDic objectForKey:[NSString stringWithFormat:@"%ld",(long)model.classify]];
+        
+        
+        //游记推荐
+        BOOL isRecommend = [model.isRecommend boolValue];
+        cell.istuijian = !isRecommend;
+
+    
+    
+    
+    
+    
+    }
+    
+    
     cell.isEit = _isEit;
     cell.deleteBtn.tag = indexPath.section + 200;
     [cell.deleteBtn addTarget:self action:@selector(actionCellBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -91,8 +182,11 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
-    
-    cell.contentView.frame = CGRectMake(-50, cell.contentView.frame.origin.y, cell.contentView.frame.size.width, cell.contentView.frame.size.height);
+//    [UIView animateWithDuration:0.25 animations:^{
+//        
+        cell.contentView.frame = CGRectMake(-50, cell.contentView.frame.origin.y, cell.contentView.frame.size.width, cell.contentView.frame.size.height);
+   // }];
+    //cell.contentView.frame = CGRectMake(-50, cell.contentView.frame.origin.y, cell.contentView.frame.size.width, cell.contentView.frame.size.height);
     //    cell.titleLbl1.textColor = AppTextCOLOR;
     //    cell.title2Lb.textColor = AppTextCOLOR;
     //    cell.dingweiimg.textColor = [UIColor grayColor];
@@ -118,8 +212,17 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+    homeYJModel * model = _dataArray[indexPath.section];
+
+    NSDictionary * dic = @{
+        @"model":model,
+        @"index":@(indexPath.section),
+        @"dataarray":_dataArray
+    };
+    
+    
     //发送通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectzuopinNotification" object:@"0"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectzuopinNotification" object:dic];
     
     
     

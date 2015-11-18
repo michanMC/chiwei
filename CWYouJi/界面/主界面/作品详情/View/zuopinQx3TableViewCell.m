@@ -71,7 +71,7 @@
 }
 -(void)setHeadStr:(NSString *)headStr
 {
-    
+    [_headImgView sd_setImageWithURL:[NSURL URLWithString:headStr] placeholderImage:[UIImage imageNamed:@"home_default-avatar"]];
 }
 -(void)setNameStr:(NSString *)nameStr
 {

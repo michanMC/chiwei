@@ -22,7 +22,7 @@ extern CGFloat const kLBBlurredImageDefaultBlurRadius;
  @param LBBlurredImageCompletionBlock a completion block called after the image
     was blurred and set to the UIImageView (the block is dispatched on main thread)
  */
-- (void)setImageToBlur:(UIImage *)image
+- (void)setImageToBlur:(UIImage *)image Url:(NSString*)url
             blurRadius:(CGFloat)blurRadius
        completionBlock:(LBBlurredImageCompletionBlock)completion;
 

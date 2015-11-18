@@ -57,9 +57,9 @@
 
 {
     
-    CGFloat imageW = 20;
+    CGFloat imageW = 18;
     
-    CGFloat imageH = 20;
+    CGFloat imageH = 18;
     
     CGFloat imageX = 0;
     

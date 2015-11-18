@@ -152,6 +152,34 @@
 
     }
 }
+-(void)setTitleStr:(NSString *)titleStr
+{
+    _titleLbl.text = titleStr;
+}
+-(void)setTitle2Str:(NSString *)title2Str
+{
+    _title2Lbl.text = title2Str;
+}
+-(void)setLeixingStrStr:(NSString *)leixingStr
+{
+    _leixingView.image = [UIImage imageNamed:leixingStr];
+}
+-(void)setIstuijian:(BOOL)istuijian{
+    
+    _tuijianView.hidden = istuijian;
+}
+-(void)setDingweiStr:(NSString *)dingweiStr{
+    
+}
+-(void)setNameStr:(NSString *)nameStr{
+    _nameLbl.text = nameStr;
+}
+-(void)setImgViewStr:(NSString *)imgViewStr
+{
+    
+    [_imgView sd_setImageWithURL:[NSURL URLWithString:imgViewStr] placeholderImage:[UIImage imageNamed:@"travels-details_default-chart04"]];
+    
+}
 - (void)awakeFromNib {
     // Initialization code
 }
@@ -163,3 +191,4 @@
 }
 
 @end
+

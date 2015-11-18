@@ -58,9 +58,18 @@
 - (void)didSelectObjzuopin:(NSNotification *)notication
 {
     NSLog(@">>>%@",notication);
-    zuopinXQViewController * ctl = [[zuopinXQViewController alloc]init];
-    [self pushNewViewController:ctl];
+    if ([notication.object isKindOfClass:[NSDictionary class]]) {
+        NSDictionary * dic = notication.object;
+        
+        zuopinXQViewController * ctl = [[zuopinXQViewController alloc]init];
+        ctl.home_model = dic[@"model"];
+        ctl.dataArray = dic[@"dataarray"];
+        ctl.index = [dic[@"index"] integerValue];
+    
+        [self pushNewViewController:ctl];
 
+    }
+   
     
 }
 

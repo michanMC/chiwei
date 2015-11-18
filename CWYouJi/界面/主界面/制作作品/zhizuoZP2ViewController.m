@@ -125,12 +125,12 @@
     if (btn.tag == 200) {
         NSLog(@"发布");
         NSLog(@">>>>%@",_dataDic);
-        NSString * isRecommend;
-        NSString *classify;
+        NSInteger  isRecommend = 0;
+        NSInteger classify = 0;
         NSString *startTime;
         NSString *spotId;
         if ([[_dataDic objectForKey:@"isRecommend"] isEqualToString:@"赞美"]) {
-            isRecommend = @"1";
+            isRecommend = 1;
 //            _titlearray = @[@"东西好吃得不要不要的",@"三星级的价格，五星级的享受",@"景美，我和我的小伙伴都惊呆了",@"买买买"];
 
             
@@ -139,17 +139,17 @@
         else
         {
           // [@"我有100钟方法让你吃不下去",@"住宿环境差，感觉不会再爱了",@"看到这景色，我的内心几乎是崩溃",@"青岛大虾，38元一只"];
-            isRecommend = @"0";
+            isRecommend = 0;
             
         }
         if ([[_dataDic objectForKey:@"classify"] isEqualToString:@"东西好吃得不要不要的"]||[[_dataDic objectForKey:@"classify"] isEqualToString:@"我有100钟方法让你吃不下去"])
-            classify = @"0";
+            classify = 0;
         if ([[_dataDic objectForKey:@"classify"] isEqualToString:@"三星级的价格，五星级的享受"]||[[_dataDic objectForKey:@"classify"] isEqualToString:@"住宿环境差，感觉不会再爱了"])
-            classify = @"1";
+            classify = 1;
         if ([[_dataDic objectForKey:@"classify"] isEqualToString:@"景美，我和我的小伙伴都惊呆了"]||[[_dataDic objectForKey:@"classify"] isEqualToString:@"看到这景色，我的内心几乎是崩溃"])
-            classify = @"2";
+            classify = 2;
         if ([[_dataDic objectForKey:@"classify"] isEqualToString:@"买买买"]|[[_dataDic objectForKey:@"classify"] isEqualToString:@"青岛大虾，38元一只"])
-            classify = @"3";
+            classify = 3;
 
      startTime =   [[_dataDic objectForKey:@"startTime"] substringToIndex:10];
         
@@ -183,9 +183,9 @@
                                         @"title":_diaotiStr,
                                         @"content":_holderTextStr,
                                         @"spotId":@(1),
-                                        @"classify":@(0),//classify,
+                                        @"classify":@(classify),//classify,
                                         @"startTime":startTime,
-                                        @"isRecommend":@(0),//isRecommend,
+                                        @"isRecommend":@(isRecommend),//isRecommend,
                                         @"photoes":photoes,
                                         @"user_session":self.userSessionId
                                         
@@ -193,10 +193,25 @@
         
         
         [self showLoading:YES AndText:nil];
-        [self.requestManager requestWebWithParaWithURL:@"api/travel/add.json" Parameter:Parameterdic Finish:^(NSDictionary *resultDic) {
+        [self.requestManager requestWebWithParaWithURL:@"api/travel/add.json" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
             [self hideHud];
             NSLog(@"成功");
             NSLog(@"返回==%@",resultDic);
+            
+            [self showAllTextDialog:@"发布成功"];
+            //发送通知首页刷新
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"dishuaxinObjNotification" object:@""];
+            
+
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                [self.navigationController popToRootViewControllerAnimated:YES];
+                
+            });
+
+            
+            
+            
             
         } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
             [self hideHud];
@@ -358,7 +373,7 @@
     
     
     _diaotiStr = textField.text;
-    [_tableview reloadData];
+    //[_tableview reloadData];
 }
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {

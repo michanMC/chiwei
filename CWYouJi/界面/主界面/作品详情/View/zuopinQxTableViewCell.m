@@ -125,6 +125,10 @@
         height = 35;
         _headimgView = [[UIImageView alloc]initWithFrame:CGRectMake(x, y, width, height)];
         _headimgView.image = [UIImage imageNamed:@"home_default-avatar"];
+        ViewRadius(_headimgView, 35/2);
+        _headimgView.layer.borderColor = [UIColor whiteColor].CGColor;
+        _headimgView.layer.borderWidth = 1.0;
+        
         [_foorView addSubview:_headimgView];
         
         x += width + 5;
@@ -142,7 +146,7 @@
         height = 20;
         _shouchangBtn = [[MCbackButton alloc]initWithFrame:CGRectMake(x, y, width, height)];
         [_shouchangBtn setImage:[UIImage imageNamed:@"travels_icon_favorite_normal"] forState:UIControlStateNormal];
-        _shouchangBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+        _shouchangBtn.titleLabel.font = [UIFont systemFontOfSize:12];
         [_shouchangBtn setTitle:@"收藏" forState:UIControlStateNormal];
         [_shouchangBtn setTitleColor:[UIColor grayColor] forState:0];
         [_foorView addSubview:_shouchangBtn];
@@ -161,9 +165,27 @@
     
     
 }
--(void)setTimeStr:(NSString *)timeStr
+-(void)setIsshouchang:(BOOL)isshouchang
 {
     
+    if (isshouchang) {
+        [_shouchangBtn setTitle:@"已收藏" forState:0];
+        [_shouchangBtn setImage:[UIImage imageNamed:@"travels_icon_favorite_pressed"] forState:0];
+    }
+    else
+    {
+        [_shouchangBtn setTitle:@"收藏" forState:0];
+        [_shouchangBtn setImage:[UIImage imageNamed:@"travels_icon_favorite_normal"] forState:0];
+        
+    }
+    
+    
+}
+-(void)setTimeStr:(NSString *)timeStr
+{
+    NSLog(@"%@",timeStr);
+    
+    _timeLbl.text = timeStr;
 }
 -(void)setTitleStr:(NSString *)titleStr
 {
@@ -176,11 +198,12 @@
 }
 -(void)setKeyImgStr:(NSString *)keyImgStr
 {
-    
+    _keyImgView.image = [UIImage imageNamed:keyImgStr];
 }
 -(void)setTuijanImgStr:(NSString *)tuijanImgStr
 {
-    
+    _tuijanImgView.image = [UIImage imageNamed:tuijanImgStr];
+
 }
 -(void)setDingweiStr:(NSString *)dingweiStr
 {
@@ -199,11 +222,11 @@
 }
 -(void)setNameLStr:(NSString *)nameLStr
 {
-    
+    _nameLbl.text = nameLStr;
 }
 -(void)setHeadimgStr:(NSString *)headimgStr
 {
-    
+    [_headimgView sd_setImageWithURL:[NSURL URLWithString:headimgStr] placeholderImage:[UIImage imageNamed:@"home_default-avatar"]];
     
 }
 - (void)awakeFromNib {

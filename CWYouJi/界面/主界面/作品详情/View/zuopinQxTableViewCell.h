@@ -22,4 +22,7 @@
 @property(nonatomic,copy)NSString *headimgStr;
 @property(nonatomic,copy)NSString *nameLStr;
 
+
+@property(nonatomic,assign)BOOL isshouchang;
+
 @end

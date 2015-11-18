@@ -18,6 +18,14 @@
 #import "WMLabelAlertView.h"
 #import "fenxiangViewTableViewCell.h"
 
+
+#import "REFrostedViewController.h"
+#import "AppDelegate.h"
+
+#import "loginViewController.h"
+#import "homeYJModel.h"
+
+
 @interface DEMOMenuViewController ()<WMAlertViewDelegate,UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate>{
     UIImageView *imageView;
     UILabel *label;
@@ -32,6 +40,7 @@
     MCUser * _user;
     RGFadeView * rgFadeView;
     UIButton * _bianjiBtn;
+    YJUserModel * _usermodel;
 
 }
 
@@ -44,7 +53,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didMoenuSelectObj:) name:@"didMoenuSelectObjNotification" object:nil];
-        _user=  [MCUser sharedInstance];
     }
     
     return self;
@@ -58,8 +66,16 @@
         [rgFadeView removeFromSuperview];
         rgFadeView = nil;
     }
+    
+    
 }
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self Datadetail:NO];
 
+    
+}
 #pragma mark-监听
 - (void)didMoenuSelectObj:(NSNotification *)notication
 {
@@ -72,6 +88,7 @@
     [super viewDidLoad];
     requestManager = [NetworkManager instanceManager];
     requestManager.needSeesion = YES;
+    _user=  [MCUser sharedInstance];
 
     index = 3;
     NSLog(@"%f",self.tableView.frame.size.width);
@@ -94,6 +111,8 @@
        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, (200 - 80)/2, 80, 80)];
         imageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         //imageView.image = [UIImage imageNamed:@"mine_default-avatar"];
+        NSLog(@"%@",_user.userThumbnail);
+        
         [imageView sd_setImageWithURL:[NSURL URLWithString:_user.userThumbnail] placeholderImage:[UIImage imageNamed:@"mine_default-avatar"]];
        
         
@@ -239,11 +258,15 @@
         
         
         
-        [requestManager requestWebWithParaWithURL:@"api/user/profiles/updateNickname.json" Parameter:Parameterdic Finish:^(NSDictionary *resultDic) {
+        [requestManager requestWebWithParaWithURL:@"api/user/profiles/updateNickname.json" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
            
             [self hideHud];
 
             [self showHint:@"修改成功"];
+            //发送通知首页刷新
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"dishuaxinObjNotification" object:@""];
+            
+
             label.text = rgFadeView.msgTextView.text;
             
             CGFloat lblW = [MCIucencyView heightforString:label.text andHeight:20 fontSize:18];
@@ -265,6 +288,10 @@
             
             NSLog(@"成功");
             NSLog(@"返回==%@",resultDic);
+            
+            
+            
+            
             
         } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
             [self hideHud];
@@ -380,7 +407,17 @@
     if (indexPath.row == 3) {
         return;
     }
+    if(indexPath.row == 5){
+//注销
+        
+        [self logout];
+        
+        
+        return;
+    }
+
     [self.frostedViewController hideMenuViewController];
+    
     //要传的值
     NSString *sendString;
     if (indexPath.row == 0) {
@@ -399,18 +436,116 @@
         
     }
     
-    else if(indexPath.row == 5){
-        sendString = @"5";
-        
-    }
-    
+
 
     
     //发送通知
     [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectObjNotification" object:sendString];
 
 }
+#pragma mark-查询资料
+-(void)Datadetail:(BOOL)iszhuan{
+    
+  
+    [requestManager requestWebWithParaWithURL:@"api/user/detail.json" Parameter:nil IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        
+      _usermodel  = [YJUserModel mj_objectWithKeyValues:resultDic[@"object"]];
+        
+        [self.tableView  reloadData];
+        
+        //头像
+        [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",AppImgURL,_usermodel.thumbnail]] placeholderImage:[UIImage imageNamed:@"mine_default-avatar"]];
+        
 
+        
+        label.text = _usermodel.nickname;
+        
+        CGFloat lblW = [MCIucencyView heightforString:label.text andHeight:20 fontSize:18];
+        
+        CGFloat width = 20;
+        CGFloat height = width;
+        CGFloat x =(self.tableView.frame.size.width - 50- lblW)/2 - 10;
+        
+        
+        CGFloat y = 150;
+        
+        _dengjiimgView .frame= CGRectMake(x, y, width, height);
+        
+        _user.userNickname = label.text;
+        
+        x = (Main_Screen_Width-50)/2 + lblW / 2 + 10;
+        
+        _bianjiBtn.frame = CGRectMake(x,_bianjiBtn.frame.origin.y , _bianjiBtn.frame.size.width, _bianjiBtn.frame.size.height);
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showHint:description];
+        NSLog(@"失败");
+    }];
+
+    
+    
+    
+    
+    
+}
+#pragma mark-注销
+-(void)logout{
+    
+    [self showHudInView:self.view hint:nil];
+    
+    [requestManager requestWebWithParaWithURL:@"api/user/logout.json" Parameter:nil IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        /*保存数据－－－－－－－－－－－－－－－－－begin*/
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        [defaults setObject :@"" forKey:@"Pwd"];
+        
+        [defaults setObject :@"" forKey:@"sessionId"];
+        [defaults setObject :@"" forKey:@"nickname"];
+        [defaults setObject :@"" forKey:@"mobile"];
+        [defaults setObject :@"" forKey:@"id"];
+        [defaults setObject :@"" forKey:@"password"];
+        
+        //强制让数据立刻保存
+        [defaults synchronize];
+        [self showHint:@"账号已退出"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            loginViewController *loginVC = [[loginViewController alloc]init];
+            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            DEMONavigationController *nav = [[DEMONavigationController alloc]initWithRootViewController:loginVC];
+            appDelegate.window.rootViewController = nav;
+
+        });
+
+        
+
+       
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showHint:description];
+        NSLog(@"失败");
+    }];
+ 
+    
+    
+    
+}
 #pragma mark -
 #pragma mark UITableView Datasource
 
@@ -500,6 +635,8 @@
 
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.titleLbl.text = @"你已经吐槽180条，赞美20条游记，请继续不吐不快吧";
+        
+        
         return cell;
     }
     if (indexPath.row == 3) {
@@ -520,13 +657,13 @@
     
     cell.backgroundColor = RGBCOLOR(106, 104, 84);
     if (indexPath.row == 1) {
-        cell.titleStr = @"已制作的作品(88)";
+        cell.titleStr = [NSString stringWithFormat:@"已制作的作品(%@)",_usermodel.travelCount ];
         cell.isimg = NO;
         cell.imgViewStr = @"mine_icon_works";
         return cell;
     }
     if (indexPath.row == 2) {
-        cell.titleStr = @"我收藏的作品(88)";
+        cell.titleStr = [NSString stringWithFormat:@"我收藏的作品(%@)",_usermodel.collectionCount ];
         cell.isimg = YES;
         cell.imgViewStr = @"mine_icon_favorite";
         return cell;
@@ -624,8 +761,6 @@
     if (image != nil) {
         
         
-        //头像
-        imageView.image = image;
         [self updateAvatar:image];
     }
 }
@@ -644,10 +779,16 @@
     
     
     
-    [requestManager requestWebWithParaWithURL:@"api/user/profiles/updateAvatar.json" Parameter:Parameterdic Finish:^(NSDictionary *resultDic) {
+    [requestManager requestWebWithParaWithURL:@"api/user/profiles/updateAvatar.json" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
         [self hideHud];
         NSLog(@"成功");
         NSLog(@"返回==%@",resultDic);
+        //发送通知首页刷新
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"dishuaxinObjNotification" object:@""];
+        
+        //头像
+        imageView.image = img;
+
         _user.userThumbnail = resultDic[@"object"];
         
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {

@@ -7,8 +7,9 @@
 //
 
 #import "BaseViewController.h"
-
+#import "homeYJModel.h"
 @interface zuopinDataViewController : BaseViewController
 @property(nonatomic,strong)UITableView*tableView;
+@property(nonatomic,strong)homeYJModel *home_model;
 
 @end

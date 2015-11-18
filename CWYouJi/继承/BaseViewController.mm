@@ -127,7 +127,14 @@
     
     _userThumbnail = _user.userThumbnail;
     
-    
+    _classifyDic =@{
+                                 @"0":@"住",
+                                 @"1":@"食",
+                                 @"2":@"购",
+                                 @"3":@"景",
+                                 
+                                 };
+
     
     
     

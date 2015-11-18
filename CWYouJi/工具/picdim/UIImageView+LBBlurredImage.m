@@ -19,18 +19,23 @@ CGFloat const kLBBlurredImageDefaultSaturationDeltaFactor = 1.8;
 - (void)setImageToBlur:(UIImage *)image
        completionBlock:(LBBlurredImageCompletionBlock)completion
 {
-    [self setImageToBlur:image
+    [self setImageToBlur:image Url:@""
               blurRadius:kLBBlurredImageDefaultBlurRadius
          completionBlock:completion];
 }
 
-- (void)setImageToBlur:(UIImage *)image
+- (void)setImageToBlur:(UIImage *)image Url:(NSString*)url
             blurRadius:(CGFloat)blurRadius
        completionBlock:(LBBlurredImageCompletionBlock) completion
 {
     NSParameterAssert(image);
     blurRadius = (blurRadius <= 0) ? : kLBBlurredImageDefaultBlurRadius;
+    __block typeof(UIImage*) img = image;
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UIImageView *imgView_bg = [[UIImageView alloc]init];
+//        [imgView_bg sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:image];
+//        img = imgView_bg.image;
         
         UIImage *blurredImage = [image applyBlurWithRadius:blurRadius
                                                  tintColor:nil
@@ -39,6 +44,7 @@ CGFloat const kLBBlurredImageDefaultSaturationDeltaFactor = 1.8;
         
         dispatch_async(dispatch_get_main_queue(), ^{
             self.image = blurredImage;
+            //[self sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:blurredImage];
             if (completion) {
                 completion();
             }

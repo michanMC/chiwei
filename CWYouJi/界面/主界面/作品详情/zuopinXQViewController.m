@@ -12,7 +12,7 @@
 #import "zuopinDataViewController.h"
 #import "HZPhotoBrowser.h"
 #define ARC4RANDOM_MAX	0x100000000
-
+#import "homeYJModel.h"
 @interface zuopinXQViewController ()<UITableViewDataSource,UITableViewDelegate,DMLazyScrollViewDelegate,HZPhotoBrowserDelegate>
 {
     DMLazyScrollView* _lazyScrollView;
@@ -57,7 +57,8 @@
     //启动图片浏览器
     HZPhotoBrowser *browserVc = [[HZPhotoBrowser alloc] init];
     browserVc.sourceImagesContainerView = self.view; // 原图的父控件
-    browserVc.imageCount = 4; // 图片总数
+    homeYJModel * model = _dataArray[_index];
+    browserVc.imageCount = model.photos.count; // 图片总数
     browserVc.currentImageIndex =(int)index;
     browserVc.delegate = self;
     [browserVc show];
@@ -71,8 +72,13 @@
 
 - (NSURL *)photoBrowser:(HZPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index
 {
-   // NSString * imgurl = [NSString stringWithFormat:@"%@%@",AppURL,imgArray[index]];
+    homeYJModel * model =_dataArray[_index];
+    if (model.photos.count) {
+        
+        NSString * imgurl = model.photos[index][@"raw"];//[NSString stringWithFormat:@"%@%@",];
     
+    return [NSURL URLWithString:imgurl];
+    }
     return [NSURL URLWithString:@""];
 }
 
@@ -80,14 +86,17 @@
 -(void)prepareUI{
      _imgview = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Height)];
     [self.view addSubview:_imgview];
-    
-    [self.imgview setImageToBlur:[UIImage imageNamed:@"login_bg_720"]
+//    if (_home_model.photos.count) {
+//        NSDictionary * img = _home_model.photos[0];
+//    
+    [self.imgview setImageToBlur:[UIImage imageNamed:@"login_bg_720"] Url:@""
                       blurRadius:kLBBlurredImageDefaultBlurRadius
                  completionBlock:^(){
                      NSLog(@"The blurred image has been set");
                  }];
+   // }
     
-    NSUInteger numberOfPages = 10;
+    NSUInteger numberOfPages = _dataArray.count;
     _viewControllerArray = [[NSMutableArray alloc] initWithCapacity:numberOfPages];
     for (NSUInteger k = 0; k < numberOfPages; ++k) {
         [_viewControllerArray addObject:[NSNull null]];
@@ -96,6 +105,7 @@
     // PREPARE LAZY VIEW
     CGRect rect = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     _lazyScrollView = [[DMLazyScrollView alloc] initWithFrame:rect];
+    //_lazyScrollView.currentPage = _index;
     [_lazyScrollView setEnableCircularScroll:YES];
    // [_lazyScrollView setAutoPlay:YES];
     
@@ -123,23 +133,75 @@
 - (UIViewController *) controllerAtIndex:(NSInteger) index {
     if (index > _viewControllerArray.count || index < 0) return nil;
     id res = [_viewControllerArray objectAtIndex:index];
+   
+    
     if (res == [NSNull null]) {
         zuopinDataViewController *contr = [[zuopinDataViewController alloc] init];
-//        contr.view.backgroundColor = [UIColor colorWithRed: (CGFloat)arc4random()/ARC4RANDOM_MAX
-//                                                     green: (CGFloat)arc4random()/ARC4RANDOM_MAX
-//                                                      blue: (CGFloat)arc4random()/ARC4RANDOM_MAX
-//                                                     alpha: 1.0f];
         
+        contr.home_model = _dataArray[index];
         UILabel* label = [[UILabel alloc] initWithFrame:contr.view.bounds];
         label.backgroundColor = [UIColor clearColor];
         label.text = [NSString stringWithFormat:@"%d",index];
         label.textAlignment = NSTextAlignmentCenter;
         label.font = [UIFont boldSystemFontOfSize:50];
-        [contr.view addSubview:label];
+       // [contr.view addSubview:label];
         
         [_viewControllerArray replaceObjectAtIndex:index withObject:contr];
+        [_lazyScrollView setPage:_index animated:YES];
+        if (index == _dataArray.count - 1) {
+            NSLog(@">>>>>>%ld",_lazyScrollView.currentPage);
+            _index = _lazyScrollView.currentPage;
+            homeYJModel * model = _dataArray[_index];
+//            if (model.photos.count) {
+//                NSDictionary * img = model.photos[0];
+//                        UIImageView *imgView_bg = [[UIImageView alloc]init];
+//                        [imgView_bg sd_setImageWithURL:[NSURL URLWithString:img[@"raw"]] placeholderImage:[UIImage imageNamed:@"login_bg_720"]];
+//                
+//                [self.imgview setImageToBlur:imgView_bg.image Url:img[@"raw"]
+//                                  blurRadius:kLBBlurredImageDefaultBlurRadius
+//                             completionBlock:^(){
+//                                 NSLog(@"The blurred image has been set");
+//                             }];
+//                
+//                
+//            }
+//
+        }
         return contr;
     }
+     NSLog(@">>>>>>%ld",_lazyScrollView.currentPage);
+    _index = _lazyScrollView.currentPage;
+    homeYJModel * model = _dataArray[_index];
+//    if (model.photos.count) {
+//                    NSDictionary * img = model.photos[0];
+//        UIImageView *imgView_bg = [[UIImageView alloc]init];
+//        [imgView_bg sd_setImageWithURL:[NSURL URLWithString:img[@"raw"]] placeholderImage:[UIImage imageNamed:@"login_bg_720"]];
+//        
+//        [self.imgview setImageToBlur:imgView_bg.image Url:img[@"raw"]
+//                          blurRadius:kLBBlurredImageDefaultBlurRadius
+//                     completionBlock:^(){
+//                         NSLog(@"The blurred image has been set");
+//                     }];
+//
+//        
+//                }
+
+    
+    
+    
+//    else
+//    {
+//        _index = index;
+//
+//
+//        if (model.photos.count) {
+//            NSDictionary * img = model.photos[0];
+//            [self.imgview sd_setImageWithURL:[NSURL URLWithString:img[@"raw"]] placeholderImage:[UIImage imageNamed:@"login_bg_720"]];
+//            
+//        }
+//
+//        
+//    }
     return res;
 }
 

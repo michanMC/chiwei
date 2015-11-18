@@ -317,7 +317,7 @@ forHTTPHeaderField:(NSString *)field
     NSURL *url = [NSURL URLWithString:URLString];
 
     NSParameterAssert(url);
-
+    NSLog(@"url = %@",url);
     NSMutableURLRequest *mutableRequest = [[NSMutableURLRequest alloc] initWithURL:url];
     mutableRequest.HTTPMethod = method;
 

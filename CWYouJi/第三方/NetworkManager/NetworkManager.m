@@ -82,26 +82,26 @@ static NSString *const EPHttpApiBaseURL = AppURL;//@"http://121.201.16.96";
  *  @param completeBlock 成功请求后得到的响应,此响应包括服务器业务逻辑异常结果,只接收服务器业务逻辑状态码为200的结果
  *  @param errorBlock    服务器响应不正常,网络连接失败返回的响应结果
  */
-- (void)requestWebWithParaWithURL:(NSString*)webApi Parameter:(NSDictionary *)para Finish:(HttpResponseSucBlock)completeBlock Error:(HttpResponseErrBlock)errorBlock
+- (void)requestWebWithParaWithURL:(NSString*)webApi Parameter:(NSDictionary *)para IsLogin:(BOOL)islogin Finish:(HttpResponseSucBlock)completeBlock Error:(HttpResponseErrBlock)errorBlock
 {
-    
-    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-  [self.httpClient.requestSerializer setValue:[defaults objectForKey:@"sessionId"] forHTTPHeaderField:@"user_session"];
-//    NSLog(@"》》》》%@",self.httpClient);
-    
-    
-    
-//    [self.httpClient.requestSerializer setValue:APP_KEY forHTTPHeaderField:@"sign_appkey"];
-//    
-//    [self.httpClient.requestSerializer setValue:[defaults objectForKey:@"sign"] forHTTPHeaderField:@"sign_sign"];
-//    [self.httpClient.requestSerializer setValue:IMEI forHTTPHeaderField:@"imei"];
+    NSMutableDictionary * paraDic =[NSMutableDictionary dictionaryWithDictionary:para];
 
-    
-    
-   // webApi = [EPHttpApiBaseURL stringByAppendingString:webApi];
+    if (islogin) {
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        NSLog(@"%@",[defaults objectForKey:@"sessionId"]);
+        
+        [self.httpClient.requestSerializer setValue:[defaults objectForKey:@"sessionId"] forHTTPHeaderField:@"user_session"];
+        
+        if ([[defaults objectForKey:@"sessionId"] length]) {
+            
+            [paraDic setObject:[defaults objectForKey:@"sessionId"] forKey:@"user_session"];
+        }
+        
+        
+    }
+   
 
-//    [self.httpClient.requestSerializer setValue:[MyTools getTheSeesionId] forHTTPHeaderField:@"user_session"];
-    [self.httpClient POST:webApi parameters:para success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.httpClient POST:webApi parameters:paraDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
        // DLog(@"URL:%@, 请求参数:%@, 返回值:%@",operation.request.URL,para,responseObject);
         
@@ -279,17 +279,17 @@ static NSString *const EPHttpApiBaseURL = AppURL;//@"http://121.201.16.96";
 
 
 //获取所有的需要的参数,暂时没用到
-- (void)getAllParamList
-{
-    [self requestWebWithParaWithURL:@"area!getFishConfig.action" Parameter:nil Finish:^(NSDictionary *resultDic) {
-        self.paramdic = resultDic;
-    } Error:^(AFHTTPRequestOperation *operation, NSError *error,NSString *description) {
-        if (error.code == 404) {
-            UIAlertView  *alert = [[UIAlertView alloc] initWithTitle:@"网络不可用" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-            [alert show];
-        }
-    }];
-}
+//- (void)getAllParamList
+//{
+//    [self requestWebWithParaWithURL:@"area!getFishConfig.action" Parameter:nil Finish:^(NSDictionary *resultDic) {
+//        self.paramdic = resultDic;
+//    } Error:^(AFHTTPRequestOperation *operation, NSError *error,NSString *description) {
+//        if (error.code == 404) {
+//            UIAlertView  *alert = [[UIAlertView alloc] initWithTitle:@"网络不可用" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+//            [alert show];
+//        }
+//    }];
+//}
 
 
 

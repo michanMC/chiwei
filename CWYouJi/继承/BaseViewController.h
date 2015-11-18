@@ -16,6 +16,7 @@ typedef NS_ENUM(NSInteger, BarbuttonItemStyle) {
 //   
 //}
 @property (nonatomic,strong) NetworkManager *requestManager;
+@property (nonatomic , strong)NSDictionary * classifyDic;
 /**
  用户id
  */

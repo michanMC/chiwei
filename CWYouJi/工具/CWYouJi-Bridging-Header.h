@@ -8,3 +8,4 @@
 #import "UIView+TYAlertView.h"
 #import "ShareView.h"
 #import "jubao_View.h"
+#import "UIPlaceHolderTextView.h"

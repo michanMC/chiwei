@@ -12,9 +12,11 @@ import UIKit
 let kScreen_height: CGFloat = UIScreen.mainScreen().bounds.size.height
 let kScreen_width: CGFloat = UIScreen.mainScreen().bounds.size.width
 let kScreen_frame: CGRect = CGRectMake(0, 0, kScreen_width, kScreen_height)
-
 class RGFadeView: UIView ,UITextViewDelegate{
-
+    
+    
+    
+    @IBOutlet weak var zuozheBtn: UIButton!
     @IBOutlet weak var titelLbl: UILabel!
     @IBOutlet var customView: UIView!
     @IBOutlet weak var closeBtn: UIButton!
@@ -24,6 +26,9 @@ class RGFadeView: UIView ,UITextViewDelegate{
     @IBOutlet weak var msgTextView: UITextView!
 
     @IBOutlet weak var placeLabel: UILabel!
+    
+    var _maskView : UIView!
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,7 +42,6 @@ class RGFadeView: UIView ,UITextViewDelegate{
     func textH(height:CGFloat){
         self.customView.height(height)
 msgTextView.frame = CGRectMake(msgTextView.frame.origin.x, msgTextView.frame.origin.y, msgTextView.frame.width, msgTextView.frame.height - 100)
-    
         
     }
     func textTitle(str:String){
@@ -55,14 +59,14 @@ msgTextView.frame = CGRectMake(msgTextView.frame.origin.x, msgTextView.frame.ori
         self.backgroundColor = UIColor.clearColor()
         self.alpha = 0
         
-        let maskView:UIView = UIView.init(frame: self.bounds)
-        maskView.backgroundColor = UIColor.blackColor()
-        maskView.alpha = 0.5
-        self.addSubview(maskView)
+        _maskView = UIView.init(frame: self.bounds)
+        _maskView.backgroundColor = UIColor.blackColor()
+        _maskView.alpha = 0.5
+        self.addSubview(_maskView)
 
         self.addSubview(self.customView)
         let tap = UITapGestureRecognizer.init(target: self, action:"tapClick:")
-        maskView.addGestureRecognizer(tap)
+        _maskView.addGestureRecognizer(tap)
     
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeFrame:", name: UIKeyboardWillChangeFrameNotification, object: nil)
@@ -101,7 +105,6 @@ msgTextView.frame = CGRectMake(msgTextView.frame.origin.x, msgTextView.frame.ori
         self.msgTextView.resignFirstResponder()
         self.msgTextView.text = ""
         self.placeLabel.hidden = false
-        
         
     }
     

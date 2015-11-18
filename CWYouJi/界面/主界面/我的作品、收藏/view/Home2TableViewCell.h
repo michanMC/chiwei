@@ -9,16 +9,21 @@
 #import <UIKit/UIKit.h>
 
 @interface Home2TableViewCell : UITableViewCell
+
 @property(nonatomic,assign)BOOL isEit;
 @property(nonatomic,strong)UIButton * deleteBtn;
 
-//@property (weak, nonatomic) IBOutlet UIImageView *imgView;
-//@property (weak, nonatomic) IBOutlet UILabel *titleLbl1;
-//@property (weak, nonatomic) IBOutlet UILabel *title2Lb;
-//@property (weak, nonatomic) IBOutlet UIImageView *typeLimgView;
-//@property (weak, nonatomic) IBOutlet UIImageView *tuijianimg;
-//@property (weak, nonatomic) IBOutlet UILabel *dingweiimg;
-//@property (weak, nonatomic) IBOutlet UIImageView *headImg;
-//@property (weak, nonatomic) IBOutlet UILabel *nameLbl;
+
+@property(nonatomic,copy)NSString * imgViewStr;
+@property(nonatomic,copy)NSString * headimgStr;
+@property(nonatomic,copy)NSString * leixingStr;
+@property(nonatomic,assign)BOOL  istuijian;
+@property(nonatomic,copy)NSString * titleStr;
+@property(nonatomic,copy)NSString * title2Str;
+@property(nonatomic,copy)NSString * dingweiStr;
+
+@property(nonatomic,copy)NSString * nameStr;
+
+
 
 @end
