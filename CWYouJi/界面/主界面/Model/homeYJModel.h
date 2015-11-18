@@ -44,7 +44,7 @@
 //@property(nonatomic,copy)NSString *class;
 @property(nonatomic,assign)NSInteger classify;
 @property(nonatomic,copy)NSString *collectCount;
-@property(nonatomic,copy)NSString *collection;
+@property(nonatomic,assign)BOOL collection;
 @property(nonatomic,copy)NSString *commentCount;
 @property(nonatomic,copy)NSString *content;
 @property(nonatomic,assign)long long createDate;

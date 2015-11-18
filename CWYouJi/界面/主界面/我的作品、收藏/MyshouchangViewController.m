@@ -73,7 +73,9 @@
     [self.requestManager requestWebWithParaWithURL:@"api/travle/collection/query.json" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
         [self hideHud];
         NSLog(@"成功");
-        NSLog(@"返回==%@",resultDic);
+        NSLog(@"收藏返回==%@",resultDic);
+        
+        
         for (NSDictionary * dic in resultDic[@"object"]) {
             travelModel * model = [travelModel mj_objectWithKeyValues:dic];
             
@@ -140,6 +142,7 @@
         if ([homemodel.photos count]) {
             NSString * str = homemodel.photos[0][@"thumbnail"];
             cell.imgViewStr = str;
+            
         }
         //头像
         if(homemodel.userModel.thumbnail)
@@ -159,7 +162,7 @@
         }
         
         //游记类型
-        //NSLog(@">>>>%@",[self.classifyDic objectForKey:model[@"classify"]]);
+        NSLog(@">>>>%@",[self.classifyDic objectForKey:[NSString stringWithFormat:@"%ld",(long)homemodel.classify]]);
         cell.leixingStr  = [self.classifyDic objectForKey:[NSString stringWithFormat:@"%ld",(long)homemodel.classify]];
         
         
@@ -225,6 +228,7 @@
     }
     
     
+   
     
     NSDictionary * dic = @{
                            @"model":homemodel,

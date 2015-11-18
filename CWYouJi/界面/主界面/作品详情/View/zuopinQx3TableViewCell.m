@@ -41,6 +41,9 @@
         height = 25;
         _headImgView = [[UIImageView alloc]initWithFrame:CGRectMake(x, y, width, height)];
         _headImgView.image =[UIImage imageNamed:@"home_default-avatar"];
+        ViewRadius(_headImgView, 25/2);
+        _headImgView.layer.borderWidth =1.0;
+        _headImgView.layer.borderColor = [UIColor whiteColor].CGColor;
         [self.contentView addSubview:_headImgView];
         
         x +=width + 5;

@@ -66,6 +66,9 @@
         height = width;
         _headimgView = [[UIImageView alloc]initWithFrame:CGRectMake(x, y, width, height)];
         _headimgView.image = [UIImage imageNamed:@"home_default-avatar"];
+        ViewRadius(_headimgView, 20);
+        _headimgView.layer.borderColor = [UIColor whiteColor].CGColor;
+        _headimgView.layer.borderWidth = 1.0;
         [_bgimgView addSubview:_headimgView];
         
         x = 58;
@@ -160,7 +163,8 @@
 {
     _title2Lbl.text = title2Str;
 }
--(void)setLeixingStrStr:(NSString *)leixingStr
+
+-(void)setLeixingStr:(NSString *)leixingStr
 {
     _leixingView.image = [UIImage imageNamed:leixingStr];
 }
@@ -178,6 +182,12 @@
 {
     
     [_imgView sd_setImageWithURL:[NSURL URLWithString:imgViewStr] placeholderImage:[UIImage imageNamed:@"travels-details_default-chart04"]];
+    
+}
+-(void)setHeadimgStr:(NSString *)headimgStr
+{
+    [_headimgView sd_setImageWithURL:[NSURL URLWithString:headimgStr] placeholderImage:[UIImage imageNamed:@"home_default-avatar"]];
+    
     
 }
 - (void)awakeFromNib {

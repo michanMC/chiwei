@@ -37,6 +37,8 @@
     
     NSMutableArray *_dataAarray;//数据源
     NSInteger _pageStr;
+    
+    NSMutableArray *_bannerArray;
 
 }
 
@@ -52,6 +54,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dishuaxinObj:) name:@"dishuaxinObjNotification" object:nil];
 	self.title = @"Home Controller";
     _dataAarray  =[NSMutableArray array];
+    _bannerArray = [NSMutableArray array];
     [self prepareUI];
     
     
@@ -208,10 +211,10 @@
     [self.view addSubview:_faBuBtn];
     [_faBuBtn addTarget:self action:@selector(actionFabu) forControlEvents:UIControlEventTouchUpInside];
     
-    [_headwheel reloadData];
+   // [_headwheel reloadData];
     [self preparedaohangtiao];
     [self loadData:YES];
-    
+    [self loadbanner];
 }
 #pragma mrak-上下拉
 -(void)actionHeader{
@@ -273,6 +276,28 @@
     _daohanTiaoLineview.backgroundColor = [UIColor clearColor];
     [_daohanTiaoview addSubview:_daohanTiaoLineview];
     [self.view addSubview:_daohanTiaoview];
+    
+    
+    
+}
+#pragma mark-加载广告图
+-(void)loadbanner{
+    
+    
+    [self.requestManager requestWebWithParaWithURL:@"api/global/banner.json" Parameter:nil IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"guang游记==%@",resultDic);
+        _bannerArray = resultDic[@"object"];
+        
+        
+        [_headwheel reloadData];
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+               NSLog(@"失败");
+    }];
+ 
     
     
     
@@ -440,37 +465,36 @@
     
     
 }
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 
-}
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
+    NSLog(@"wqe");
     _faBuBtn.hidden = NO;
     NSLog(@"%f",_tableView.contentOffset.y );
-
+    
     if (scrollView == _tableView) {
         if (_tableView.contentOffset.y > 100) {
             [UIView animateWithDuration:1 animations:^{
-                 _daohanTiaoview.backgroundColor = [UIColor whiteColor];
+                _daohanTiaoview.backgroundColor = [UIColor whiteColor];
                 _daohanTiaoLineview.backgroundColor = [UIColor lightGrayColor];
             }];
-           
+            
             
         }
         else
         {
+            
+            
             [UIView animateWithDuration:1 animations:^{
                 _daohanTiaoview.backgroundColor = [UIColor clearColor];
                 _daohanTiaoLineview.backgroundColor = [UIColor clearColor];
-
+                
             }];
             
         }
     }
-
     
+
     
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -528,7 +552,7 @@
         //photos
 
         if ([model.photos count]) {
-            NSString * str = model.photos[0][@"thumbnail"];
+            NSString * str = [NSString stringWithFormat:@"%@",model.photos[0][@"thumbnail"]];
             
             [cell.imgView sd_setImageWithURL:[NSURL URLWithString:str] placeholderImage:[UIImage imageNamed:@"travels-details_default-chart04"]];
         }
@@ -639,7 +663,9 @@
 
 -(NSInteger)numberOfZZCarousel:(ZZCarousel *)wheel
 {
-    
+    if (_bannerArray.count) {
+        return _bannerArray.count;
+    }
     return 3;
 }
 -(ZZCarouselView *)zzcarousel:(UICollectionView *)zzcarousel viewForItemAtIndex:(NSIndexPath *)index itemsIndex:(NSInteger)itemsIndex identifire:(NSString *)identifire ZZCarousel:(ZZCarousel *)zZCarousel
@@ -658,8 +684,13 @@
     /*
      *  itemsIndex 参数   ※ 注意
      */
-//     msgadlist * model = [homemodel.msgadlistArray objectAtIndex:itemsIndex];
-//     [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.adpicurl] placeholderImage:[UIImage imageNamed:@"home_moRenTuPian"]];
+    if (_bannerArray.count) {
+        NSDictionary * model = [_bannerArray objectAtIndex:itemsIndex];
+        
+        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model[@"image"]] placeholderImage:[UIImage imageNamed:@"home_banner_default-chart"]];
+    }
+    else
+   
     cell.imageView.image = [UIImage imageNamed:@"home_banner_default-chart"];
 //    
     

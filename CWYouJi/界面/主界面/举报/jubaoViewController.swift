@@ -15,7 +15,9 @@ class jubaoViewController: BaseViewController ,UITableViewDelegate,UITableViewDa
     jubao_View!
     var _titleArray:
     NSArray?
+    var _index : NSInteger!
     
+    var _youjiId:String!
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -30,7 +32,7 @@ class jubaoViewController: BaseViewController ,UITableViewDelegate,UITableViewDa
         super.viewDidLoad()
         
         self.title = "举报"
-        
+        _index = 5;
         _titleArray = NSArray()
         _titleArray = ["色情低俗","广告骚扰","政治敏感","侵权举报（诽谤、抄袭、冒用）"]
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "发送", style: UIBarButtonItemStyle.Plain, target: self, action: ("fasongBtn"))
@@ -38,20 +40,45 @@ class jubaoViewController: BaseViewController ,UITableViewDelegate,UITableViewDa
               // Do any additional setup after loading the view.
     }
     func fasongBtn(){
-       _ShareView = jubao_View.createViewFromNib()
-        _ShareView.titleLbl?.textColor = AppTextCOLOR
-        _ShareView.showInWindow()
-        _ShareView.queBtn?.addTarget(self, action: ("queBtn"), forControlEvents: UIControlEvents.TouchUpInside)
-        _ShareView.quxiaoBtn?.addTarget(self, action: ("quxiaonBtn"), forControlEvents: UIControlEvents.TouchUpInside)
+        
+        if _index > 4 {
+            self.showAllTextDialog("请选择你举报的内容")
+            return
+            
+        }
+        let dic = NSMutableDictionary()
+        dic.setObject(_youjiId, forKey: "targetId")
+        dic.setObject(_titleArray![_index], forKey: "content")
+        self.showLoading(true, andText: nil)
+        requestManager.requestWebWithParaWithURL("api/global/report.json", parameter: dic as [NSObject : AnyObject], isLogin: true, finish: { (resultDic) -> Void in
+            self.stopshowLoading()
+
+            self._ShareView = jubao_View.createViewFromNib()
+            self._ShareView.titleLbl?.textColor = AppTextCOLOR
+            self._ShareView.showInWindow()
+            self._ShareView.queBtn?.addTarget(self, action: ("queBtn"), forControlEvents: UIControlEvents.TouchUpInside)
+            self._ShareView.quxiaoBtn?.addTarget(self, action: ("quxiaonBtn"), forControlEvents: UIControlEvents.TouchUpInside)
+            
+            
+            
+            }) { (operation:AFHTTPRequestOperation?, NSError:NSError?, String:String?) -> Void in
+                self.stopshowLoading()
+                self.showAllTextDialog(String)
+            
+        }
+        
+        
         
     }
     func queBtn(){
         _ShareView.hideView()
+        self.navigationController?.popViewControllerAnimated(true)
 
         
     }
     func quxiaonBtn(){
         _ShareView.hideView()
+        self.navigationController?.popViewControllerAnimated(true)
 
         
     }
@@ -95,7 +122,7 @@ class jubaoViewController: BaseViewController ,UITableViewDelegate,UITableViewDa
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
       //  tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
+        _index = indexPath.row;
         let cell : jubaoCell = (tableView.cellForRowAtIndexPath(indexPath) as? jubaoCell)!
         
         cell.titleLbl.textColor  = UIColor.orangeColor()

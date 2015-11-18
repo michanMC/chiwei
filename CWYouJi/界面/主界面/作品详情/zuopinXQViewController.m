@@ -40,9 +40,12 @@
     [self prepareUI];
     // Do any additional setup after loading the view.
 }
-//举报
+#pragma mark- 举报
 -(void)didSelectjubaoObj:(NSNotification*)Notification{
+    NSString * youjiid = Notification.object;
+    
     jubaoViewController * ctl = [[jubaoViewController alloc]init];
+    ctl._youjiId = youjiid;
     [self pushNewViewController:ctl];
     //[self.navigationController presentViewController:ctl animated:YES completion:nil];
    
@@ -77,7 +80,7 @@
         
         NSString * imgurl = model.photos[index][@"raw"];//[NSString stringWithFormat:@"%@%@",];
     
-    return [NSURL URLWithString:imgurl];
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@",imgurl]];
     }
     return [NSURL URLWithString:@""];
 }
@@ -137,8 +140,12 @@
     
     if (res == [NSNull null]) {
         zuopinDataViewController *contr = [[zuopinDataViewController alloc] init];
+        homeYJModel * model = _dataArray[index];
+        //NSLog(@"%@",model.collection);
         
-        contr.home_model = _dataArray[index];
+        
+        contr.home_model = model;//_dataArray[index];
+        
         UILabel* label = [[UILabel alloc] initWithFrame:contr.view.bounds];
         label.backgroundColor = [UIColor clearColor];
         label.text = [NSString stringWithFormat:@"%d",index];
@@ -151,7 +158,7 @@
         if (index == _dataArray.count - 1) {
             NSLog(@">>>>>>%ld",_lazyScrollView.currentPage);
             _index = _lazyScrollView.currentPage;
-            homeYJModel * model = _dataArray[_index];
+            
 //            if (model.photos.count) {
 //                NSDictionary * img = model.photos[0];
 //                        UIImageView *imgView_bg = [[UIImageView alloc]init];

@@ -177,8 +177,9 @@
 
 }
 -(UIButton*)addImgView:(CGRect)imgFrame ImgStr:(NSString*)imgStr ImgUrlStr:(NSString*)imgUrlStr{
+    
     UIButton * imgView = [[UIButton alloc]initWithFrame:imgFrame];
-    [imgView sd_setBackgroundImageWithURL:[NSURL URLWithString:imgUrlStr] forState:0 placeholderImage:[UIImage imageNamed:imgStr]];
+    [imgView sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",imgUrlStr]] forState:0 placeholderImage:[UIImage imageNamed:imgStr]];
     
     return imgView;
 }
@@ -281,8 +282,9 @@
         }
         
         [cell.shouchangBtn addTarget:self action:@selector(actionShouchang:) forControlEvents:UIControlEventTouchUpInside];
+        //NSLog(@"======%d",[_home_model.collection boolValue]);
         
-        cell.isshouchang = [_home_model.collection boolValue];
+        cell.isshouchang = _home_model.collection;
         
       cell.timeStr =   [CommonUtil getStringWithLong:_home_model.createDate Format:@"MM-dd"];
         
@@ -432,7 +434,7 @@
     
     
     NSString * collection;
-    if ([_home_model.collection boolValue]) {
+    if (_home_model.collection ) {
         Parameterdic = @{
                          
                          @"travelId":_home_model.id,
@@ -643,10 +645,13 @@
     rgFadeView = nil;
 
 }
+#pragma mark-举报
 -(void)ActionjubaoBtn{
     
+    
+    
     //发送通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"didjubaoObjNotification" object:@""];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"didjubaoObjNotification" object:_home_model.id];
     
 
    // [self pushNewViewController:ctl];
