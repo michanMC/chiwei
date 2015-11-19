@@ -249,7 +249,7 @@
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
         [defaults setObject:_nameText.text forKey:@"UserName"];
         [defaults setObject :_pwdText.text forKey:@"Pwd"];
-        
+        [defaults setObject:@"1" forKey:@"isLogOut"];
         [defaults setObject :resultDic[@"sessionId"] forKey:@"sessionId"];
           [defaults setObject :resultDic[@"nickname"] forKey:@"nickname"];
         [defaults setObject :resultDic[@"mobile"] forKey:@"mobile"];
@@ -296,7 +296,10 @@
     REFrostedViewController *frostedViewController = [[REFrostedViewController alloc] initWithContentViewController:navigationController menuViewController:menuController];
     
     frostedViewController.direction = REFrostedViewControllerDirectionLeft;
+    
     frostedViewController.liveBlurBackgroundStyle = REFrostedViewControllerLiveBackgroundStyleLight;
+    frostedViewController.panGestureEnabled = NO;
+    
     frostedViewController.liveBlur = YES;
     frostedViewController.delegate = self;
     

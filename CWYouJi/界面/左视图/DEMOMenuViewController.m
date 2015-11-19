@@ -446,7 +446,7 @@
 #pragma mark-查询资料
 -(void)Datadetail:(BOOL)iszhuan{
     
-  
+    [self showHudInView:self.view hint:nil];
     [requestManager requestWebWithParaWithURL:@"api/user/detail.json" Parameter:nil IsLogin:YES Finish:^(NSDictionary *resultDic) {
         [self hideHud];
         NSLog(@"成功");
@@ -457,7 +457,7 @@
         [self.tableView  reloadData];
         
         //头像
-        [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",AppImgURL,_usermodel.thumbnail]] placeholderImage:[UIImage imageNamed:@"mine_default-avatar"]];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",_usermodel.thumbnail]] placeholderImage:[UIImage imageNamed:@"mine_default-avatar"]];
         
 
         
@@ -519,7 +519,7 @@
         [defaults setObject :@"" forKey:@"mobile"];
         [defaults setObject :@"" forKey:@"id"];
         [defaults setObject :@"" forKey:@"password"];
-        
+        [defaults setObject:@"" forKey:@"isLogOut"];
         //强制让数据立刻保存
         [defaults synchronize];
         [self showHint:@"账号已退出"];

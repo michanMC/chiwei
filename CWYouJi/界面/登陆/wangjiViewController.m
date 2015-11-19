@@ -96,6 +96,7 @@
     [btn setTitleColor:[UIColor whiteColor] forState:0];
     btn.titleLabel.font = [UIFont systemFontOfSize:15];
     [btn setBackgroundImage:[UIImage imageNamed:@"login_btn_normal"] forState:0];
+    [btn addTarget:self action:@selector(actionQurding) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
     y = cvvBtnY;
     x = Main_Screen_Width - 20 - 70;
@@ -120,6 +121,62 @@
     
     
     
+}
+-(void)actionQurding{
+    [_pwdText resignFirstResponder];
+    [_cvvText resignFirstResponder];
+    [_phoneText resignFirstResponder];
+
+    
+       if (!_phoneText.text.length) {
+        kAlertMessage(@"请输入手机号码");
+        return;
+    }
+    if (![CommonUtil isMobile:_phoneText.text]) {
+        kAlertMessage(@"请正确输入手机号码");
+        return;
+    }
+    if (!_cvvText.text.length) {
+        kAlertMessage(@"请输入验证码");
+        return;
+    }
+
+    if (!_pwdText.text.length) {
+        kAlertMessage(@"请输入密码");
+        return;
+    }
+    if(_pwdText.text.length < 6){
+        kAlertMessage(@"请输入6位以上的密码");
+        return;
+    }
+    
+    
+    NSDictionary * Parameterdic = @{
+                                    @"mobile":_phoneText.text,
+                                    @"password":_pwdText.text
+                                    };
+    
+    
+    [self showLoading:YES AndText:nil];
+    [self.requestManager requestWebWithParaWithURL:@"api/user/changePassword.json" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        [self showAllTextDialog:@"修改成功"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        
+        NSLog(@"失败");
+    }];
+    
+
 }
 #pragma mark-点击获取验证码
 -(void)cvvBtn{

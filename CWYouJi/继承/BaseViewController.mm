@@ -115,13 +115,18 @@
     self.view.backgroundColor = [UIColor whiteColor];
     _requestManager = [NetworkManager instanceManager];
     _requestManager.needSeesion = YES;
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+
+    
+    
+    
     _userid = _user.userid;
     
-    _userphone = _user.userphone;
+    _userphone = [defaults objectForKey:@"mobile"];
     
-    _userSessionId = _user.userSessionId;
+    _userSessionId = [defaults objectForKey:@"sessionId"];
     _userExpire = _user.userExpire;
-    _userNickname = _user.userNickname;
+    _userNickname = [defaults objectForKey:@"nickname"];
 
     _userSex = _user.userSex;
     

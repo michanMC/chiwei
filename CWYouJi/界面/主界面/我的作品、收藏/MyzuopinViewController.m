@@ -48,7 +48,7 @@
     [self loadData];
     // Do any additional setup after loading the view.
 }
-
+#pragma mark-加载数据
 -(void)loadData{
     NSDictionary * Parameterdic = @{
                                     @"page":@(1)
@@ -150,11 +150,9 @@
         //游记推荐
         BOOL isRecommend = [model.isRecommend boolValue];
         cell.istuijian = !isRecommend;
+        cell.deleteBtn.selected = model.isdelete;
 
-    
-    
-    
-    
+
     
     }
     
@@ -162,24 +160,28 @@
     cell.isEit = _isEit;
     cell.deleteBtn.tag = indexPath.section + 200;
     [cell.deleteBtn addTarget:self action:@selector(actionCellBtn:) forControlEvents:UIControlEventTouchUpInside];
-    if (_isquanxuan) {//全选
-        cell.deleteBtn.selected = YES;
-        
-        
-        
-    }
-    else
-    {
-        if ([_deleArray containsObject:@(cell.deleteBtn.tag)]) {
-            cell.deleteBtn.selected = YES;
-        }
-        else
-        {
-            cell.deleteBtn.selected = NO;
-        }
-  
-        
-    }
+    
+    
+    
+//    if (_isquanxuan) {//全选
+//        cell.deleteBtn.selected = YES;
+//        
+//        
+//        
+//        
+//    }
+//    else
+//    {
+//        if ([_deleArray containsObject:@(cell.deleteBtn.tag)]) {
+//            cell.deleteBtn.selected = YES;
+//        }
+//        else
+//        {
+//            cell.deleteBtn.selected = NO;
+//        }
+//  
+//        
+//    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
 //    [UIView animateWithDuration:0.25 animations:^{
@@ -211,6 +213,7 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (!_isEit) {
     
     homeYJModel * model = _dataArray[indexPath.section];
 
@@ -223,7 +226,7 @@
     
     //发送通知
     [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectzuopinNotification" object:dic];
-    
+    }
     
     
 }
@@ -257,9 +260,10 @@
     [foorview addSubview:lineView];
     foorview.backgroundColor = [UIColor whiteColor];
     
-    UIButton * delebtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 20, 20)];
+    UIButton * delebtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 2.5, 35, 35)];
     [delebtn setImage:[UIImage imageNamed:@"list_checkbox_normal"] forState:UIControlStateNormal];
     [delebtn setImage:[UIImage imageNamed:@"list_checkbox_checked"] forState:UIControlStateSelected];
+    delebtn.tag =  300;
     [delebtn addTarget:self action:@selector(quanxuanBtn:) forControlEvents:UIControlEventTouchUpInside];
     [foorview addSubview:delebtn];
     UILabel * lbl = [[UILabel alloc]initWithFrame:CGRectMake(40, 0, 30, 40)];
@@ -270,6 +274,34 @@
     _deleteBtn = [[UIButton alloc]initWithFrame:CGRectMake(Main_Screen_Width - 100, 0,100 , 40)];
     [_deleteBtn setTitleColor:[UIColor whiteColor] forState:0];
     [_deleteBtn setTitle:@"删除(0)" forState:0];
+    [_deleteBtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+        NSLog(@">>>>>%@",_deleArray);
+        if (!_deleArray.count) {
+            [self showAllTextDialog:@"请选择你要删除的作品"];
+            return ;
+        }
+        
+        NSMutableArray *travelIdarray = [NSMutableArray array];
+        for (int i = 200; i < _dataArray.count + 200; i++) {
+            if ([_deleArray containsObject:@(i)]) {
+                homeYJModel * model = _dataArray[i-200];
+                
+                [travelIdarray addObject:model.id];
+                
+            }
+            
+        }
+
+        
+        
+        
+        
+        NSString * travelIds = [travelIdarray componentsJoinedByString:@","];
+        [self deletedata:travelIds];
+    
+        
+    }];
+
     _deleteBtn.backgroundColor =[UIColor orangeColor];
     [foorview addSubview:_deleteBtn];
     [self.view addSubview:foorview];
@@ -277,17 +309,66 @@
     
     
 }
+-(void)deletedata:(NSString*)travelIds{
+    
+    NSDictionary * Parameterdic = @{
+                                    @"travelIds":travelIds
+                                    };
+    
+    
+    [self showLoading:YES AndText:nil];
+    [self.requestManager requestWebWithParaWithURL:@"api/travel/delete.json" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        [_dataArray removeAllObjects];
+        [self showAllTextDialog:@"删除成功"];
+        [self loadData];
+        //发送通知首页刷新
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"dishuaxinObjNotification" object:@""];
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        
+        NSLog(@"失败");
+    }];
+
+    
+    
+    
+}
 -(void)actionCellBtn:(UIButton*)btn{
     
     
+    homeYJModel * homeModel =  _dataArray[btn.tag - 200];
+
+    
     if ([_deleArray containsObject:@(btn.tag)]) {
         [_deleArray removeObject:@(btn.tag)];
+        homeModel.isdelete = NO;
+
     }
     else{
         [_deleArray addObject:@(btn.tag)];
+        homeModel.isdelete = YES;
+
     }
     
-    [_deleteBtn setTitle:[NSString stringWithFormat:@"删除(%ld)",_deleArray.count] forState:0];
+    //200
+
+    
+    [_deleteBtn setTitle:[NSString stringWithFormat:@"删除(%ld)",(unsigned long)_deleArray.count] forState:0];
+    
+    UIButton * quanxuanbtn = (UIButton*)[self.view viewWithTag:300];
+    if (_dataArray.count == _deleArray.count ) {
+        quanxuanbtn.selected = YES;
+    }
+    else
+    {
+        quanxuanbtn.selected = NO;
+
+    }
     [_tableView reloadData];
     
     
@@ -295,17 +376,29 @@
     
 }
 -(void)quanxuanBtn:(UIButton*)btn{
+    
     if (btn.selected) {
         btn.selected = NO;
-        _isquanxuan = NO;
-    [_deleteBtn setTitle:[NSString stringWithFormat:@"删除(%ld)",_deleArray.count] forState:0];
+         [_deleArray removeAllObjects];
+        for (homeYJModel * model in _dataArray) {
+            model.isdelete = NO;
+        }
+    [_deleteBtn setTitle:[NSString stringWithFormat:@"删除(%ld)",(unsigned long)_deleArray.count] forState:0];
     }
     else
     {
+        
         btn.selected = YES;
-        _isquanxuan = YES;
+        
         [_deleArray removeAllObjects];
-    [_deleteBtn setTitle:[NSString stringWithFormat:@"删除(%d)",10] forState:0];
+        
+    [_deleteBtn setTitle:[NSString stringWithFormat:@"删除(%d)",_dataArray.count] forState:0];
+        for (int i = 0; i < _dataArray.count; i++) {
+            homeYJModel * model = _dataArray[i];
+            model.isdelete = YES;
+            [_deleArray addObject:@(200+ i)];
+        }
+       
     }
     [_tableView reloadData];
 }

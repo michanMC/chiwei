@@ -62,5 +62,7 @@
 @property(nonatomic,strong)NSArray *photos;
 
 @property(nonatomic,strong)YJUserModel * userModel;
+@property(nonatomic,assign)BOOL  isdelete;
+
 
 @end

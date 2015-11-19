@@ -37,7 +37,7 @@
     if (self) {
         
         
-        _deleteBtn = [[UIButton alloc]initWithFrame:CGRectMake(10,(150-30)/2, 30, 30)];
+        _deleteBtn = [[UIButton alloc]initWithFrame:CGRectMake(10,(150-35)/2, 35, 35)];
         [_deleteBtn setImage:[UIImage imageNamed:@"list_checkbox_normal"] forState:UIControlStateNormal];
         [_deleteBtn setImage:[UIImage imageNamed:@"list_checkbox_checked"] forState:UIControlStateSelected];
         [self.contentView addSubview:_deleteBtn];

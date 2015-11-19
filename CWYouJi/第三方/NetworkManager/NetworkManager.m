@@ -10,6 +10,8 @@
 #import "MyTools.h"
 #import "AA3DESManager.h"
 #import "CommeHelper.h"
+#import "ViewController.h"
+#import "AppDelegate.h"
 //http://121.201.16.96:80/app/test
 static NSString *const EPHttpApiBaseURL = AppURL;//@"http://121.201.16.96";
 //static NSString *const EPHttpApiBaseURL = @"http://120.25.218.167";
@@ -164,35 +166,33 @@ static NSString *const EPHttpApiBaseURL = AppURL;//@"http://121.201.16.96";
                 //业务逻辑错误
                 NSString *message = [resultDic objectForKey:@"message"];
                 NSError *error = [NSError errorWithDomain:@"服务器业务逻辑错误" code:logicCode.intValue userInfo:nil];
-                if ([message isEqualToString:@"会话信息失效"]) {
+                if ([message isEqualToString:@"sessionId失效"]) {
                     
-                    //                    /*保存数据－－－－－－－－－－－－－－－－－begin*/
-                    //                    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-                    //                    [defaults setObject:@"0" forKey:@"isLogOut"];
-                    //                    // [defaults setObject :nil forKey:@"sessionId"];
-                    //                    [MCUser sharedInstance].sessionId = nil;
-                    //                    [defaults setObject:nil forKey:@"sessionId"];
-                    //                    // [defaults setObject:nil forKey:@"Pwd"];
-                    //                    [defaults setObject:nil forKey:@"customerName"];
-                    //                    [defaults setObject:nil forKey:@"examine"];
-                    //
-                    //
-                    //                    //消除提示打开通讯录
-                    //                    [defaults setBool:NO forKey:@"isNoNotice"];
-                    //
-                    //                    //强制让数据立刻保存
-                    //                    [defaults synchronize];
-                    //                    // [[NetworkManager instanceManager] setSessionID:nil];
-                    //                    ViewController * root = [[ViewController alloc]init];
-                    //                    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-                    //                    // [self addChildViewController:nav];
-                    //                    
-                    //                    
-                    //                    appDelegate.window.rootViewController = root;
-                    //                    
-                    //                    
-                    //                    
-                    //                    return ;
+                    /*保存数据－－－－－－－－－－－－－－－－－begin*/
+                    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+                        [defaults setObject:@"" forKey:@"isLogOut"];
+                                        // [defaults setObject :nil forKey:@"sessionId"];
+                    [MCUser sharedInstance].userSessionId = nil;
+                    [defaults setObject:nil forKey:@"sessionId"];
+                                        // [defaults setObject:nil forKey:@"Pwd"];
+                    [defaults setObject:nil forKey:@"nickname"];
+                    [defaults setObject:nil forKey:@"mobile"];
+                    [defaults setObject:nil forKey:@"id"];
+
+                    
+                            //强制让数据立刻保存
+                                [defaults synchronize];
+                                        // [[NetworkManager instanceManager] setSessionID:nil];
+                                        ViewController * root = [[ViewController alloc]init];
+                                        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                                        // [self addChildViewController:nav];
+                                        
+                                        
+                                        appDelegate.window.rootViewController = root;
+                                        
+                                        
+                                        
+                                        return ;
                 }
                 errorBlock(nil,error,message);
             }

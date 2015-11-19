@@ -18,6 +18,7 @@
 #import "zhizuoZP1ViewController.h"
 #import "jingdianView.h"
 #import "homeYJModel.h"
+#import "SettgViewController.h"
 @interface DEMOHomeViewController ()<ZZCarouselDelegate,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,UITextFieldDelegate,jingdianViewDelegate>
 {
     
@@ -307,7 +308,7 @@
     
     NSDictionary * Parameterdic = @{
                                     @"page":@(_pageStr),
-                                    @"user_session":self.userSessionId
+                                   
                                     
                                     };
     
@@ -436,6 +437,11 @@
         ctl.SegmentIndex = 1;
         [self pushNewViewController:ctl];
     }
+    if ([reveiveString isEqualToString:@"4"]) {
+        SettgViewController * ctl = [[SettgViewController alloc]init];
+        [self pushNewViewController:ctl];
+    }
+
 
 //    if([reveiveString isEqualToString:@"登录"]){
 //        LoginUIViewController * ctl = [[LoginUIViewController alloc]init];

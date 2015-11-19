@@ -39,6 +39,7 @@ class jubaoViewController: BaseViewController ,UITableViewDelegate,UITableViewDa
         self.prepreUI()
               // Do any additional setup after loading the view.
     }
+    
     func fasongBtn(){
         
         if _index > 4 {
@@ -70,6 +71,7 @@ class jubaoViewController: BaseViewController ,UITableViewDelegate,UITableViewDa
         
         
     }
+    
     func queBtn(){
         _ShareView.hideView()
         self.navigationController?.popViewControllerAnimated(true)

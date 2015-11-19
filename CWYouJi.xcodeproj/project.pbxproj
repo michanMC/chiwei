@@ -363,6 +363,16 @@
 		4CF9B23B1BDFD0ED006A268B /* DEMONavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9B23A1BDFD0ED006A268B /* DEMONavigationController.m */; };
 		4CF9B23E1BDFD16B006A268B /* DEMOSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9B23D1BDFD16B006A268B /* DEMOSecondViewController.m */; };
 		4CF9B2411BDFD374006A268B /* BUIControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9B2401BDFD374006A268B /* BUIControl.m */; };
+		4CFD2F6C1BFD791000613F32 /* SettgViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFD2F6B1BFD791000613F32 /* SettgViewController.m */; };
+		4CFD2F701BFD7B0400613F32 /* SettgTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFD2F6F1BFD7B0400613F32 /* SettgTableViewCell.m */; };
+		4CFD2F721BFD7B1500613F32 /* SettgTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CFD2F711BFD7B1500613F32 /* SettgTableViewCell.xib */; };
+		4CFD2F751BFD952200613F32 /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFD2F741BFD952200613F32 /* MeViewController.m */; };
+		4CFD2F781BFDA99E00613F32 /* yijianViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFD2F771BFDA99E00613F32 /* yijianViewController.m */; };
+		4CFD2F7B1BFDAD8900613F32 /* gongnengViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFD2F7A1BFDAD8900613F32 /* gongnengViewController.m */; };
+		4CFD2F7E1BFDAE1E00613F32 /* gongnengTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFD2F7D1BFDAE1E00613F32 /* gongnengTableViewCell.m */; };
+		4CFD2F801BFDAE2600613F32 /* gongnengTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CFD2F7F1BFDAE2600613F32 /* gongnengTableViewCell.xib */; };
+		4CFD2F831BFDBFB600613F32 /* GengxinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFD2F821BFDBFB600613F32 /* GengxinViewController.m */; };
+		4CFD2F861BFDCB1A00613F32 /* gengxinQXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFD2F851BFDCB1A00613F32 /* gengxinQXViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -905,6 +915,24 @@
 		4CF9B23D1BDFD16B006A268B /* DEMOSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMOSecondViewController.m; sourceTree = "<group>"; };
 		4CF9B23F1BDFD374006A268B /* BUIControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BUIControl.h; sourceTree = "<group>"; };
 		4CF9B2401BDFD374006A268B /* BUIControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BUIControl.m; sourceTree = "<group>"; };
+		4CFD2F6A1BFD791000613F32 /* SettgViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettgViewController.h; sourceTree = "<group>"; };
+		4CFD2F6B1BFD791000613F32 /* SettgViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettgViewController.m; sourceTree = "<group>"; };
+		4CFD2F6E1BFD7B0400613F32 /* SettgTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettgTableViewCell.h; sourceTree = "<group>"; };
+		4CFD2F6F1BFD7B0400613F32 /* SettgTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettgTableViewCell.m; sourceTree = "<group>"; };
+		4CFD2F711BFD7B1500613F32 /* SettgTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettgTableViewCell.xib; sourceTree = "<group>"; };
+		4CFD2F731BFD952200613F32 /* MeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeViewController.h; sourceTree = "<group>"; };
+		4CFD2F741BFD952200613F32 /* MeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeViewController.m; sourceTree = "<group>"; };
+		4CFD2F761BFDA99E00613F32 /* yijianViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yijianViewController.h; sourceTree = "<group>"; };
+		4CFD2F771BFDA99E00613F32 /* yijianViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = yijianViewController.m; sourceTree = "<group>"; };
+		4CFD2F791BFDAD8900613F32 /* gongnengViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gongnengViewController.h; sourceTree = "<group>"; };
+		4CFD2F7A1BFDAD8900613F32 /* gongnengViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = gongnengViewController.m; sourceTree = "<group>"; };
+		4CFD2F7C1BFDAE1E00613F32 /* gongnengTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gongnengTableViewCell.h; sourceTree = "<group>"; };
+		4CFD2F7D1BFDAE1E00613F32 /* gongnengTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = gongnengTableViewCell.m; sourceTree = "<group>"; };
+		4CFD2F7F1BFDAE2600613F32 /* gongnengTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = gongnengTableViewCell.xib; sourceTree = "<group>"; };
+		4CFD2F811BFDBFB600613F32 /* GengxinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GengxinViewController.h; sourceTree = "<group>"; };
+		4CFD2F821BFDBFB600613F32 /* GengxinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GengxinViewController.m; sourceTree = "<group>"; };
+		4CFD2F841BFDCB1A00613F32 /* gengxinQXViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gengxinQXViewController.h; sourceTree = "<group>"; };
+		4CFD2F851BFDCB1A00613F32 /* gengxinQXViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = gengxinQXViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2094,6 +2122,7 @@
 		4CF9B2351BDFD095006A268B /* 主界面 */ = {
 			isa = PBXGroup;
 			children = (
+				4CFD2F691BFD78F300613F32 /* 系统设置 */,
 				4CAC613B1BF6D90C0025158D /* 举报 */,
 				4C49958D1BEE68060032413A /* 制作作品 */,
 				4C1C3D001BEDCB220059D9C2 /* 作品详情 */,
@@ -2106,6 +2135,39 @@
 				4CF9B2371BDFD0B4006A268B /* DEMOHomeViewController.m */,
 			);
 			path = "主界面";
+			sourceTree = "<group>";
+		};
+		4CFD2F691BFD78F300613F32 /* 系统设置 */ = {
+			isa = PBXGroup;
+			children = (
+				4CFD2F6D1BFD7AF200613F32 /* View */,
+				4CFD2F6A1BFD791000613F32 /* SettgViewController.h */,
+				4CFD2F6B1BFD791000613F32 /* SettgViewController.m */,
+			);
+			path = "系统设置";
+			sourceTree = "<group>";
+		};
+		4CFD2F6D1BFD7AF200613F32 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4CFD2F6E1BFD7B0400613F32 /* SettgTableViewCell.h */,
+				4CFD2F6F1BFD7B0400613F32 /* SettgTableViewCell.m */,
+				4CFD2F711BFD7B1500613F32 /* SettgTableViewCell.xib */,
+				4CFD2F731BFD952200613F32 /* MeViewController.h */,
+				4CFD2F741BFD952200613F32 /* MeViewController.m */,
+				4CFD2F761BFDA99E00613F32 /* yijianViewController.h */,
+				4CFD2F771BFDA99E00613F32 /* yijianViewController.m */,
+				4CFD2F791BFDAD8900613F32 /* gongnengViewController.h */,
+				4CFD2F7A1BFDAD8900613F32 /* gongnengViewController.m */,
+				4CFD2F7C1BFDAE1E00613F32 /* gongnengTableViewCell.h */,
+				4CFD2F7D1BFDAE1E00613F32 /* gongnengTableViewCell.m */,
+				4CFD2F7F1BFDAE2600613F32 /* gongnengTableViewCell.xib */,
+				4CFD2F811BFDBFB600613F32 /* GengxinViewController.h */,
+				4CFD2F821BFDBFB600613F32 /* GengxinViewController.m */,
+				4CFD2F841BFDCB1A00613F32 /* gengxinQXViewController.h */,
+				4CFD2F851BFDCB1A00613F32 /* gengxinQXViewController.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2267,6 +2329,7 @@
 				4CB318241BE0FB4800D2E2A5 /* travels-details_default-chart01@2x.png in Resources */,
 				4CB3181F1BE0FB4800D2E2A5 /* home_default-chart@3x.png in Resources */,
 				4CB317E31BE0FB4800D2E2A5 /* nav_icon_back@3x.png in Resources */,
+				4CFD2F721BFD7B1500613F32 /* SettgTableViewCell.xib in Resources */,
 				4CB317C11BE0FB4800D2E2A5 /* home_icon_checked@3x.png in Resources */,
 				4CB317931BE0FB4800D2E2A5 /* nav_delete_pressed@3x.png in Resources */,
 				4C1C3CFC1BEDBDDB0059D9C2 /* close@2x.png in Resources */,
@@ -2299,6 +2362,7 @@
 				4C9AF5911BEEEF3500104E7B /* zhizuoZp1TableViewCell.xib in Resources */,
 				4CB3179C1BE0FB4800D2E2A5 /* pop-up-box_close@2x.png in Resources */,
 				4CAC614D1BF6E4690025158D /* jubaoCell.xib in Resources */,
+				4CFD2F801BFDAE2600613F32 /* gongnengTableViewCell.xib in Resources */,
 				4CB3182A1BE0FB4800D2E2A5 /* travels-details_default-chart04@2x.png in Resources */,
 				4CB317A71BE0FB4800D2E2A5 /* list_checkbox_checked@3x.png in Resources */,
 				4CB318211BE0FB4800D2E2A5 /* mine_default-avatar@3x.png in Resources */,
@@ -2437,6 +2501,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CFD2F701BFD7B0400613F32 /* SettgTableViewCell.m in Sources */,
 				4CF9B22F1BDFCEC3006A268B /* UIViewController+REFrostedViewController.m in Sources */,
 				4CF9B1EA1BDFC8CB006A268B /* RESideMenu.m in Sources */,
 				4C1C3D0B1BEDCCDA0059D9C2 /* UIImage+ImageEffects.m in Sources */,
@@ -2474,6 +2539,7 @@
 				4CF9B22C1BDFCEC3006A268B /* REFrostedViewController.m in Sources */,
 				4C9AF5991BEEF8F800104E7B /* zhizuoZp3TableViewCell.m in Sources */,
 				4CA31D571BEF8FD10026F118 /* MCdeleteImgView.m in Sources */,
+				4CFD2F861BFDCB1A00613F32 /* gengxinQXViewController.m in Sources */,
 				4CAC61471BF6DF4D0025158D /* swiftACMacros.swift in Sources */,
 				4CAC613E1BF6D9260025158D /* jubaoViewController.swift in Sources */,
 				4CF9B1F91BDFC8CB006A268B /* UIImage+MultiFormat.m in Sources */,
@@ -2528,6 +2594,7 @@
 				4CA31D541BEF8F560026F118 /* ZYQAssetPickerController.m in Sources */,
 				4CF9B1C11BDFC8CB006A268B /* MF_Base64Additions.m in Sources */,
 				4C5C0F731BFB0A690041FC65 /* NSObject+MJKeyValue.m in Sources */,
+				4CFD2F781BFDA99E00613F32 /* yijianViewController.m in Sources */,
 				4CF9B1B71BDFC8CB006A268B /* AFURLConnectionOperation.m in Sources */,
 				4CAC615D1BF706120025158D /* jubao_View.m in Sources */,
 				4C5C0F721BFB0A690041FC65 /* NSObject+MJCoding.m in Sources */,
@@ -2537,6 +2604,7 @@
 				4CED41561BE5D1E30060CE47 /* MyshouchangViewController.m in Sources */,
 				4CF9B1F11BDFC8CB006A268B /* SDWebImageCompat.m in Sources */,
 				4C7796821BF383AF00DEA04C /* UIImage+ImageEffects.m in Sources */,
+				4CFD2F7E1BFDAE1E00613F32 /* gongnengTableViewCell.m in Sources */,
 				4CF9B1C01BDFC8CB006A268B /* GTMBase64.m in Sources */,
 				4CF9B1C21BDFC8CB006A268B /* CommeHelper.m in Sources */,
 				4CF9B1FF1BDFC8CB006A268B /* MCUser.m in Sources */,
@@ -2562,6 +2630,8 @@
 				4CF9B23E1BDFD16B006A268B /* DEMOSecondViewController.m in Sources */,
 				4C49958A1BEE5B780032413A /* RGFadeView.swift in Sources */,
 				4CF9B1B61BDFC8CB006A268B /* AFSecurityPolicy.m in Sources */,
+				4CFD2F751BFD952200613F32 /* MeViewController.m in Sources */,
+				4CFD2F831BFDBFB600613F32 /* GengxinViewController.m in Sources */,
 				4CED41501BE5D1A70060CE47 /* zuopinViewController.m in Sources */,
 				4CB318411BE12D1300D2E2A5 /* ZZCarousel.m in Sources */,
 				4CF9B22D1BDFCEC3006A268B /* UIImage+REFrostedViewController.m in Sources */,
@@ -2581,12 +2651,14 @@
 				4CF9B1F31BDFC8CB006A268B /* SDWebImageDownloader.m in Sources */,
 				4CF9B1E31BDFC8CB006A268B /* UIScrollView+MJRefresh.m in Sources */,
 				4CF9B1BA1BDFC8CB006A268B /* AFURLSessionManager.m in Sources */,
+				4CFD2F7B1BFDAD8900613F32 /* gongnengViewController.m in Sources */,
 				4CC52B8D1BFC6E64001BC042 /* pinglunModel.m in Sources */,
 				4CB318381BE1075B00D2E2A5 /* zhuceViewController.m in Sources */,
 				4CF9B1BF1BDFC8CB006A268B /* AA3DESManager.m in Sources */,
 				4CAC61781BF71EE60025158D /* HZPhotoBrowserView.m in Sources */,
 				4CF9B1D01BDFC8CB006A268B /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				4CF9B0821BDFC7ED006A268B /* AppDelegate.m in Sources */,
+				4CFD2F6C1BFD791000613F32 /* SettgViewController.m in Sources */,
 				4C77968F1BF384BF00DEA04C /* TYAlertView.m in Sources */,
 				4C9AF5A31BEF11B000104E7B /* zhizuoZp5TableViewCell.m in Sources */,
 				4CF9B07F1BDFC7ED006A268B /* main.m in Sources */,

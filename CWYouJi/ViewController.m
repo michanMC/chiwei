@@ -22,13 +22,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // 没有注销且seesion没过期才可以直接进入主界面
+    NSString* logout = [[NSUserDefaults standardUserDefaults] objectForKey:@"isLogOut"];
+
+    if ( [logout isEqualToString:@"1"] && [[[NSUserDefaults standardUserDefaults] objectForKey:@"sessionId"] length]) {
+
+        [self lloginChenggong];
+    
+    }
+    else{
+    
     loginViewController *loginVC = [[loginViewController alloc]init];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     DEMONavigationController *nav = [[DEMONavigationController alloc]initWithRootViewController:loginVC];
     appDelegate.window.rootViewController = nav;
     return;
 
-
+    }
 
 /*
     DEMONavigationController *navigationController = [[DEMONavigationController alloc] initWithRootViewController:[[DEMOHomeViewController alloc] init]];
@@ -52,6 +62,31 @@
     
     
     // Do any additional setup after loading the view, typically from a nib.
+}
+-(void)lloginChenggong{
+    
+    DEMONavigationController *navigationController = [[DEMONavigationController alloc] initWithRootViewController:[[DEMOHomeViewController alloc] init]];
+    
+    DEMOMenuViewController *menuController = [[DEMOMenuViewController alloc] initWithStyle:UITableViewStylePlain];
+    
+    
+    REFrostedViewController *frostedViewController = [[REFrostedViewController alloc] initWithContentViewController:navigationController menuViewController:menuController];
+    
+    frostedViewController.direction = REFrostedViewControllerDirectionLeft;
+    
+    frostedViewController.liveBlurBackgroundStyle = REFrostedViewControllerLiveBackgroundStyleLight;
+    frostedViewController.panGestureEnabled = NO;
+    
+    frostedViewController.liveBlur = YES;
+    frostedViewController.delegate = self;
+    
+    // Make it a root controller
+    //
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.window.rootViewController = frostedViewController;
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
