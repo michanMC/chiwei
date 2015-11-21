@@ -34,12 +34,23 @@
 @end
 
 @implementation zuopinXQViewController
+-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectjubaoObj:) name:@"didjubaoObjNotification" object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didshowTupianjubaoObj:) name:@"didshowObjNotification" object:nil];
+
+        
+    }
+    
+    return self;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectjubaoObj:) name:@"didjubaoObjNotification" object:nil];
-    
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didshowTupianjubaoObj:) name:@"didshowObjNotification" object:nil];
     [self prepareUI];
     // Do any additional setup after loading the view.
 }
@@ -57,14 +68,15 @@
 #pragma mark-浏览图片监听
 -(void)didshowTupianjubaoObj:(NSNotification*)Notification{
     
-    NSLog(@"%@",Notification.object);
+  //  NSLog(@"%@",Notification.object);
     NSInteger index = [Notification.object integerValue] - 400;
     
     //启动图片浏览器
     HZPhotoBrowser *browserVc = [[HZPhotoBrowser alloc] init];
     browserVc.sourceImagesContainerView = self.view; // 原图的父控件
+    NSLog(@"===%ld",_index);
     homeYJModel * model = _dataArray[_index];
-    NSLog(@"---------%ld",_index);
+    NSLog(@"---------%ld",model.photos.count);
     browserVc.imageCount = model.photos.count; // 图片总数
     browserVc.currentImageIndex =(int)index;
     browserVc.delegate = self;
@@ -84,7 +96,7 @@
         
         NSString * imgurl = model.photos[index][@"raw"];//[NSString stringWithFormat:@"%@%@",];
     
-    return [NSURL URLWithString:[NSString stringWithFormat:@"%@",imgurl]];
+   return [NSURL URLWithString:[NSString stringWithFormat:@"%@",imgurl]];
     }
     return [NSURL URLWithString:@""];
 }
@@ -135,10 +147,15 @@
     _fenxianBtn = [[UIButton alloc]initWithFrame:CGRectMake(Main_Screen_Width - 35 - 10, 23, 35, 35)];
     [_fenxianBtn setImage:[UIImage imageNamed:@"nav_icon_share"] forState:UIControlStateNormal];
     [self.view addSubview:_fenxianBtn];
+    [_fenxianBtn addTarget:self action:@selector(action_Fenxian:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
+    /*
     [_fenxianBtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
        
         NSLog(@"%d",_index);
-        
+      
         fenxianView *shareView = [fenxianView createViewFromNib];
         shareView.backgroundColor = [UIColor clearColor];
         
@@ -155,25 +172,25 @@
         }];
         [shareView.weibobtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
             [shareView hideView];
-            [self actionFenxian:SSDKPlatformTypeSinaWeibo];
+           // [self actionFenxian:SSDKPlatformTypeSinaWeibo];
             //[self.navigationController popToRootViewControllerAnimated:YES];
             NSLog(@"微博");
         }];
         [shareView.qqbtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
             [shareView hideView];
-            [self actionFenxian:SSDKPlatformTypeQQ];
+            //[self actionFenxian:SSDKPlatformTypeQQ];
             //[self.navigationController popToRootViewControllerAnimated:YES];
             NSLog(@"QQ");
         }];
         [shareView.weixinbtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
             [shareView hideView];
-            [self actionFenxian:SSDKPlatformTypeWechat];
+           // [self actionFenxian:SSDKPlatformTypeWechat];
           //  [self.navigationController popToRootViewControllerAnimated:YES];
             NSLog(@"weixin");
         }];
         [shareView.tubtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
             [shareView hideView];
-            [self actionFenxian:SSDKPlatformTypeDouBan];
+            //[self actionFenxian:SSDKPlatformTypeDouBan];
             //[self.navigationController popToRootViewControllerAnimated:YES];
             NSLog(@"土豆");
         }];
@@ -182,11 +199,61 @@
         
        // NSLog(@"%@",_dataArray[])
         
-        
+     
         
     }];
 
+    */
     
+    
+}
+-(void)action_Fenxian:(UIButton*)btn{
+    
+    
+    fenxianView *shareView = [fenxianView createViewFromNib];
+    shareView.backgroundColor = [UIColor clearColor];
+    
+    shareView.titleLbl.textColor = AppTextCOLOR;
+    ViewRadius(shareView.bgView, 5);
+    
+    
+    [shareView.deleBtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+        [shareView hideView];
+        
+        // [self.navigationController popToRootViewControllerAnimated:YES];
+        
+        
+    }];
+    [shareView.weibobtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+        [shareView hideView];
+        [self actionFenxian:SSDKPlatformTypeSinaWeibo];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        NSLog(@"微博");
+    }];
+    [shareView.qqbtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+        [shareView hideView];
+        [self actionFenxian:SSDKPlatformTypeQQ];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        NSLog(@"QQ");
+    }];
+    [shareView.weixinbtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+        [shareView hideView];
+         [self actionFenxian:SSDKPlatformTypeWechat];
+          [self.navigationController popToRootViewControllerAnimated:YES];
+        NSLog(@"weixin");
+    }];
+    [shareView.tubtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+        [shareView hideView];
+        [self actionFenxian:SSDKPlatformTypeDouBan];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        NSLog(@"土豆");
+    }];
+    [shareView showInWindow];
+    
+    
+    // NSLog(@"%@",_dataArray[])
+    
+
     
     
 }
@@ -274,12 +341,13 @@
     
     [self.navigationController popViewControllerAnimated:YES];
     
+    
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 /*
 #pragma mark - Navigation
 

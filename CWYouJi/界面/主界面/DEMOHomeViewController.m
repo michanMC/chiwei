@@ -454,6 +454,9 @@
         _spotIdStr = - 1;
         //[self actionHeader];
         _pageStr = 1;
+        [_jingdianArray removeAllObjects];
+        _jiangdianView.jingdianArray = _jingdianArray;
+       // [self textFieldDidEndEditing:textField];
         [self loadData:YES];
         return;
     }

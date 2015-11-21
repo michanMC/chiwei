@@ -197,10 +197,19 @@
         [self login];
     }
     else if(btn.tag == 103){//微博
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+
+        SSDKUserQueryConditional * conditional;
+        if (![[defaults objectForKey:@"uid"] length]|| ![defaults objectForKey:@"uid"]) {
+            conditional = nil;
+        }
+        else
+        {
+            conditional = [SSDKUserQueryConditional userQueryConditionalByUserId:[defaults objectForKey:@"uid"]];
+        }
         
         
-        
-        [ShareSDK getUserInfo:SSDKPlatformTypeSinaWeibo conditional:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
+        [ShareSDK getUserInfo:SSDKPlatformTypeSinaWeibo conditional:conditional onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
            
             NSLog(@">>%d",state);
             NSLog(@"%@",user.nickname);
@@ -225,9 +234,50 @@
         
     }
     else if(btn.tag == 104){//qq
+        [ShareSDK getUserInfo:SSDKPlatformTypeQQ conditional:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
+            
+            NSLog(@">>%d",state);
+            NSLog(@"%@",user.nickname);
+            NSLog(@"%@",user.icon);
+            NSLog(@"%@",user.uid);
+            
+//            NSDictionary * Parameterdic = @{
+//                                            @"uname":user.uid,
+//                                            @"nickname":user.nickname,
+//                                            @"type":@(3),
+//                                            @"raw":user.icon,
+//                                            @"thumbnail":user.icon
+//                                            };
+            
+            
+           // [self socialLogin:Parameterdic];
+            
+        }];
+
         
     }
     else if(btn.tag == 105){//微信
+        [ShareSDK getUserInfo:SSDKPlatformTypeWechat conditional:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
+            
+//            NSLog(@">>%d",state);
+//            NSLog(@"%@",user.nickname);
+//            NSLog(@"%@",user.icon);
+//            NSLog(@"%@",user.uid);
+//            
+//            NSDictionary * Parameterdic = @{
+//                                            @"uname":user.uid,
+//                                            @"nickname":user.nickname,
+//                                            @"type":@(3),
+//                                            @"raw":user.icon,
+//                                            @"thumbnail":user.icon
+//                                            };
+//            
+//            
+//            [self socialLogin:Parameterdic];
+            
+        }];
+        
+
         
     }
     
@@ -239,11 +289,40 @@
     
     
     [self showLoading:YES AndText:nil];
-    [self.requestManager requestWebWithParaWithURL:@"api/user/socialLogin.json" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+    [self.requestManager requestWebWithParaWithURL:@"api/user/socialLogin.json" Parameter:Parameterdic IsLogin:NO Finish:^(NSDictionary *resultDic) {
         [self hideHud];
         NSLog(@"成功");
         NSLog(@"返回==%@",resultDic);
+        /*保存数据－－－－－－－－－－－－－－－－－begin*/
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        [defaults setObject:Parameterdic[@"uname"] forKey:@"uid"];
+        [defaults setObject:@"1" forKey:@"isLogOut"];
+        [defaults setObject :resultDic[@"object"][@"sessionId"] forKey:@"sessionId"];
+        [defaults setObject :resultDic[@"object"][@"user"][@"nickname"] forKey:@"nickname"];
+        [defaults setObject :resultDic[@"mobile"] forKey:@"mobile"];
+        [defaults setObject :resultDic[@"object"][@"user"][@"id"] forKey:@"id"];
+        [defaults setObject :resultDic[@"sign"] forKey:@"password"];
         
+        
+        
+        //强制让数据立刻保存
+        [defaults synchronize];
+        /*保存数据－－－－－－－－－－－－－－－－－end*/
+        MCUser *_user = [MCUser sharedInstance];
+        _user.userExpire = resultDic[@"expire"];
+        _user.userSessionId = resultDic[@"object"][@"sessionId"];
+        
+        
+        
+        _user.userid = resultDic[@"object"][@"user"][@"id"];
+        _user.userphone = resultDic[@"object"][@"user"][@"mobile"];
+        _user.userNickname = resultDic[@"object"][@"user"][@"nickname"];
+        _user.userSex = resultDic[@"object"][@"user"][@"sex"];
+        _user.userThumbnail = [NSString stringWithFormat:@"%@%@",AppImgURL,resultDic[@"object"][@"user"][@"thumbnail"]];
+        NSLog(@">>>>%@",[NSString stringWithFormat:@"%@%@",AppImgURL,resultDic[@"object"][@"user"][@"thumbnail"]]);
+        
+        [self lloginChenggong];
+
         
         
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {

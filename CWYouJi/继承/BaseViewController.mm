@@ -25,6 +25,7 @@
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
+    
 }
 - (void)clickedBarButtonItemAction {
     if (self.barbuttonItemAction) {
@@ -277,5 +278,8 @@
     
     
 }
-
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 @end
