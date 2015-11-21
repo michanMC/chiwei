@@ -64,6 +64,7 @@
     HZPhotoBrowser *browserVc = [[HZPhotoBrowser alloc] init];
     browserVc.sourceImagesContainerView = self.view; // 原图的父控件
     homeYJModel * model = _dataArray[_index];
+    NSLog(@"---------%ld",_index);
     browserVc.imageCount = model.photos.count; // 图片总数
     browserVc.currentImageIndex =(int)index;
     browserVc.delegate = self;
