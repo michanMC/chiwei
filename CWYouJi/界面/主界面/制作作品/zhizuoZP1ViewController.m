@@ -13,6 +13,7 @@
 #import "zhizuoZp4TableViewCell.h"
 #import "zhizuoZp5TableViewCell.h"
 #import "zhizuoZP2ViewController.h"
+#import "jingdianModel.h"
 @interface zhizuoZP1ViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIAlertViewDelegate>
 {
     UITableView *_tableView;
@@ -35,7 +36,7 @@
     NSArray *_titlearray;
     
     
-    
+    jingdianModel *_jingdianModel;
     
     
 
@@ -60,7 +61,7 @@
     [super viewDidLoad];
     self.title = @"制作游记";
     _titlearray = @[@"东西好吃得不要不要的",@"三星级的价格，五星级的享受",@"景美，我和我的小伙伴都惊呆了",@"买买买"];
-    
+    _dataArray = [NSMutableArray array];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"nav_icon_back_pressed"] style:UIBarButtonItemStylePlain target:self action:@selector(ActionBack)];
     
     [self prepareUI];
@@ -148,7 +149,7 @@
         kAlertMessage(@"请选择你对此景点的看法");
         return;
     }
-    if (!_jingdianStr.length) {
+    if (!_jingdianStr.length || !_jingdianModel.id) {
         kAlertMessage(@"请输入你的景点");
         return;
     }
@@ -165,8 +166,9 @@
     NSMutableDictionary * dic = [NSMutableDictionary dictionary];
     [dic setObject:str1 forKey:@"isRecommend"];
     [dic setObject:str2 forKey:@"classify"];
-    [dic setObject:_jingdianStr forKey:@"spotId"];
+    [dic setObject:_jingdianModel.id forKey:@"spotId"];
     [dic setObject:_timeStr forKey:@"startTime"];
+    [dic setObject:_jingdianStr forKey:@"jingdianStr"];
 
     
 
@@ -315,8 +317,11 @@
             cell = [[[NSBundle mainBundle]loadNibNamed:@"zhizuoZp5TableViewCell" owner:self options:nil]lastObject];
         }
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
+        if(_dataArray.count >  indexPath.row - 4){
+            jingdianModel * model = _dataArray[indexPath.row - 4];
+            cell.titelLbl.text = model.nameCH;
 
-        cell.titelLbl.text = _dataArray[indexPath.row - 4];
+        }
         
         return cell; //[[UITableViewCell alloc]init];
     }
@@ -345,8 +350,13 @@
     if (_isbianji) {
         if (indexPath.row > 3) {
             UITextField * text = (UITextField*)[self.view viewWithTag:800];
-            text.text = _dataArray[indexPath.row - 4];
-            _jingdianStr = _dataArray[indexPath.row - 4];
+            if (_dataArray.count >  indexPath.row - 4) {
+                jingdianModel * model = _dataArray[indexPath.row - 4];
+                text.text = model.nameCH;
+                _jingdianModel = model;
+                _jingdianStr = model.nameCH;//_dataArray[indexPath.row - 4];
+
+            }
         }
         _isbianji = NO;
         [_tableView reloadData];
@@ -360,10 +370,6 @@
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
     if (textField.tag == 800) {
-        _dataArray = [NSMutableArray arrayWithObjects:@"123",@"213123",@"qweqwe",@"qwewqe", nil];
-        _isbianji = YES;
-        
-        [_tableView reloadData];
         
     }
     if (textField.tag == 801) {
@@ -390,6 +396,46 @@
 }
 -(void)EditingChanged:(UITextField*)text{
     
+    
+    NSDictionary * Parameterdic = @{
+                                    @"keyWord":text.text
+                                    };
+    
+    
+    // [self showLoading:YES AndText:nil];
+    [self.requestManager requestWebWithParaWithURL:@"api/travel/searchSpots.json" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self stopshowLoading];
+        NSLog(@"成功");
+        NSLog(@"返回》》==%@",resultDic);
+        [_dataArray removeAllObjects];
+        NSArray * objectArray = resultDic[@"object"];
+        for (NSDictionary *dic in objectArray) {
+            jingdianModel * modle = [jingdianModel mj_objectWithKeyValues:dic];
+            [_dataArray addObject:modle];
+        }
+        
+        if (_dataArray.count) {
+            _isbianji = YES;
+            
+            [_tableView reloadData];
+            
+            //  [_jiangdianView.tableView reloadData];
+        }
+        
+        
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self stopshowLoading];
+        [self showAllTextDialog:description];
+        
+        NSLog(@"失败");
+    }];
+    
+
+    
+    
+    //_dataArray = [NSMutableArray arrayWithObjects:@"123",@"213123",@"qweqwe",@"qwewqe", nil];
+   
 
     
 }

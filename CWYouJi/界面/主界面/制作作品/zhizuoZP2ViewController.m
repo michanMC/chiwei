@@ -122,13 +122,13 @@
         return;
     }
 
-    if (btn.tag == 200) {
+    if (btn.tag == 200) {//发布
         NSLog(@"发布");
         NSLog(@">>>>%@",_dataDic);
         NSInteger  isRecommend = 0;
         NSInteger classify = 0;
         NSString *startTime;
-        NSString *spotId;
+        NSInteger spotId;
         if ([[_dataDic objectForKey:@"isRecommend"] isEqualToString:@"赞美"]) {
             isRecommend = 1;
 //            _titlearray = @[@"东西好吃得不要不要的",@"三星级的价格，五星级的享受",@"景美，我和我的小伙伴都惊呆了",@"买买买"];
@@ -152,6 +152,7 @@
             classify = 3;
 
      startTime =   [[_dataDic objectForKey:@"startTime"] substringToIndex:10];
+        spotId = [[_dataDic objectForKey:@"spotId"] integerValue];
         
         
        // NSLog(@">>>>>%@",imgArray);
@@ -182,7 +183,7 @@
         NSDictionary * Parameterdic = @{
                                         @"title":_diaotiStr,
                                         @"content":_holderTextStr,
-                                        @"spotId":@(1),
+                                        @"spotId":@(spotId),
                                         @"classify":@(classify),//classify,
                                         @"startTime":startTime,
                                         @"isRecommend":@(isRecommend),//isRecommend,
@@ -202,12 +203,48 @@
             //发送通知首页刷新
             [[NSNotificationCenter defaultCenter] postNotificationName:@"dishuaxinObjNotification" object:@""];
             
-
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            ShareView *shareView = [ShareView createViewFromNib];
+            shareView.titleLbl.textColor = AppTextCOLOR;
+            ViewRadius(shareView.bgView, 5);
+            
+            
+            [shareView.detebtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+                [shareView hideView];
                 
                 [self.navigationController popToRootViewControllerAnimated:YES];
                 
-            });
+                
+            }];
+            [shareView.weiboBtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+                [shareView hideView];
+                [self actionFenxian:SSDKPlatformTypeSinaWeibo];
+                [self.navigationController popToRootViewControllerAnimated:YES];
+                NSLog(@"微博");
+            }];
+            [shareView.QQBtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+                [shareView hideView];
+                [self actionFenxian:SSDKPlatformTypeQQ];
+[self.navigationController popToRootViewControllerAnimated:YES];
+                NSLog(@"QQ");
+            }];
+            [shareView.weixin handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+                [shareView hideView];
+                [self actionFenxian:SSDKPlatformTypeWechat];
+[self.navigationController popToRootViewControllerAnimated:YES];
+                NSLog(@"weixin");
+            }];
+            [shareView.toudouBtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+                [shareView hideView];
+                [self actionFenxian:SSDKPlatformTypeDouBan];
+[self.navigationController popToRootViewControllerAnimated:YES];
+                NSLog(@"土豆");
+            }];
+            [shareView showInWindow];
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                
+//                [self.navigationController popToRootViewControllerAnimated:YES];
+//                
+//            });
 
             
             
@@ -220,47 +257,9 @@
             NSLog(@"失败");
         }];
         
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         return;
-        ShareView *shareView = [ShareView createViewFromNib];
-        shareView.titleLbl.textColor = AppTextCOLOR;
-        ViewRadius(shareView.bgView, 5);
-        
-        
-        [shareView.detebtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
-            [shareView hideView];
-            
-            
-            
-        
-        }];
-        [shareView.weiboBtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
-           [shareView hideView];
-            NSLog(@"微博");
-        }];
-        [shareView.QQBtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
-           [shareView hideView];
-            NSLog(@"QQ");
-        }];
-        [shareView.weixin handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
-           [shareView hideView];
-            NSLog(@"weixin");
-        }];
-        [shareView.toudouBtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
-           [shareView hideView];
-            NSLog(@"土豆");
-        }];
-        [shareView showInWindow];
+       
 //        TYAlertController *alertController = [TYAlertController alertControllerWithAlertView:shareView preferredStyle:TYAlertControllerStyleAlert];
 //        
 //        // blur effect
@@ -303,6 +302,7 @@
         ctl.titleStr = _diaotiStr;
         ctl.title2Str = _holderTextStr;
         ctl.dataDic = _dataDic;
+        ctl.jingdianStr =  [_dataDic objectForKey:@"jingdianStr"];
         [self pushNewViewController:ctl];
         
         

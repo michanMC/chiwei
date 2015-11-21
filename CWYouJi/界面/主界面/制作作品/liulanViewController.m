@@ -277,7 +277,7 @@
     
         cell.dataStr = _title2Str;
         
-        
+    cell.dingweiStr= _jingdianStr;
         CGFloat h = [MCIucencyView heightforString:_title2Str andWidth:Main_Screen_Width - 80 - 30 fontSize:13];
         
         UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, Main_Screen_Width - 80, 85 + h + 55) byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii:CGSizeMake(10, 10)];

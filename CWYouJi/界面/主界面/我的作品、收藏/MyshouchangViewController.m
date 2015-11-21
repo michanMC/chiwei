@@ -21,7 +21,7 @@
 //    NSMutableArray *_deleArray;//记录要删除的Btn
     
     NSMutableArray *_dataArray;
-
+    NSInteger pageStr;
     
 }
 
@@ -35,15 +35,15 @@
         _isEit = NO;
         _deleArray = [NSMutableArray array];
         _dataArray = [NSMutableArray array];
-
-       
+        pageStr = 1;
+        
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(disshuaxinObj:) name:@"dishuaxinObjNotification" object:nil];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(disshuaxinObj:) name:@"dishoucangshuaxinObjNotification" object:nil];
      self.view.frame = CGRectMake(Main_Screen_Width, 0, Main_Screen_Width, Main_Screen_Height - 64 - 44);
     self.view.backgroundColor = [UIColor redColor];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Height - 64 - 44) style:UITableViewStyleGrouped];
@@ -51,25 +51,41 @@
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
-    [self loadData];
+    [_tableView addHeaderWithTarget:self action:@selector(actionHeader)];
+    [_tableView addFooterWithTarget:self action:@selector(actionFooter)];
+
+    [self loadData:YES];
     // Do any additional setup after loading the view.
 }
 -(void)disshuaxinObj:(NSNotification*)Notification{
     
     [_dataArray removeAllObjects];
-    [self loadData];
+    [self loadData:NO];
     
     
     
     
 }
--(void)loadData{
+-(void)actionHeader{
+    pageStr = 1;
+    [_dataArray  removeAllObjects];
+    [self loadData:NO];
+    
+}
+-(void)actionFooter{
+    
+    pageStr ++;
+    [self loadData:NO];
+    
+}
+
+-(void)loadData :(BOOL)iszhuan{
     NSDictionary * Parameterdic = @{
-                                    @"page":@(1)
+                                    @"page":@(pageStr)
                                     };
     
     
-    [self showLoading:YES AndText:nil];
+    [self showLoading:iszhuan AndText:nil];
     [self.requestManager requestWebWithParaWithURL:@"api/travle/collection/query.json" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
         [self hideHud];
         NSLog(@"成功");
@@ -83,10 +99,15 @@
             model.homeModel.userModel =[YJUserModel mj_objectWithKeyValues:dic[@"travel"][@"user"]];
             [_dataArray addObject:model];
         }
-        
+        [_tableView headerEndRefreshing];
+        [_tableView footerEndRefreshing];
         [_tableView reloadData];
         
+        
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [_tableView headerEndRefreshing];
+        [_tableView footerEndRefreshing];
+
         [self hideHud];
         [self showAllTextDialog:description];
         
@@ -165,7 +186,8 @@
         NSLog(@">>>>%@",[self.classifyDic objectForKey:[NSString stringWithFormat:@"%ld",(long)homemodel.classify]]);
         cell.leixingStr  = [self.classifyDic objectForKey:[NSString stringWithFormat:@"%ld",(long)homemodel.classify]];
         
-        
+        cell.dingweiStr = homemodel.spotName;
+
         //游记推荐
         BOOL isRecommend = [homemodel.isRecommend boolValue];
         cell.istuijian = !isRecommend;
@@ -336,7 +358,17 @@
         NSLog(@"返回==%@",resultDic);
         [_dataArray removeAllObjects];
         [self showAllTextDialog:@"删除成功"];
-        [self loadData];
+        [self loadData:YES];
+        
+        
+        //发送通知首页刷新
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"dishuaxinObjNotification" object:@""];
+        
+        
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"didzuopingshuaxinObjNotification" object:@""];
+
+        
         
         
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {

@@ -173,6 +173,7 @@
     _tuijianView.hidden = istuijian;
 }
 -(void)setDingweiStr:(NSString *)dingweiStr{
+    _dingweiLbl.text = dingweiStr;
     
 }
 -(void)setNameStr:(NSString *)nameStr{

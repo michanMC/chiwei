@@ -19,6 +19,7 @@
 #import "jingdianView.h"
 #import "homeYJModel.h"
 #import "SettgViewController.h"
+#import "jingdianModel.h"
 @interface DEMOHomeViewController ()<ZZCarouselDelegate,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,UITextFieldDelegate,jingdianViewDelegate>
 {
     
@@ -40,6 +41,16 @@
     NSInteger _pageStr;
     
     NSMutableArray *_bannerArray;
+    
+    
+    
+    NSInteger  _spotIdStr;//景点
+    NSInteger  _classifyStr;//类型
+    NSInteger  _isRecommendStr;//推荐
+
+    NSMutableArray *_jingdianArray;
+    
+    
 
 }
 
@@ -50,12 +61,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _spotIdStr = -1;
+    _classifyStr = -1;
+    _isRecommendStr = -1;
     _pageStr = 1;
+    //监听左视图的跳转
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectObj:) name:@"didSelectObjNotification" object:nil];
+    //监听首页的刷新
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dishuaxinObj:) name:@"dishuaxinObjNotification" object:nil];
 	self.title = @"Home Controller";
     _dataAarray  =[NSMutableArray array];
     _bannerArray = [NSMutableArray array];
+    _jingdianArray = [NSMutableArray array];
+    
     [self prepareUI];
     
     
@@ -98,7 +116,7 @@
     [self.view addSubview:_jiangdianView];
     
 }
-
+#pragma mark- 喜欢\分类
 -(void)actionShaixuan:(UIButton*)btn{
     
     NSLog(@"%ld",btn.tag);
@@ -134,6 +152,37 @@
         
         NSLog(@"喜欢%ld",_btnTagindexXH);
         NSLog(@"分类%ld",_btnTagindexFL);
+        if (_btnTagindexXH == 0 || _btnTagindexXH == 700) {
+            _isRecommendStr = -1;
+        }
+        else if(_btnTagindexXH == 701){
+        
+            _isRecommendStr = 1;
+        }
+        else if(_btnTagindexXH == 702){
+            
+            _isRecommendStr = 0;
+        }
+        
+        if (_btnTagindexFL == 0 ||  _btnTagindexFL == 800) {
+            _classifyStr = -1;
+        }
+        else if(_btnTagindexFL == 801){
+            _classifyStr = 0;
+
+        }else if(_btnTagindexFL == 802){
+            _classifyStr = 1;
+            
+        }else if(_btnTagindexFL == 803){
+            _classifyStr = 2;
+            
+        }else if(_btnTagindexFL == 804){
+            _classifyStr = 3;
+            
+        }
+       // [self actionHeader];
+        _pageStr = 1;
+        [self loadData:YES];
 
         
     }
@@ -200,6 +249,7 @@
 -(void)prepareUI{
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Height) style:UITableViewStyleGrouped];
     _headwheel = [self headViewwheel:500];
+
     _tableView.tableHeaderView = [self addHeadView:_headwheel];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -212,7 +262,7 @@
     [self.view addSubview:_faBuBtn];
     [_faBuBtn addTarget:self action:@selector(actionFabu) forControlEvents:UIControlEventTouchUpInside];
     
-   // [_headwheel reloadData];
+    [_headwheel reloadData];
     [self preparedaohangtiao];
     [self loadData:YES];
     [self loadbanner];
@@ -291,6 +341,12 @@
         NSLog(@"guang游记==%@",resultDic);
         _bannerArray = resultDic[@"object"];
         
+        _tableView.tableHeaderView = nil;
+        
+        _headwheel = [self headViewwheel:500];
+        
+        _tableView.tableHeaderView = [self addHeadView:_headwheel];
+        
         
         [_headwheel reloadData];
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
@@ -306,11 +362,32 @@
 #pragma mark-加载数据
 -(void)loadData:(BOOL)isjuhua{
     
-    NSDictionary * Parameterdic = @{
-                                    @"page":@(_pageStr),
-                                   
-                                    
-                                    };
+//    NSDictionary * Parameterdic = @{
+//                                    @"page":@(_pageStr),
+//                                   @"spotId":@(_spotIdStr),
+//                                    @"classify":@(_classifyStr),
+//                                    @"isRecommend":@(_isRecommendStr),
+//                                    
+//                                    };
+    
+    
+    NSMutableDictionary * Parameterdic = [NSMutableDictionary dictionary];
+    [Parameterdic  setObject:@(_pageStr) forKey:@"page"];
+    if (_spotIdStr>=0 ) {
+        [Parameterdic  setObject:@(_spotIdStr) forKey:@"spotId"];
+
+    }
+    if (_classifyStr>=0 ) {
+        [Parameterdic  setObject:@(_classifyStr) forKey:@"classify"];
+        
+    }
+    if (_isRecommendStr>=0 ) {
+        [Parameterdic  setObject:@(_isRecommendStr) forKey:@"isRecommend"];
+        
+    }
+
+    
+    
     
     
     [self showLoading:isjuhua AndText:nil];
@@ -367,12 +444,60 @@
 
     
 }
+#pragma mark-景点
 -(void)actionText:(UITextField*)textField{
     _daohanTiaoview.backgroundColor = [UIColor whiteColor];
     _daohanTiaoLineview.backgroundColor =[ UIColor lightGrayColor];
-    _shaixuanView.hidden = YES;
-    _jiangdianView.hidden = NO;
-    NSLog(@"string%@",textField.text);
+   
+    NSLog(@"string>>%@",textField.text);
+    if (textField.text.length == 0 || [textField.text isEqualToString:@""] ||[textField.text isEqualToString:@" "]  ) {
+        _spotIdStr = - 1;
+        //[self actionHeader];
+        _pageStr = 1;
+        [self loadData:YES];
+        return;
+    }
+    
+    
+    NSDictionary * Parameterdic = @{
+                                    @"keyWord":textField.text
+                                    };
+    
+    
+   // [self showLoading:YES AndText:nil];
+    [self.requestManager requestWebWithParaWithURL:@"api/travel/searchSpots.json" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self stopshowLoading];
+        NSLog(@"成功");
+        NSLog(@"返回》》==%@",resultDic);
+        [_jingdianArray removeAllObjects];
+        NSArray * objectArray = resultDic[@"object"];
+        for (NSDictionary *dic in objectArray) {
+            jingdianModel * modle = [jingdianModel mj_objectWithKeyValues:dic];
+            [_jingdianArray addObject:modle];
+        }
+        if (_jingdianArray.count) {
+            
+        
+        _jiangdianView.jingdianArray = _jingdianArray;
+            _shaixuanView.hidden = YES;
+            _jiangdianView.hidden = NO;
+      //  [_jiangdianView.tableView reloadData];
+        }
+        
+        
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self stopshowLoading];
+        [self showAllTextDialog:description];
+        
+        NSLog(@"失败");
+    }];
+
+    
+    
+    
+    
+    
     
 }
 //-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -386,22 +511,22 @@
 //    return YES;
 //    
 //}
--(void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    if (textField.text.length) {
-        _shaixuanView.hidden = YES;
-        _daohanTiaoview.backgroundColor = [UIColor whiteColor];
-        _daohanTiaoLineview.backgroundColor =[ UIColor lightGrayColor];
-        _shaixuanView.hidden = YES;
-        _jiangdianView.hidden = NO;
-        NSLog(@"string%@",textField.text);
-        
-
-    }
-    
-    
-}
--(void)jingdianStr:(NSString *)str{
+//-(void)textFieldDidBeginEditing:(UITextField *)textField
+//{
+//    if (textField.text.length) {
+//        _shaixuanView.hidden = YES;
+//        _daohanTiaoview.backgroundColor = [UIColor whiteColor];
+//        _daohanTiaoLineview.backgroundColor =[ UIColor lightGrayColor];
+//        _shaixuanView.hidden = YES;
+//        _jiangdianView.hidden = NO;
+//        NSLog(@"string%@",textField.text);
+//        
+//
+//    }
+//    
+//    
+//}
+-(void)jingdianStr:(NSString *)str SpotId:(NSString *)spotId{
     _searchtext.text = str;
     [_searchtext resignFirstResponder];
     if (_tableView.contentOffset.y > 100) {
@@ -413,7 +538,16 @@
         _daohanTiaoview.backgroundColor = [UIColor clearColor];
         _daohanTiaoLineview.backgroundColor =[ UIColor clearColor];
     }
-    
+    if (spotId.length) {
+        _spotIdStr = [spotId integerValue];
+
+    }
+    else
+    {
+        _spotIdStr = - 1;
+    }
+    _pageStr = 1;
+    [self loadData:YES];
     _jiangdianView.hidden = YES;
     
     
@@ -457,7 +591,7 @@
     
 }
 -(void)dishuaxinObj:(NSNotification*)notication{
-    _pageStr = 0;
+    _pageStr = 1;
     [self loadData:NO];
 }
 #pragma mark-发布
@@ -578,7 +712,7 @@
            cell.nameLbl.text = @"游客";
         }
          
-        
+        cell.dingweiimg.text = model.spotName;
         //游记类型
         //NSLog(@">>>>%@",[self.classifyDic objectForKey:model[@"classify"]]);
         cell.typeLimgView.image  = [UIImage imageNamed:[self.classifyDic objectForKey:[NSString stringWithFormat:@"%ld",model.classify]]];

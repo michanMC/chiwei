@@ -53,6 +53,7 @@
 @property(nonatomic,copy)NSString *isRecommend;
 @property(nonatomic,copy)NSString *shareCount;
 @property(nonatomic,copy)NSString *spotId;
+@property(nonatomic,copy)NSString * spotName;
 @property(nonatomic,copy)NSString *startTime;
 @property(nonatomic,copy)NSString *status;
 @property(nonatomic,copy)NSString *title;

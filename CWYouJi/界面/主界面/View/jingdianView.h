@@ -10,7 +10,7 @@
 
 @protocol jingdianViewDelegate <NSObject>
 
--(void)jingdianStr:(NSString*)str;
+-(void)jingdianStr:(NSString*)str SpotId:(NSString*)spotId;
 
 @end
 

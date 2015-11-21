@@ -207,6 +207,7 @@
 }
 -(void)setDingweiStr:(NSString *)dingweiStr
 {
+    _dingweiLbl.text = dingweiStr;
     
 }
 

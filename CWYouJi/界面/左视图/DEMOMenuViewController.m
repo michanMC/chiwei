@@ -230,9 +230,10 @@
         rgFadeView = [[RGFadeView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Height)];
         [self.view.window addSubview:rgFadeView];
     }
+    rgFadeView.zuozheBtn.hidden = YES;
     [rgFadeView textH:150];
     rgFadeView.titelLbl.text = @"编辑昵称";
-    rgFadeView.placeLabel.text = @"输入昵称";
+   // rgFadeView.placeLabel.text = @"输入昵称";
     [rgFadeView.msgTextView becomeFirstResponder];
     [rgFadeView.sendBtn addTarget:self action:@selector(ActionSendBtn) forControlEvents:UIControlEventTouchUpInside];
     rgFadeView.msgTextView.tag = 2000;
@@ -683,7 +684,7 @@
 
     return cell;
 }
-#pragma mark-分享
+#pragma mark-分享actionFenxian
 -(void)actionFenxian{
     _fenxiangView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width - 80, 2 * 40)style:UITableViewStyleGrouped];
     // _yinhanView.bounces = NO;

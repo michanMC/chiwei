@@ -280,7 +280,7 @@
             cell.subTitleStr = @"";
             
         }
-        
+        cell.dingweiStr = _home_model.spotName;
         [cell.shouchangBtn addTarget:self action:@selector(actionShouchang:) forControlEvents:UIControlEventTouchUpInside];
         //NSLog(@"======%d",[_home_model.collection boolValue]);
         
@@ -455,6 +455,11 @@
         [self loadModle:YES];
         //发送通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"dishuaxinObjNotification" object:@""];
+       // dishoucangshuaxinObjNotification
+        //发送通知刷新我制作的作品
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"didzuopingshuaxinObjNotification" object:@""];
+        //发送通知刷新我收藏的作品
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"dishoucangshuaxinObjNotification" object:@""];
         
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
         [self hideHud];

@@ -205,5 +205,77 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+#pragma mark-点击某个分享按钮
+-(void)actionFenxian:(SSDKPlatformType)PlatformType{
+    
+    
+    /**
+     * 在简单分享中，只要设置共有分享参数即可分享到任意的社交平台
+     **/
+    __weak BaseViewController *theController = self;
+    // [self showLoadingView:YES];
+    [self showLoading:YES AndText:nil];
+    //创建分享参数
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    
+    NSArray* imageArray = @[[UIImage imageNamed:@"坑了-个爹_pressed"]];
+    
+    if (imageArray) {
+        
+        [shareParams SSDKSetupShareParamsByText:@"分享内容"
+                                         images:imageArray
+                                            url:[NSURL URLWithString:@"http://mob.com"]
+                                          title:@"分享标题"
+                                           type:SSDKContentTypeImage];
+        
+        //进行分享
+        [ShareSDK share:PlatformType
+             parameters:shareParams
+         onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+             
+             [theController stopshowLoading];
+             // [theController.tableView reloadData];
+             
+             switch (state) {
+                 case SSDKResponseStateSuccess:
+                 {
+                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享成功"
+                                                                         message:nil
+                                                                        delegate:nil
+                                                               cancelButtonTitle:@"确定"
+                                                               otherButtonTitles:nil];
+                     [alertView show];
+                     break;
+                 }
+                 case SSDKResponseStateFail:
+                 {
+                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享失败"
+                                                                         message:[NSString stringWithFormat:@"%@", error]
+                                                                        delegate:nil
+                                                               cancelButtonTitle:@"确定"
+                                                               otherButtonTitles:nil];
+                     [alertView show];
+                     break;
+                 }
+                 case SSDKResponseStateCancel:
+                 {
+                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享已取消"
+                                                                         message:nil
+                                                                        delegate:nil
+                                                               cancelButtonTitle:@"确定"
+                                                               otherButtonTitles:nil];
+                     [alertView show];
+                     break;
+                 }
+                 default:
+                     break;
+             }
+         }];
+    }
+    
+    
+    
+    
+}
 
 @end

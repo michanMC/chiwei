@@ -13,11 +13,14 @@
 #import "HZPhotoBrowser.h"
 #define ARC4RANDOM_MAX	0x100000000
 #import "homeYJModel.h"
+#import "fenxianView.h"
 @interface zuopinXQViewController ()<UITableViewDataSource,UITableViewDelegate,DMLazyScrollViewDelegate,HZPhotoBrowserDelegate>
 {
     DMLazyScrollView* _lazyScrollView;
 
     UIButton * _backBtn;
+    UIButton * _fenxianBtn;
+
     UILabel *_titleLbl;
     NSMutableArray*   _viewControllerArray;
 
@@ -128,6 +131,59 @@
     [self.view addSubview:_backBtn];
     [_backBtn addTarget:self action:@selector(actionBackBtn) forControlEvents:UIControlEventTouchUpInside];
     
+    _fenxianBtn = [[UIButton alloc]initWithFrame:CGRectMake(Main_Screen_Width - 35 - 10, 23, 35, 35)];
+    [_fenxianBtn setImage:[UIImage imageNamed:@"nav_icon_share"] forState:UIControlStateNormal];
+    [self.view addSubview:_fenxianBtn];
+    [_fenxianBtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+       
+        NSLog(@"%d",_index);
+        
+        fenxianView *shareView = [fenxianView createViewFromNib];
+        shareView.backgroundColor = [UIColor clearColor];
+        
+        shareView.titleLbl.textColor = AppTextCOLOR;
+        ViewRadius(shareView.bgView, 5);
+        
+        
+        [shareView.deleBtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+            [shareView hideView];
+            
+           // [self.navigationController popToRootViewControllerAnimated:YES];
+            
+            
+        }];
+        [shareView.weibobtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+            [shareView hideView];
+            [self actionFenxian:SSDKPlatformTypeSinaWeibo];
+            //[self.navigationController popToRootViewControllerAnimated:YES];
+            NSLog(@"微博");
+        }];
+        [shareView.qqbtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+            [shareView hideView];
+            [self actionFenxian:SSDKPlatformTypeQQ];
+            //[self.navigationController popToRootViewControllerAnimated:YES];
+            NSLog(@"QQ");
+        }];
+        [shareView.weixinbtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+            [shareView hideView];
+            [self actionFenxian:SSDKPlatformTypeWechat];
+          //  [self.navigationController popToRootViewControllerAnimated:YES];
+            NSLog(@"weixin");
+        }];
+        [shareView.tubtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+            [shareView hideView];
+            [self actionFenxian:SSDKPlatformTypeDouBan];
+            //[self.navigationController popToRootViewControllerAnimated:YES];
+            NSLog(@"土豆");
+        }];
+        [shareView showInWindow];
+
+        
+       // NSLog(@"%@",_dataArray[])
+        
+        
+        
+    }];
 
     
     

@@ -7,7 +7,7 @@
 //
 
 #import "jingdianView.h"
-
+#import "jingdianModel.h"
 @interface jingdianView ()<UITableViewDataSource,UITableViewDelegate>{
     
     
@@ -29,7 +29,7 @@
     
 }
 -(void)prepareUI{
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, self.frame.size.height)];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, self.frame.size.height) style:UITableViewStyleGrouped];
     _tableView.delegate =self;
     _tableView.dataSource = self;
     [self addSubview:_tableView];
@@ -39,7 +39,13 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     
-    return 4;
+    return _jingdianArray.count;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 0.01;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 10;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -49,19 +55,53 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
         
     }
-    
-    cell.textLabel.text = @"大理";
+    if (_jingdianArray.count > indexPath.row) {
+        jingdianModel *model = _jingdianArray[indexPath.row];
+    cell.textLabel.text = model.nameCH;
     cell.textLabel.font = [UIFont systemFontOfSize:14];
     cell.textLabel.textColor = AppTextCOLOR;
+    }
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [_delegate jingdianStr:@"大理"];
+    jingdianModel *model = _jingdianArray[indexPath.row];
+
+    [_delegate jingdianStr:model.nameCH SpotId:model.id];
     
     
 }
+-(void)setJingdianArray:(NSMutableArray *)jingdianArray
+{
+    
+    _jingdianArray = jingdianArray;
+    [_tableView reloadData];
+    
+    
+}
+#pragma mark-分割线没有显示全，左边有一段缺失：
+-(void)viewDidLayoutSubviews {
+    [super layoutSubviews];
+    if ([_tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_tableView setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    if ([_tableView respondsToSelector:@selector(setLayoutMargins:)])  {
+        [_tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

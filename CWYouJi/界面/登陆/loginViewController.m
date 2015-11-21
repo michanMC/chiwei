@@ -150,14 +150,14 @@
     btn = [[UIButton alloc]initWithFrame:CGRectMake(x, y, width, height)];
     btn.titleLabel.font = [UIFont systemFontOfSize:15];
     [btn setBackgroundImage:[UIImage imageNamed:@"qq"] forState:0];
-    btn.tag = 103;
+    btn.tag = 104;
     [btn addTarget:self action:@selector(actionBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_bgImgView addSubview:btn];
     x -= (30 + 40);
     btn = [[UIButton alloc]initWithFrame:CGRectMake(x, y, width, height)];
     btn.titleLabel.font = [UIFont systemFontOfSize:15];
     [btn setBackgroundImage:[UIImage imageNamed:@"weibo"] forState:0];
-    btn.tag = 104;
+    btn.tag = 103;
     [btn addTarget:self action:@selector(actionBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_bgImgView addSubview:btn];
     x = (Main_Screen_Width - width)/2;
@@ -198,6 +198,31 @@
     }
     else if(btn.tag == 103){//微博
         
+        
+        
+        [ShareSDK getUserInfo:SSDKPlatformTypeSinaWeibo conditional:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
+           
+            NSLog(@">>%d",state);
+            NSLog(@"%@",user.nickname);
+            NSLog(@"%@",user.icon);
+            NSLog(@"%@",user.uid);
+
+            NSDictionary * Parameterdic = @{
+                                            @"uname":user.uid,
+                                            @"nickname":user.nickname,
+                                            @"type":@(3),
+                                            @"raw":user.icon,
+                                            @"thumbnail":user.icon
+                                            };
+            
+            
+            [self socialLogin:Parameterdic];
+            
+        }];
+        
+        
+        
+        
     }
     else if(btn.tag == 104){//qq
         
@@ -207,6 +232,39 @@
     }
     
 }
+#pragma mark-第三方登录
+-(void)socialLogin:(NSDictionary *)Parameterdic{
+    
+    
+    
+    
+    [self showLoading:YES AndText:nil];
+    [self.requestManager requestWebWithParaWithURL:@"api/user/socialLogin.json" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        
+        
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        
+        NSLog(@"失败");
+    }];
+
+    
+    
+    
+    
+    
+    
+    
+    
+}
+
+
+
 #pragma mark-登陆
 -(void)login{
     

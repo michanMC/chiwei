@@ -166,7 +166,7 @@ static NSString *const EPHttpApiBaseURL = AppURL;//@"http://121.201.16.96";
                 //业务逻辑错误
                 NSString *message = [resultDic objectForKey:@"message"];
                 NSError *error = [NSError errorWithDomain:@"服务器业务逻辑错误" code:logicCode.intValue userInfo:nil];
-                if ([message isEqualToString:@"sessionId失效"]) {
+                if ([message isEqualToString:@"session无效"]) {
                     
                     /*保存数据－－－－－－－－－－－－－－－－－begin*/
                     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];

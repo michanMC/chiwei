@@ -3,6 +3,7 @@
 #import <UIKit/UIKit.h>
 #import "MJRefresh.h"
 #import "NetworkManager.h"
+#import <ShareSDK/ShareSDK.h>
 typedef void(^BarButtonItemActionBlock)(void);
 
 typedef NS_ENUM(NSInteger, BarbuttonItemStyle) {
@@ -95,5 +96,5 @@ typedef NS_ENUM(NSInteger, BarbuttonItemStyle) {
 /**
  *  分享
  */
--(void)ShareCtlView:(UIViewController*)ctl;
+-(void)actionFenxian:(SSDKPlatformType)PlatformType;
 @end
